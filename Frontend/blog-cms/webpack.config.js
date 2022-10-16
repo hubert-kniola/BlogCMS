@@ -15,14 +15,13 @@ const config = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   devServer: {
     open: true,
     host: "localhost",
     hot: true,
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
+    historyApiFallback: true,
   },
   watchOptions: {
       aggregateTimeout: 200,
