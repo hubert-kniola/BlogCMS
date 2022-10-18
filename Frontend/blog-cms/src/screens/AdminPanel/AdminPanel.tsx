@@ -1,7 +1,7 @@
 import React from "react";
 
-const Test = () => {
+const AdminPanel = () => {
   return <p>TEST</p>;
 };
 
-export default Test;
+export default AdminPanel;
