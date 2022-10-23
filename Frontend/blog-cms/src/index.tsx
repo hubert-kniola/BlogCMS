@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import ErrorPage from "../src/screens/ErrorPage";
-import Login from "./screens/Login/Login";
-import AdminPanel from "./screens/AdminPanel/AdminPanel";
-import { store } from "../store/store";
+import SwitchPanel from "./screens/SwitchPanel/SwitchPanel";
+import { RootState, store } from "../store/store";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "admin",
-    element: true ? <Login/> : <AdminPanel/>,
+    element: <SwitchPanel/>,
   },
 ]);
 
