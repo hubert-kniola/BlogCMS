@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosConfig = axios.create({
-    baseURL: 'https://pp-sdi-api.herokuapp.com/api/v1'
+    baseURL: 'https://20.238.228.10'
 });
 
 axiosConfig.defaults.headers.common["content-type"]= "application/json";
