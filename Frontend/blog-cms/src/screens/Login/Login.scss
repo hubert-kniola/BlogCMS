@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   width: 30rem;
-  height: 30vh;
+  height: 28vh;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
@@ -21,10 +21,24 @@
   outline-width: 5px;
   outline: none;
   padding: 0 8px;
+
+  &--password {
+    margin-top: 6%;
+    background-color: rgb(241, 241, 241);
+    border-radius: 3px;
+    height: 2rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    outline-color: invert;
+    outline-width: 5px;
+    outline: none;
+    padding: 0 8px;
+  }
 }
 
 .button {
-  margin-top: 8%;
+  margin-top: 6%;
   margin-left: auto;
   margin-right: auto;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -58,7 +72,7 @@
   text-align: center;
   margin-top: 1%;
   &:hover {
-    color:rgb(214, 115, 112);
+    color: rgb(214, 115, 112);
     cursor: pointer;
   }
 }

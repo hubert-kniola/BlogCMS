@@ -2,19 +2,30 @@ import React from "react";
 import "./AdminPanel.scss";
 
 const AdminPanel = () => {
+  const cssClasses = {
+    /* panel class */
+    panel: "panel",
+    /* header class */
+    header: "header",
+    /* profil class */
+    profil: "profil",
+    /* menu class */
+    menu: "menu",
+    /* content class */
+    content: "content",
+    /* footer class */
+    footer: "footer",
+  };
+
   return (
-    <div className="panel">
-      <div className="header">
+    <div className={cssClasses.panel}>
+      <div className={cssClasses.header}>
         Admin Panel
-        <div className="profil">Profil</div>
-        <div className="menu">Menu</div>
+        <div className={cssClasses.profil}>Profil</div>
+        <div className={cssClasses.menu}>Menu</div>
       </div>
-      <div className="content">
-        Content
-      </div>
-      <div className="footer">
-        Footer
-      </div>
+      <div className={cssClasses.content}>Content</div>
+      <div className={cssClasses.footer}>Footer</div>
     </div>
   );
 };
