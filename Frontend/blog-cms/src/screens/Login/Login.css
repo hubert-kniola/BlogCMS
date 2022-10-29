@@ -21,20 +21,20 @@
   outline-width: 5px;
   outline: none;
   padding: 0 8px;
+}
 
-  &--password {
-    margin-top: 6%;
-    background-color: rgb(241, 241, 241);
-    border-radius: 3px;
-    height: 2rem;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    outline-color: invert;
-    outline-width: 5px;
-    outline: none;
-    padding: 0 8px;
-  }
+.input--password {
+  margin-top: 6%;
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  height: 2rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  outline-color: invert;
+  outline-width: 5px;
+  outline: none;
+  padding: 0 8px;
 }
 
 .button {
@@ -49,11 +49,11 @@
   width: 10rem;
   height: 4vh;
   border-radius: 3px;
+}
 
-  &:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
-      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-  }
+.button:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .valid-text {
@@ -71,8 +71,9 @@
   margin-right: auto;
   text-align: center;
   margin-top: 1%;
-  &:hover {
-    color: rgb(214, 115, 112);
-    cursor: pointer;
-  }
+}
+
+.register:hover {
+  color: rgb(214, 115, 112);
+  cursor: pointer;
 }

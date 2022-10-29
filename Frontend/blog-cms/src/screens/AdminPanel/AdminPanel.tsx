@@ -1,31 +1,25 @@
 import React from "react";
-import "./AdminPanel.scss";
+import AdminHeader from "../../components/AdminHeader/AdminHeader";
+import AdminFooter from "../../components/AdminFooter/AdminFooter";
+import AdminContent from "../../components/AdminContent/AdminContent";
+import Tile from "../../components/Tile/Tile";
+import "./AdminPanel.css";
 
 const AdminPanel = () => {
   const cssClasses = {
     /* panel class */
     panel: "panel",
-    /* header class */
-    header: "header",
-    /* profil class */
-    profil: "profil",
-    /* menu class */
-    menu: "menu",
-    /* content class */
-    content: "content",
-    /* footer class */
-    footer: "footer",
   };
+
+  const Tiles: any = [{ text: "tile1" }, { text: "tile2" }, { text: "tile3" }];
+  const menuItems: string[] = ["LogOut"];
+  const footerItems: string[] = ["GitHub", "Created by Mateusz Kuźniak & Hubert Knioła"]
 
   return (
     <div className={cssClasses.panel}>
-      <div className={cssClasses.header}>
-        Admin Panel
-        <div className={cssClasses.profil}>Profil</div>
-        <div className={cssClasses.menu}>Menu</div>
-      </div>
-      <div className={cssClasses.content}>Content</div>
-      <div className={cssClasses.footer}>Footer</div>
+      <AdminHeader menuItems={menuItems} />
+      <AdminContent tiles={Tiles} />
+      <AdminFooter items={footerItems}/>
     </div>
   );
 };

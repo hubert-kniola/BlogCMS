@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
 import axiosConfig from "../../axiosConfig";
 import { updateUser } from "../../../store/slices/userSlice";
-import "./Login.scss";
+import "./Login.css";
 import { BEM } from "../../tools";
 
 const Login = () => {

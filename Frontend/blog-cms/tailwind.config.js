@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   media: false, // or 'media' or 'class'
-  content: ["./src/**/*.{html,js,ts}"],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {},
     screens: {

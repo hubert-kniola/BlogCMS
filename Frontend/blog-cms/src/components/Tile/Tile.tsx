@@ -1,15 +1,18 @@
 import React from "react";
-import "./Tile.scss";
+import "./Tile.css";
 
 interface TileProps {
   text: string;
-  onClick: () => void;
+  /*onClick: () => void;*/
 }
 
-const Tile = ({ text, onClick }: TileProps) => {
+const Tile = ({ text }: TileProps) => {
+  const cssClasses = {
+    tile: "tile",
+  };
   return (
-    <div className="tile" onClick={onClick}>
-      {text}
+    <div className={cssClasses.tile}>
+      <p>{text}</p>
     </div>
   );
 };
