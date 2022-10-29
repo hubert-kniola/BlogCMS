@@ -10,7 +10,7 @@ const AdminPanel = () => {
     /* profil class */
     profil: "profil",
     /* menu class */
-    menu: "menu",
+    menu: "adminMenu",
     /* content class */
     content: "content",
     /* footer class */
