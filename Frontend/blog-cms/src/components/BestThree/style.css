@@ -1,7 +1,7 @@
 .bestContainer{
     @apply 
     w-full h-48 
-    mt-12 px-4
+    my-16 px-4
     bg-primary
     flex 
     shadow-xl

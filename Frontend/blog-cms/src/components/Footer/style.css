@@ -1,0 +1,13 @@
+.mainPageFooter{
+    @apply 
+    w-full 
+     bg-primary 
+     mb-0 
+     p-8   
+     flex 
+     text-secondary
+}
+
+.mainPageFooter_item{
+    @apply m-auto
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { BestThree, List } from "../../components";
+import { BestThree, Footer, List } from "../../components";
 
 
 const MainPage = () => {
@@ -7,6 +7,7 @@ const MainPage = () => {
       <>
         <List />
         <BestThree />
+        <Footer/>
       </>
     );
 }
