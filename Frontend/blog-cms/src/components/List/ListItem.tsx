@@ -32,7 +32,10 @@ type ListItemType = {
 export const ListItem: FC<ListItemType> = ({post, index}) =>
 {
     return (
-      <div className={index > 0 ? GetNextItemClass() : GetFirstItemClass()}>
+      <a
+        href="https://google.pl"
+        className={index > 0 ? GetNextItemClass() : GetFirstItemClass()}
+      >
         <div
           className={BEM(css.listItem, css.photo)}
           style={{ backgroundImage: `url(${post.imgUrl})` }}
@@ -42,6 +45,6 @@ export const ListItem: FC<ListItemType> = ({post, index}) =>
           <div className={BEM(css.listItem, css.date)}>{post.date}</div>
           <div className={BEM(css.listItem, css.snippet)}>{post.content}</div>
         </div>
-      </div>
+      </a>
     ); 
 }
