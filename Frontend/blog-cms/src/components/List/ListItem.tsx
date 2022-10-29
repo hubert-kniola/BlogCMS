@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import "./style.css";
 import { BEM } from "../../tools";
-import { Post } from "../../types";
+import { PostItemType } from "../../types";
 
 const css = {
     listItem: "listItem",
@@ -24,12 +24,7 @@ const GetNextItemClass = () => {
     return GetFirstItemClass() + " " + BEM(css.listItem, null, css.modifiers.next);
 }
 
-type ListItemType = {
-    post: Post
-    index: number;
-}
-
-export const ListItem: FC<ListItemType> = ({post, index}) =>
+export const ListItem: FC<PostItemType> = ({post, index}) =>
 {
     return (
       <a

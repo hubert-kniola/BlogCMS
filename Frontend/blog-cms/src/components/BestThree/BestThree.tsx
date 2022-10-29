@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import "./style.css";
-import { ListItem } from "./ListItem";
-import { Post } from "../../types";
 import { BEM } from "../../tools";
+import { Post } from "../../types";
+import { BestOne } from "./BestOne";
+import  "./style.css"
 
 const css = {
-    container: "listContainer",
-  };
+    bestContainer: "bestContainer",
+}
 
 const lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 const url1= 'https://previews.123rf.com/images/datsenkomarina/datsenkomarina1801/datsenkomarina180100123/93153161-beautiful-view-of-the-tropical-beach-of-sri-lanka-on-a-sunny-day.jpg'
@@ -22,13 +22,15 @@ const posts: Post[]= [
     {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1},
 ]
 
-export const List:FC = () => {
+export const BestThree:FC = () => {
     return (
-      <div className={BEM(css.container)}>
-        {posts.slice(0,5).map((post, index) => {
-          return <ListItem post={post} index={index} key={index} />;
-        })}
-      </div>
+      <>
+        <div className={BEM(css.bestContainer)}>
+            {posts.slice(0,3).map((post, index) => {
+                return <BestOne post={post} index={index}/>
+            })}
+        </div>
+      </>
     );
 }
 

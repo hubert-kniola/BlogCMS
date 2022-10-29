@@ -1,0 +1,58 @@
+.bestContainer{
+    @apply 
+    w-full h-48 
+    mt-12 px-4
+    bg-primary
+    flex 
+    shadow-xl
+
+}
+
+.bestContainer_bestPost{
+    @apply 
+    w-[27%]  h-72
+    m-auto mt-[-3rem] 
+    bg-box 
+    border border-primary rounded-lg
+    shadow-xl
+    p-2
+}
+
+.bestPost_bestPhoto{
+    @apply
+    m-auto p-0 
+    w-full h-28
+    rounded-lg
+    bg-cover bg-center
+}
+
+.bestPost_bestContent{
+    @apply relative m-auto h-40 
+}
+
+.bestPost_bestTitle{
+    @apply 
+    text-lg text-primary font-bold
+}
+
+.bestPost_bestDate{
+    @apply 
+    text-sm text-date
+}
+
+.bestPost_bestSnippet{
+    @apply 
+    text-sm text-primary h-24 overflow-hidden text-justify
+}
+
+.bestPost_bestHidden{
+    @apply 
+    absolute bottom-0 left-0
+    bg-gradient-to-b from-transparent to-box
+    w-full h-10
+    pt-6
+    text-center
+    text-sm font-bold
+}
+
+

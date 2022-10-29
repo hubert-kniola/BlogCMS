@@ -4,3 +4,4 @@ export type Post = {
     content: string,
     imgUrl: string,
 }
+

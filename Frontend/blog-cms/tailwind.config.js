@@ -36,9 +36,8 @@ module.exports = {
           dark: "2c2c2d",
           light: "#bbbbbb"
         },
-       
       },
-    },
+    },      
     screens: {
       sm: '480px',
       md: '768px',

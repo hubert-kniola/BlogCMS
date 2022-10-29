@@ -20,7 +20,6 @@
     @apply 
         m-auto p-0 
         w-1/5 h-20
-        bg-red-500
         rounded-lg
         bg-cover bg-center
 }

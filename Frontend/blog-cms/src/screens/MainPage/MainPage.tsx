@@ -1,11 +1,14 @@
 import React from "react";
-import { List } from "../../components";
+import { BestThree, List } from "../../components";
 
 
 const MainPage = () => {
-    return(
-        <List/>
-    )
+    return (
+      <>
+        <List />
+        <BestThree />
+      </>
+    );
 }
 
 export default MainPage;
