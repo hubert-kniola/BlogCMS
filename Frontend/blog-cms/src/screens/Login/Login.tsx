@@ -14,13 +14,14 @@ const Login = () => {
 
   const cssClasses = {
     /* input class */
-    input: "input",
+    container: "loginContainer",
+    input: "loginInput",
     /* button class */
-    button: "button",
+    button: "loginButton",
     /* register class */
-    register: "register",
+    register: "loginRegister",
     /* valid class */
-    valid: "valid-text",
+    valid: "loginValidText",
     /* modifiers of classes */
     modifiers: {
       /* password modifier */
@@ -32,7 +33,9 @@ const Login = () => {
     if (email && password) {
       const params = {
         email: email,
-        pass: sha256(password),
+        // pass: sha256(password),
+        pass: password,
+        
       };
       axiosConfig
         .post(`/login`, params)
@@ -45,7 +48,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="container">
+      <div className={BEM(cssClasses.container)}>
         <input
           type="text"
           id="email"
