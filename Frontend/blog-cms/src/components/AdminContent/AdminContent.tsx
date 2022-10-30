@@ -1,6 +1,6 @@
 import React from "react";
 import Tile from "../../components/Tile/Tile";
-import "./AdminContent.css";
+import "./style.css";
 
 interface AdminContentProps {
   tiles: any;
@@ -24,5 +24,3 @@ export const AdminContent = ({ tiles }: AdminContentProps) => {
     </div>
   );
 };
-
-export default AdminContent;

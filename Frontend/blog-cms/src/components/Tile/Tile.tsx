@@ -1,5 +1,5 @@
 import React from "react";
-import "./Tile.css";
+import "./style.css";
 
 interface TileProps {
   text: string;

@@ -1,9 +1,7 @@
 import React from "react";
-import AdminHeader from "../../components/AdminHeader/AdminHeader";
-import AdminFooter from "../../components/AdminFooter/AdminFooter";
-import AdminContent from "../../components/AdminContent/AdminContent";
+import {AdminHeader, AdminFooter, AdminContent} from "../../components";
 import Tile from "../../components/Tile/Tile";
-import "./AdminPanel.css";
+import "./style.css";
 
 const AdminPanel = () => {
   const cssClasses = {
@@ -13,13 +11,13 @@ const AdminPanel = () => {
 
   const Tiles: any = [{ text: "tile1" }, { text: "tile2" }, { text: "tile3" }];
   const menuItems: string[] = ["LogOut"];
-  const footerItems: string[] = ["GitHub", "Created by Mateusz Kuźniak & Hubert Knioła"]
+  const gitItems: any[] = [ {text: "~ Mateusz", link: "https://github.com/mateuszkuzniak"},{text: "~ Hubert", link: "https://github.com/hubert-kniola"}]
 
   return (
     <div className={cssClasses.panel}>
       <AdminHeader menuItems={menuItems} />
       <AdminContent tiles={Tiles} />
-      <AdminFooter items={footerItems}/>
+      <AdminFooter items={gitItems}/>
     </div>
   );
 };

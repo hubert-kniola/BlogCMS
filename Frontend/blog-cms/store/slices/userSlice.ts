@@ -3,14 +3,18 @@ import type { RootState } from "../store";
 
 interface UserState {
   email: string;
+  userName: string;
   password: string;
   token: string;
+  refreshToken: string;
 }
 
 const initialState: UserState = {
     email: null,
+    userName: null,
     password: null,
     token: null,
+    refreshToken: null
 };
 
 export const userSlice = createSlice({
@@ -18,7 +22,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     updateUser: (state: any, action: PayloadAction<UserState>) => {
-        state = action.payload;
+        state.email = action.payload.email;
+        state.userName = action.payload.userName;
+        state.password = action.payload.password;
+        state.token = action.payload.token;
+        state.refreshToken = action.payload.refreshToken;
     },
     updateToken: (state: any, action: PayloadAction<UserState>) => {
         state.token = action.payload.token;
