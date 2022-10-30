@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import MenuButton from "../../components/MenuButton/MenuButton";
-import "./AdminHeader.css";
+import { MenuButton } from "../../components/MenuButton/MenuButton";
+import "./style.css";
 
 interface AdminHeaderProps {
   menuItems: string[];
@@ -29,5 +29,3 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
     </div>
   );
 };
-
-export default AdminHeader;

@@ -11,7 +11,13 @@
 }
 
 .footer p {
-  margin-left: auto;
-  margin-right: auto;
   color: rgb(168, 168, 168);
 }
+
+.footer div{
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  display: flex;
+}
+

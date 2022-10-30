@@ -1,5 +1,5 @@
 import React from "react";
-import "./MenuButton.css";
+import "./style.css";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -43,5 +43,3 @@ export const MenuButton = ({ menuItems }: MenuButtonProps) => {
     </div>
   );
 };
-
-export default MenuButton;

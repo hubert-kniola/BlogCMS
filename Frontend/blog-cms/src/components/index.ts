@@ -3,3 +3,8 @@ export * from "./BestThree/BestThree"
 export * from "./Footer/Footer"
 export * from "./Menu/MainPageMenu/MainPageMenu"
 export * from "./Ico/MoreIco"
+export * from "./AdminContent/AdminContent";
+export * from "./AdminFooter/AdminFooter";
+export * from "./AdminHeader/AdminHeader";
+export * from "./MenuButton/MenuButton";
+export * from "./Tile/Tile";

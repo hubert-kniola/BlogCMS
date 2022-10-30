@@ -1,8 +1,8 @@
 import React from "react";
-import "./AdminFooter.css";
-
+import "./style.css";
+import GitHubIcon from "@mui/icons-material/GitHub";
 interface AdminFooterProps {
-  items: any;
+  items: any[];
 }
 
 export const AdminFooter = ({ items }: AdminFooterProps) => {
@@ -14,10 +14,13 @@ export const AdminFooter = ({ items }: AdminFooterProps) => {
   return (
     <div className={cssClasses.footer}>
       {items.map((e: any) => (
-        <p>{e}</p>
+        <div>
+          <a href={e.link} target="_blank">
+            <GitHubIcon sx={{ color: "#a8a8a8" }} fontSize="large" />
+          </a>
+          <p>{e.text}</p>
+        </div>
       ))}
     </div>
   );
 };
-
-export default AdminFooter;

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
 import axiosConfig from "../../axiosConfig";
 import { updateUser } from "../../../store/slices/userSlice";
-import "./Login.css";
+import "./style.css";
 import { BEM } from "../../tools";
 
 const Login = () => {
@@ -32,7 +32,8 @@ const Login = () => {
     if (email && password) {
       const params = {
         email: email,
-        pass: sha256(password),
+        //pass: sha256(password),
+        pass: "string"
       };
       axiosConfig
         .post(`/login`, params)
