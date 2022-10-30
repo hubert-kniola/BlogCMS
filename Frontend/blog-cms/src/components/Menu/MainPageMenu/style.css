@@ -1,0 +1,29 @@
+.mainPageMenu{
+    @apply 
+    w-full h-10
+    text-secondary bg-primary
+    flex
+    align-middle
+}
+
+
+.mainPageMenu_item{
+    @apply 
+    w-[14%]  m-auto h-full flex text-center
+}
+
+.mainPageMenu_item--pageLogo{
+    @apply 
+    w-[32%]  
+}
+
+.mainPageMenu_item--content{
+    @apply m-auto w-full
+}
+
+.mainPageMenu_item--more{
+    @apply w-[5%] m-auto
+}
+
+
+

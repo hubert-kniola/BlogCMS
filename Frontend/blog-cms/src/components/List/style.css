@@ -1,0 +1,51 @@
+.listContainer{
+    @apply w-full m-0 p-4  
+}
+
+.listItem {
+    @apply 
+    w-full 
+    m-0 p-2
+    bg-box 
+    flex rounded-lg
+    shadow-xl
+}
+
+
+.listItem--next {
+    @apply mt-2
+}
+
+.listItem_photo {
+    @apply 
+        m-auto p-0 
+        w-1/5 h-20
+        rounded-lg
+        bg-cover bg-center
+}
+
+
+.listItem_content {
+    @apply 
+    w-4/5
+    ml-2 py-2 px-1 
+    rounded-lg
+}
+
+.listItem_title {
+    @apply 
+    w-full 
+    text-xl text-text-dark font-bold
+}
+
+.listItem_date {
+    @apply w-full  text-xs text-text-light
+}
+
+.listItem_snippet {
+    @apply 
+    w-full max-h-6 
+    text-sm text-text-dark 
+    truncate
+}
+
