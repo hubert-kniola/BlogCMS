@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { BEM } from "../../tools";
 import "./style.css"
 
@@ -8,7 +8,7 @@ const css = {
 }
 
 
-export const Footer:FC = () => {
+export const Footer = () => {
     return (
       <>
         <div className={BEM(css.footer)}>

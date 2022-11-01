@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { BEM } from "../../tools";
 import { Post } from "../../types";
 import { BestOne } from "./BestOne";
@@ -22,12 +22,12 @@ const posts: Post[]= [
     {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1},
 ]
 
-export const BestThree:FC = () => {
+export const BestThree = () => {
     return (
       <>
         <div className={BEM(css.bestContainer)}>
             {posts.slice(0,3).map((post, index) => {
-                return <BestOne post={post} index={index}/>
+                return <BestOne post={post} key={index}/>
             })}
         </div>
       </>

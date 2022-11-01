@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import { BEM } from "../../tools";
-import { PostItemType } from "../../types";
+import { Post, PostItemType } from "../../types";
 import  "./style.css"
 
 const css = {
@@ -13,8 +13,11 @@ const css = {
     bestSnippet: "bestSnippet",
     bestHidden: "bestHidden"
 }
+interface IBestOne {
+  post: Post
+}
 
-export const BestOne:FC<PostItemType> = ({post}) =>{
+export const BestOne = ({post}: IBestOne) =>{
     return (
         <>
             <div className={BEM(css.bestContainer, css.bestPost)}>
