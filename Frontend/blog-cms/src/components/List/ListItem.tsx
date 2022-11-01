@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { BEM } from "../../tools";
-import { Post, PostItemType } from "../../types";
+import { Post } from "../../types";
 
 const css = {
     listItem: "listItem",

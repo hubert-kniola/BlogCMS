@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import "./style.css";
 import { ListItem } from "./ListItem";
 import { Post } from "../../types";

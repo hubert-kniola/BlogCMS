@@ -32,6 +32,7 @@ module.exports = {
         box: '#FFFFFF',
         title: "#1d1d1e",
         date: "#d5d5d6",
+        accent: "#d67370",
         text:{
           dark: "2c2c2d",
           light: "#bbbbbb"

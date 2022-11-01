@@ -1,6 +1,6 @@
 import React from "react";
 import { BEM } from "../../tools";
-import { Post, PostItemType } from "../../types";
+import { Post } from "../../types";
 import  "./style.css"
 
 const css = {

@@ -10,3 +10,5 @@ export * from "./MenuButton/MenuButton";
 export * from "./Tile/Tile";
 export * from "./Ico/MoreIco"
 export * from "./Menu/MainPageMenu/MainPageMenu"
+export * from "./Menu/MainPageMenu/MainPageMenu"
+export * from "./Slider/Slider"
