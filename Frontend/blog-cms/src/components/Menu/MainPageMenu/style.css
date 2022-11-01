@@ -1,29 +1,84 @@
-.mainPageMenu{
+  
+  header {
+    @apply shadow bg-primary text-secondary
+
+  }
+  
+  .mainPageMenu_navArea {
+    @apply flex items-center my-0 mx-auto py-2 px-5 
+  }
+  
+  .mainPageMenu_logo {
+    text-decoration: none;
+    @apply text-2xl text-secondary mr-5
+  }
+  
+  .navBar_menu {
+    @apply flex items-center flex-wrap list-none
+  }
+  
+  .navBar_item {
+    @apply relative text-sm 
+  }
+  
+  .navBar_item  a {
+    @apply block decoration-inherit
+  }
+  
+  .navBar_item  > a {
+    text-align: left;
+    padding: 0.7rem 1rem;
+  }
+  
+  .navBar_item  a:hover{
+    @apply bg-secondary text-primary
+  }
+  
+  .navBar_arrow::after {
+    content: "";
+    display: inline-block;
+    margin-left: 0.28em;
+    vertical-align: 0.09em;
+    border-top: 0.42em solid;
+    border-right: 0.32em solid transparent;
+    border-left: 0.32em solid transparent;
+  }
+  
+  .navBar_dropdown {
     @apply 
-    w-full h-10
-    text-secondary bg-primary
-    flex
-    align-middle
-}
-
-
-.mainPageMenu_item{
+    text-primary text-sm 
+    absolute 
+    right-0 
+    shadow 
+    z-[9999]
+    min-w-[10rem]
+    py-2 px-0
+    list-none
+    bg-box
+    hidden
+    rounded-lg
+  }
+  
+  .navBar_dropdown.navBar_dropdown--show {
+    @apply block
+  }
+  
+  .navBar_dropdown .navBar_dropdown--submenu {
+    @apply absolute left-full top-[-7px]
+  }
+  
+  
+  /* .content {
     @apply 
-    w-[14%]  m-auto h-full flex text-center
-}
-
-.mainPageMenu_item--pageLogo{
-    @apply 
-    w-[32%]  
-}
-
-.mainPageMenu_item--content{
-    @apply m-auto w-full
-}
-
-.mainPageMenu_item--more{
-    @apply w-[5%] m-auto
-}
-
-
-
+    max-w-6xl 
+    py-12 px-5
+    my-0 mx-auto 
+  }
+  
+  .content h2 {
+    @apply mb-4
+  }
+  
+  .content a {
+    @apply  mr-[10px]
+  } */

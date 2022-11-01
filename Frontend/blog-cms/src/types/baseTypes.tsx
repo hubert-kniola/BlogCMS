@@ -5,3 +5,9 @@ export type Post = {
     imgUrl: string,
 }
 
+export type MenuItemType = {
+    title: string;
+    url: string
+    subMenu?: MenuItemType[]
+}
+

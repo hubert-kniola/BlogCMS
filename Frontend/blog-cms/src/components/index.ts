@@ -8,3 +8,5 @@ export * from "./AdminFooter/AdminFooter";
 export * from "./AdminHeader/AdminHeader";
 export * from "./MenuButton/MenuButton";
 export * from "./Tile/Tile";
+export * from "./Ico/MoreIco"
+export * from "./Menu/MainPageMenu/MainPageMenu"

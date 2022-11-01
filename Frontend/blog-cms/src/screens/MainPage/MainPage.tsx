@@ -1,5 +1,6 @@
 import React from "react";
-import { BestThree, Footer, List, MainPageMenu } from "../../components";
+import { BestThree, Footer, List } from "../../components";
+import { MainPageMenu } from "../../components/Menu/MainPageMenu/MainPageMenu";
 
 
 const MainPage = () => {
