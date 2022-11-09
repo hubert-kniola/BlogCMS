@@ -17,8 +17,8 @@ export const AdminContent = ({ tiles }: AdminContentProps) => {
   return (
     <div className={cssClasses.content}>
       <div className={cssClasses.tileContainer}>
-        {tiles.map((e: any) => {
-          return <Tile text={e.text} />;
+        {tiles.map((e: any, i: number) => {
+          return <Tile text={e.text} key={i} />;
         })}
       </div>
     </div>

@@ -10,11 +10,26 @@
   z-index: 10;
 }
 
-.header p {
+.header > p {
   color: rgb(168, 168, 168);
-  margin-right: 10px;
+  margin-right: 3rem;
+  margin-left: 3rem;
   justify-content: center;
   align-items: center;
+}
+
+.header > p:hover{
+  cursor: pointer;
+  color: rgb(201, 201, 201);
+}
+
+.header > .line {
+  display: inline-block;
+  border-right: 2px solid #ccc;
+  height: 3rem;
+  line-height: 8vh;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .profil {
