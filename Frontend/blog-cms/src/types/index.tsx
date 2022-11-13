@@ -1,2 +1,2 @@
 export * from "./baseTypes"
-export * from "./advancedTypes"
+export * from "./enums"

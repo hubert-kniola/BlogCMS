@@ -1,19 +1,29 @@
 import React, { useEffect, useRef, useState } from "react"
+import { BEM, GetTextPositionStyle } from "../../tools"
+import { SlideType } from "../../types"
 import "./style.css"
 
-const photos = [
-    {url: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/200332548.jpg?k=34ecaa0d7c1ee3359f83e4b60178f64ef9824eeed435a1d195d815ab8ebdf0a2&o='},
-    {url: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/200332548.jpg?k=34ecaa0d7c1ee3359f83e4b60178f64ef9824eeed435a1d195d815ab8ebdf0a2&o='},
-    {url: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/200332548.jpg?k=34ecaa0d7c1ee3359f83e4b60178f64ef9824eeed435a1d195d815ab8ebdf0a2&o='},
-    {url: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/200332548.jpg?k=34ecaa0d7c1ee3359f83e4b60178f64ef9824eeed435a1d195d815ab8ebdf0a2&o='},
-]
+const css = {
+  slider: "slider",
+  allSlides: "allSlides",
+  slide: "slide",
+  container: "container",
+  content: "content",
+  navigation: "navigation",
+  dot:"dot",
+  title: "title",
+  modifiers: {
+    active: "active"
+  }
+}
 
+interface ISlider  {
+  slides : SlideType[]
+}
 
-
-export const Slider = () => {
+export const Slider = ({slides} : ISlider) => {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
-  const array = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const resetTimeout = () => {
     if(timeoutRef.current){
@@ -26,52 +36,67 @@ export const Slider = () => {
     timeoutRef.current = setTimeout(
       () =>
         setIndex((prevIndex) =>
-          prevIndex === array.length - 1 ? 0 : prevIndex + 1
+          prevIndex === slides.length - 1 ? 0 : prevIndex + 1
         ),
       5000
     );
-
-    array[index].current.checked = true;
 
     return () => {
       resetTimeout();
     };
   }, [index])
 
-
     return (
-        <>
-      <div className="slider">
-        <div className="slides">
-          <input type="radio" name="radio-btn" id="radio1" ref={array[0]} checked={true}/>
-          <input type="radio" name="radio-btn" id="radio2" ref={array[1]}/>
-          <input type="radio" name="radio-btn" id="radio3" ref={array[2]}/>
-          <input type="radio" name="radio-btn" id="radio4" ref={array[3]}/>
-
-          {photos.map((p, i) => {
+      <>
+        <div className={BEM(css.slider, css.container)}>
+          <div className={BEM(css.slider,css.allSlides)} style={{width: `${slides.length*100}%`}}>
+            {slides.map((oneSlide, idx) => {
               return (
-              <div
-              className={`slide ${i == 0 && "first"}`}
-                style={{ backgroundImage: `url(${p.url})` }}
-                />
-                );
+                <>
+                  <div
+                    key={idx}
+                    className={BEM(css.slider, css.slide)}
+                    style={{
+                      backgroundImage: `url(${oneSlide.photoUrl})`,
+                      transform: `translate3d(${-index * 100}%, 0, 0)`,
+                      width: `${100 / slides.length}%`,
+                    }}
+                  >
+                    <div className={BEM(css.slide,css.content)} style={GetTextPositionStyle(oneSlide.textPosition)} >
+                        <p
+                        className={BEM(css.slide,css.content, css.title)}
+                        >
+                          {oneSlide.title}
+                          {oneSlide.content && (
+                            <p
+                            className={BEM(css.slide,css.content, css.content)}
+                            >
+                              {oneSlide.content}
+                            </p>
+                          )}
+                        </p>
+                    </div>
+                  </div>
+                </>
+              );
             })}
-          
-          <div className="navigation-auto" >
-            <div className="auto-btn1" ></div>
-            <div className="auto-btn2" ></div>
-            <div className="auto-btn3" ></div>
-            <div className="auto-btn4" ></div>
           </div>
-
+          <div className={BEM(css.slider,css.navigation)}>
+            {slides.map((_, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={`${BEM(css.slider, css.navigation, css.dot)} ${
+                    idx === index
+                      ? BEM(css.slider, css.navigation, css.modifiers.active)
+                      : ""
+                  }`}
+                  onClick={() => setIndex(idx)}
+                />
+              );
+            })}
+          </div>
         </div>
-        <div className="navigation-manual">
-            <label htmlFor="radio1" className="manual-btn"></label>
-            <label htmlFor="radio2" className="manual-btn"></label>
-            <label htmlFor="radio3" className="manual-btn" onClick={() => setIndex(2)}></label>
-            <label htmlFor="radio4" className="manual-btn"></label>
-          </div>
-      </div>
-     </>
+      </>
     );
 }
