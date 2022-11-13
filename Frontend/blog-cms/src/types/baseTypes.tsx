@@ -28,4 +28,10 @@ export type SlideType = {
     urlToPost?: string,
 } 
 
+export type Faq = {
+    question: string,
+    answer: string,
+
+}
+
 
