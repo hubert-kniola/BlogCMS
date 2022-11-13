@@ -18,7 +18,7 @@ import About from "./components/About/About";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MainPage />,
     errorElement: <ErrorPage />,
   },
   {
