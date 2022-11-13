@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Tile from "../../components/Tile/Tile";
 import "./style.css";
 
@@ -16,11 +17,7 @@ export const AdminContent = ({ tiles }: AdminContentProps) => {
 
   return (
     <div className={cssClasses.content}>
-      <div className={cssClasses.tileContainer}>
-        {tiles.map((e: any, i: number) => {
-          return <Tile text={e.text} key={i} />;
-        })}
-      </div>
+      <Outlet/>
     </div>
   );
 };

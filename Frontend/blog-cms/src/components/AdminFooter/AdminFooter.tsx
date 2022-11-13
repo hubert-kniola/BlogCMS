@@ -14,8 +14,8 @@ export const AdminFooter = ({ items }: AdminFooterProps) => {
   return (
     <div className={cssClasses.footer}>
       {items.map((e: any, i: number) => (
-        <div>
-          <a href={e.link} target="_blank" key={i}>
+        <div key={i}>
+          <a href={e.link} target="_blank">
             <GitHubIcon sx={{ color: "#a8a8a8" }} fontSize="large" />
           </a>
           <p>{e.text}</p>
