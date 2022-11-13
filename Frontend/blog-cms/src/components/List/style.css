@@ -1,11 +1,30 @@
 .listContainer{
-    @apply w-full m-0 p-4  
+    @apply w-full m-0  py-10  flex
 }
+
+.listContainer_posts{
+    @apply 
+        w-2/3
+        p-4
+}
+
+.listContainer_posts--title{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 33%;
+    display: flex;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+
+
 
 .listItem {
     @apply 
-    w-full 
-    m-0 p-2
+    w-full
+    ml-auto p-2
     bg-box 
     flex rounded-lg
     shadow-xl
@@ -19,15 +38,19 @@
 .listItem_photo {
     @apply 
         m-auto p-0 
-        w-1/5 h-20
+        w-32 min-w-[8rem] h-32 min-h-[8rem]
         rounded-lg
         bg-cover bg-center
 }
 
 
 .listItem_content {
+    width: calc(100% - 8rem);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     @apply 
-    w-4/5
     ml-2 py-2 px-1 
     rounded-lg
 }
@@ -44,7 +67,7 @@
 
 .listItem_snippet {
     @apply 
-    w-full max-h-6 
+    w-full  max-h-16
     text-sm text-text-dark 
     truncate
 }

@@ -8,7 +8,7 @@ export const MainPageMenu:FC = () => {
       <header>
         <div className={BEM(css.mainPageMenu, css.area)}>
           <a href="/" className={BEM(css.mainPageMenu, css.logo)}>
-            TwojaStaraCompany!
+            Company!
           </a>
           <Navbar/>
         </div>

@@ -44,6 +44,8 @@ export const ListItem = ({post, index}: IListItem) =>
           <div className={BEM(css.listItem, css.title)}>{post.title}</div>
           <div className={BEM(css.listItem, css.date)}>{post.date}</div>
           <div className={BEM(css.listItem, css.snippet)}>{post.content}</div>
+          <div className={BEM(css.listItem, css.date)}>Category: {post.category && post.category.join(", ")}</div>
+          <div className={BEM(css.listItem, css.date)}>Time to read: {post.timeToRead ? post.timeToRead : '5 min'}</div>
         </div>
       </a>
     ); 

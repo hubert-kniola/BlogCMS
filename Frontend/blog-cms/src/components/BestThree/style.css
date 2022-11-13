@@ -1,17 +1,18 @@
 .bestContainer{
     @apply 
     w-full h-48 
-    my-16 px-4
+    my-16 
     bg-primary
     flex 
     shadow-xl
+    items-center
+    justify-center
 
 }
 
 .bestContainer_bestPost{
     @apply 
-    w-[27%]  h-72
-    m-auto mt-[-3rem] 
+    w-[17%]  h-72 min-w-[250px] mx-8
     bg-box 
     border border-primary rounded-lg
     shadow-xl

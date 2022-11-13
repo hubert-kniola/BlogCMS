@@ -5,6 +5,8 @@ export type Post = {
     date: string,
     content: string,
     imgUrl: string,
+    category?: string[],
+    timeToRead?: string,
 }
 
 export type PostItemType = {

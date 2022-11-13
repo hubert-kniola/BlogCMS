@@ -6,6 +6,8 @@ import { BEM } from "../../tools";
 
 const css = {
     container: "listContainer",
+    posts: "posts",
+    title: "title"
   };
 
 const lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -25,9 +27,15 @@ const posts: Post[]= [
 export const List = () => {
     return (
       <div className={BEM(css.container)}>
-        {posts.slice(0,5).map((post, index) => {
-          return <ListItem post={post} index={index} key={index} />;
-        })}
+        <div className={BEM(css.container, css.posts, css.title)}>
+              Hej!<br/>
+              Sprawdź moje<br/>ostatnie posty
+        </div>
+        <div className={BEM(css.container, css.posts)}>
+          {posts.slice(0, 5).map((post, index) => {
+            return <ListItem post={post} index={index} key={index} />;
+          })}
+        </div>
       </div>
     );
 }
