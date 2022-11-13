@@ -5,14 +5,14 @@ import "./style.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Category from "../Category/Category";
 import { useAppSelector } from "../../../store/hooks";
-import {UserState} from "../../../store/slices/userSlice";
+import { UserState } from "../../../store/slices/userSlice";
 
 interface AdminHeaderProps {
   menuItems: any[];
 }
 
 export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
-  const userName = useAppSelector((state: any) => state.user.userName)
+  const userName = useAppSelector((state: any) => state.user.userName);
 
   const cssClasses = {
     /* header class */
