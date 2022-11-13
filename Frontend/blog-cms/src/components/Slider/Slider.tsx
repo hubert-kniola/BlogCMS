@@ -11,23 +11,33 @@ const photos = [
 
 
 export const Slider = () => {
-    const array = [
-        useRef(null),
-        useRef(null),
-        useRef(null),
-        useRef(null),
-    ]
-    let counter = 0;    
+  const [index, setIndex] = useState(0);
+  const timeoutRef = useRef(null);
+  const array = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
-    useEffect(() => {
-        let interval = setInterval(() =>{
-            array[counter].current.checked = true;
-            counter++;
-             if(counter == 4){
-                counter = 0;
-             }
-         }, 1000)
-    }, [])
+  const resetTimeout = () => {
+    if(timeoutRef.current){
+      clearTimeout(timeoutRef.current);
+    }
+  }
+
+  useEffect(() => {
+    resetTimeout();
+    timeoutRef.current = setTimeout(
+      () =>
+        setIndex((prevIndex) =>
+          prevIndex === array.length - 1 ? 0 : prevIndex + 1
+        ),
+      5000
+    );
+
+    array[index].current.checked = true;
+
+    return () => {
+      resetTimeout();
+    };
+  }, [index])
+
 
     return (
         <>
@@ -58,7 +68,7 @@ export const Slider = () => {
         <div className="navigation-manual">
             <label htmlFor="radio1" className="manual-btn"></label>
             <label htmlFor="radio2" className="manual-btn"></label>
-            <label htmlFor="radio3" className="manual-btn"></label>
+            <label htmlFor="radio3" className="manual-btn" onClick={() => setIndex(2)}></label>
             <label htmlFor="radio4" className="manual-btn"></label>
           </div>
       </div>
