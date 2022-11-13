@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-interface UserState {
+export interface UserState {
   email: string;
   userName: string;
   password: string;
@@ -9,7 +9,7 @@ interface UserState {
   refreshToken: string;
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
     email: null,
     userName: null,
     password: null,

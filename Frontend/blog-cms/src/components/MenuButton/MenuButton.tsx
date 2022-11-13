@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -12,7 +12,7 @@ interface MenuButtonProps {
 }
 
 export const MenuButton = ({ menuItems }: MenuButtonProps) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -24,7 +24,7 @@ export const MenuButton = ({ menuItems }: MenuButtonProps) => {
   return (
     <div>
       <IconButton color="primary" onClick={handleClick} size="large">
-        <MenuIcon fontSize="large" sx={{ color: "#00eadc"}} />
+        <MenuIcon fontSize="large" sx={{ color: "#00eadc" }} />
       </IconButton>
       <Menu
         id="fade-menu"
@@ -36,8 +36,10 @@ export const MenuButton = ({ menuItems }: MenuButtonProps) => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        {menuItems.map((e: any) => (
-          <MenuItem onClick={handleClose}>{e}</MenuItem>
+        {menuItems.map((e: any, i: number) => (
+          <MenuItem onClick={e.method} key={i}>
+            {e.text}
+          </MenuItem>
         ))}
       </Menu>
     </div>
