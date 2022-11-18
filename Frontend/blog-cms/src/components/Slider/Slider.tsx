@@ -25,6 +25,7 @@ export const Slider = ({slides} : ISlider) => {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
 
+
   const resetTimeout = () => {
     if(timeoutRef.current){
       clearTimeout(timeoutRef.current);
@@ -48,7 +49,50 @@ export const Slider = ({slides} : ISlider) => {
 
     return (
       <>
-        <div className={BEM(css.slider, css.container)}>
+        <div className="slider_container">
+          <div className="view">
+            <div
+              className="slider_row"
+              style={{ transform: `translate3d(${(-index * 100) / slides.length}%, 0, 0)` }}
+            >
+              {
+
+              }
+              {
+                slides.map((item, idx) => {
+                  return (
+                    <div className="slider_slide" key={idx}>
+                      <div
+                        className={
+                          idx === index ? "slide_box--active" : `slide_box`
+                        }
+                        style={{
+                          backgroundImage: `url(${item.photoUrl})`,
+                        }}
+                      ></div>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </div>
+        </div>
+        <div className={BEM(css.slider,css.navigation)}>
+            {slides.map((_, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={`${BEM(css.slider, css.navigation, css.dot)} ${
+                    idx === index
+                      ? BEM(css.slider, css.navigation, css.modifiers.active)
+                      : ""
+                  }`}
+                  onClick={() => setIndex(idx)}
+                />
+              );
+            })}
+          </div>
+        {/* <div className={BEM(css.slider, css.container)}>
           <div className={BEM(css.slider,css.allSlides)} style={{width: `${slides.length*100}%`}}>
             {slides.map((oneSlide, idx) => {
               return (
@@ -96,7 +140,7 @@ export const Slider = ({slides} : ISlider) => {
               );
             })}
           </div>
-        </div>
+        </div> */}
       </>
     );
 }
