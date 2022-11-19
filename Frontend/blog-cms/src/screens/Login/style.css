@@ -1,54 +1,79 @@
-.loginContainer {
-  @apply shadow-2xl
-  w-[20%]
-  m-auto
-  mt-[7%]
-  items-center
-  p-2
-  px-4
-  bg-box
-  flex flex-col
-  min-w-[300px]
-  max-w-[400px];
+.container {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  height: 28vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
 }
 
-.loginInput,
-.loginInput--password {
-  @apply w-full
-    bg-secondary
-    h-8
-    mt-4
-    rounded
-    py-0 px-2;
+.input {
+  margin-top: 8%;
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  height: 2rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  outline-color: invert;
+  outline-width: 5px;
+  outline: none;
+  padding: 0 8px;
 }
 
-.loginButton {
+.input--password {
+  margin-top: 6%;
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  height: 2rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  outline-color: invert;
+  outline-width: 5px;
+  outline: none;
+  padding: 0 8px;
+}
+
+.button {
+  margin-top: 6%;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-
-  @apply w-[30%]
-  m-auto
-  bg-[#00eadc]
-  p-1
-  mt-4
-  rounded-[6px]
-  text-box;
+  background-color: #00eadc;
+  color: white;
+  width: 10rem;
+  height: 4vh;
+  border-radius: 3px;
 }
 
-.loginButton:hover {
+.button:hover {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
     rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
-.loginValidText {
-  @apply text-red-500
-  text-sm font-bold;
+.valid-text {
+  color: red;
+  font-size: small;
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.loginRegister {
-  @apply text-secondary-600 font-bold
-  mt-1
-  cursor-pointer
-  hover:text-[#00eadc];
+.register {
+  color: rgb(180, 180, 180);
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 1%;
+}
+
+.register:hover {
+  color: rgb(214, 115, 112);
+  cursor: pointer;
 }

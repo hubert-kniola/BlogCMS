@@ -1,19 +1,38 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { BEM } from "../../tools";
 import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./style.css";
 import FileUploader from "../FileUploader/FileUploader";
 import { WithContext as ReactTags } from "react-tag-input";
+import MenuItem from "@mui/material/MenuItem";
+import { useAppSelector } from "../../../store/hooks";
+import { RootState } from "../../../store/store";
+import { FormControl, FormHelperText, OutlinedInput } from "@mui/material";
+import { CategoryState } from "../../../store/slices/categorySlice";
 
-const KeyCodes = {
-  comma: 188,
-  enter: 13,
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 };
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
-
 const Posts = () => {
-  const [tags, setTags] = React.useState([]);
+  const categories = useAppSelector(
+    (state: RootState) => state.category.categories
+  );
+  const [mainCategory, setMainCategory] = useState<CategoryState>({
+    title: null,
+    url: null,
+    subMenu: [],
+  });
+  const [mainCategoryName, setMainCategoryName] = useState<string>(null);
+  const [subCategory, setSubCategory] = useState<string[]>([]);
 
   const cssClasses = {
     post: "post",
@@ -21,28 +40,35 @@ const Posts = () => {
     text: "text",
     elements: "elements",
     title: "title",
-    tag: "tag"
+    tag: "tag",
   };
 
-  const handleDelete = (i: number) => {
-    setTags(tags.filter((tag, index) => index !== i));
+  const exampleCategories: CategoryState[] = [
+    {
+      title: "Title 1",
+      url: "xd",
+      subMenu: null,
+    },
+    {
+      title: "Title 2",
+      url: "xdd",
+      subMenu: [{ title: "SubTitle2.1", url: "", subMenu: null }],
+    },
+  ];
+
+  const handleMainCategory = (event: SelectChangeEvent<any>) => {
+    setMainCategory(event.target.value as CategoryState);
+    setMainCategoryName(event.target.value);
   };
 
-  const handleAddition = (tag: any) => {
-    setTags([...tags, tag]);
-  };
-
-  const handleDrag = (tag: any, currPos: any, newPos: any) => {
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    setTags(newTags);
-  };
-
-  const handleTagClick = (index: number) => {
-    console.log("The tag at index " + index + " was clicked");
+  const handleSubCategory = (event: SelectChangeEvent<typeof subCategory>) => {
+    const {
+      target: { value },
+    } = event;
+    setSubCategory(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   return (
@@ -62,22 +88,46 @@ const Posts = () => {
 
         <p>Zdjęcie:</p>
         <FileUploader />
-        <p>Kategoria:</p>
-        <div className={BEM("tag", "container")}>
-          <ReactTags
-            classNames={{ tagInput: "tagInput", remove: "tagInput--remove", tag: "tag", tags: "tags"}}
-            maxLength={35}
-            tags={tags}
-            delimiters={delimiters}
-            handleDelete={handleDelete}
-            handleAddition={handleAddition}
-            handleDrag={handleDrag}
-            handleTagClick={handleTagClick}
-            inputFieldPosition="bottom"
-            placeholder="Dodaj kategorię dla posta"
-            autocomplete
-          />
-        </div>
+        <p>Kategoria główna:</p>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="mainDropDown"
+            value={mainCategoryName}
+            autoWidth
+            displayEmpty
+            onChange={handleMainCategory}
+            MenuProps={MenuProps}
+          >
+            <MenuItem value="">Brak</MenuItem>
+            {exampleCategories.map((element: CategoryState) => (
+              <MenuItem value={element.title}>{element.title}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <p>Podkategoria:</p>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            labelId="demo-multiple-name-label"
+            id="subDropDown"
+            multiple
+            value={subCategory}
+            onChange={handleSubCategory}
+            displayEmpty
+            autoWidth
+            MenuProps={MenuProps}
+          >
+            {mainCategory.subMenu ? (
+              mainCategory.subMenu.map((element: any, i: number) => (
+                <MenuItem key={i} value={element.title}>
+                  {element.title}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem value="">Brak</MenuItem>
+            )}
+          </Select>
+        </FormControl>
       </div>
     </div>
   );

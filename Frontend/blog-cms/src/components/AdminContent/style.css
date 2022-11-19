@@ -2,9 +2,17 @@
     background-color: rgb(241, 241, 241);
     width: 100%;
     height: 84vh;
+    margin-top: 8vh;
+    margin-bottom: 8vh;;
+    overflow: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height:100%;
+    padding: 2rem;
 }
 
 .tileContainer {
     width: 75%;
-    height: 84vh;
+    height: 100vh;
 }

@@ -1,6 +1,6 @@
 .post_container {
   width: 45vw;
-  height: 60vh;
+  height: 80vh;
   background-color: white;
   box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
   margin-left: auto;
@@ -57,34 +57,4 @@
 }
 .post_elements > input:focus {
   outline: 2px dashed rgb(196, 196, 196);
-}
-
-.tag_container{
-  margin-top: 1rem;
-}
-
-.tagInput {
-  outline: 2px dashed rgb(233, 233, 233);
-  height: 3vh;
-}
-
-.tagInput > input:focus {
-  outline: none;
-}
-
-.tag {
-  outline: 2px dashed rgba(160, 160, 160, 0.35);
-  background-color: rgba(228, 228, 228, 0.35);
-  border-radius: 3px;
-  margin-right: 1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.tags {
-  flex-wrap: wrap;
-}
-
-.tagInput--remove {
-  color: rgb(255, 0, 0);
 }

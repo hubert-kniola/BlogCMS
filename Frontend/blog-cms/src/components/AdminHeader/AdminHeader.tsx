@@ -12,7 +12,7 @@ interface AdminHeaderProps {
 }
 
 export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
-  const userName = useAppSelector((state: any) => state.user.userName);
+  const userName = useAppSelector((state: any) => state.user.userName)
 
   const cssClasses = {
     /* header class */
@@ -56,7 +56,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
                   {element.text}
                 </Link>
               </li>
-              {i !== navList.length - 1 && <div className="line" />}
+              {i !== navList.length - 1 && <div className="line" key={i+10}/>}
             </>
           ))}
         </ul>
