@@ -6,7 +6,10 @@ export const css = {
     content: "content",
     navigation: "navigation",
     dot:"dot",
+    box: "box",
     title: "title",
+    row: "row",
+    view: "view",
     modifiers: {
       active: "active"
     }

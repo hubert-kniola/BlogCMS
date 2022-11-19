@@ -12,7 +12,7 @@
     overflow: hidden;
 }
 
-.view{
+.slider_view{
     width: 60%;
     height: 80%;
     margin: auto;
@@ -34,15 +34,15 @@
     display: flex;
 }
 
-.slide_box {
+.slide_box, .slide_box--active {
     width: 80%;
     height: 60%;
     border-radius: 15px;
     /* background-color: burlywood; */
     margin: auto;
+    padding: 1rem 0;
     opacity: 0.5;
     transition: 2s ease;
-    animation: infinite forwards linear;
     display: flex;
     @apply 
     bg-cover bg-center
@@ -51,38 +51,30 @@
 .slide_box--active{
     width: 100%;
     height: 100%;
-    border-radius: 15px;
-    /* background-color: burlywood; */
-    margin: auto;
     opacity: 1;
-    transition: 2s ease;
-    display: flex;
-        @apply 
-    bg-cover bg-center
+    @apply shadow-2xl
 }
 
- .slide_content{
+.slide_content{
     width: 100%;
     height: 100%;
     display: flex;
-    color: white;
-    padding: 2rem;
-    cursor: pointer;
+    align-items: flex-end;
+    @apply text-secondary text-xl
 }
 
-.slide_content--title {
-    text-align: center;
-    font-size: 5rem;
-    color: white;
-    text-shadow: 2px 2px #000000;
-}
-
-.slide_content--title .slide_content--content {
+.slide_content--title{
     width: 100%;
-    text-align: center;
-    font-size: 2rem;
-    color: white;
-    text-shadow: 2px 2px #000000;
+    text-shadow: 2px 2px rgb(49 49 50);
+}
+
+.slide_content--title p {
+    padding: 0 1rem;
+}
+
+.slide_title {
+    font-weight: bold; 
+    @apply text-2xl border-b-4 border-secondary 
 }
 
  .slider_navigation {
@@ -98,7 +90,7 @@
     margin: 0.5rem;
     border-radius: 100%;
     padding: 0.3rem;
-    @apply border-primary border-2
+    @apply border-primary border-4
 }
 
 .slider_navigation--dot.slider_navigation--active {

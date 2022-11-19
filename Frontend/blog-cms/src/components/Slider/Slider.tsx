@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
+import { BEM } from "../../tools"
 import { SlideType } from "../../types"
+import { css } from "./css"
 import { Slide } from "./Slide"
 import { SliderNavigation } from "./SliderNavigation"
 import "./style.css"
@@ -35,10 +37,10 @@ export const Slider = ({slides} : ISlider) => {
 
   return (
     <>
-      <div className="slider_container">
-        <div className="view">
+      <div className={BEM(css.slider, css.container)}>
+        <div className={BEM(css.slider, css.view)}>
           <div
-            className="slider_row"
+            className={BEM(css.slider, css.row)}
             style={{
               width: `${100 * slides.length}%`,
               transform: `translate3d(${
