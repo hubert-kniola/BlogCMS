@@ -1,26 +1,26 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { BEM } from "../../tools";
 import Button from "@mui/material/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "react-select";
 import "./style.css";
 import FileUploader from "../FileUploader/FileUploader";
 import { WithContext as ReactTags } from "react-tag-input";
-import MenuItem from "@mui/material/MenuItem";
 import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
-import { FormControl, FormHelperText, OutlinedInput } from "@mui/material";
 import { CategoryState } from "../../../store/slices/categorySlice";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
+const exampleCategories: CategoryState[] = [
+  {
+    title: "Title 1",
+    url: "xd",
+    subMenu: [],
   },
-};
+  {
+    title: "Title 2",
+    url: "xdd",
+    subMenu: [{ title: "SubTitle2.1", url: "", subMenu: [] }, { title: "SubTitle2.2", url: "", subMenu: [] }],
+  },
+];
 
 const Posts = () => {
   const categories = useAppSelector(
@@ -31,8 +31,7 @@ const Posts = () => {
     url: null,
     subMenu: [],
   });
-  const [mainCategoryName, setMainCategoryName] = useState<string>(null);
-  const [subCategory, setSubCategory] = useState<string[]>([]);
+  const [subCategoryNames, setSubCategoryNames] = useState<string[]>([]);
 
   const cssClasses = {
     post: "post",
@@ -43,31 +42,33 @@ const Posts = () => {
     tag: "tag",
   };
 
-  const exampleCategories: CategoryState[] = [
-    {
-      title: "Title 1",
-      url: "xd",
-      subMenu: null,
-    },
-    {
-      title: "Title 2",
-      url: "xdd",
-      subMenu: [{ title: "SubTitle2.1", url: "", subMenu: null }],
-    },
-  ];
-
-  const handleMainCategory = (event: SelectChangeEvent<any>) => {
-    setMainCategory(event.target.value as CategoryState);
-    setMainCategoryName(event.target.value);
+  const mapMainCategoriesToOptions = (categories: CategoryState[]): any => {
+    const options = categories.map((element) => {
+      return {
+        value: element,
+        label: element.title,
+      };
+    });
+    return options;
   };
 
-  const handleSubCategory = (event: SelectChangeEvent<typeof subCategory>) => {
-    const {
-      target: { value },
-    } = event;
-    setSubCategory(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+  const mapSubCategoriesToOptions = (mainCategory: CategoryState): any => {
+    const options = mainCategory.subMenu.map((element) => {
+      return { value: element.title, label: element.title };
+    });
+    return options;
+  };
+
+  const handleMainCategory = (event: any) => {
+    setMainCategory(event.value);
+  };
+
+  const handleSubCategory = (event: any) => {
+    console.log(event)
+    console.log(Object.values(event))
+    console.log(Object.values(event.value))
+    setSubCategoryNames(
+      Object.keys(event.value)
     );
   };
 
@@ -89,45 +90,26 @@ const Posts = () => {
         <p>Zdjęcie:</p>
         <FileUploader />
         <p>Kategoria główna:</p>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <Select
-            labelId="demo-simple-select-helper-label"
-            id="mainDropDown"
-            value={mainCategoryName}
-            autoWidth
-            displayEmpty
-            onChange={handleMainCategory}
-            MenuProps={MenuProps}
-          >
-            <MenuItem value="">Brak</MenuItem>
-            {exampleCategories.map((element: CategoryState) => (
-              <MenuItem value={element.title}>{element.title}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          defaultValue={"Brak"}
+          placeholder={"Nie wybrano"}
+          name="color"
+          options={mapMainCategoriesToOptions(exampleCategories)}
+          onChange={handleMainCategory}
+        />
         <p>Podkategoria:</p>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <Select
-            labelId="demo-multiple-name-label"
-            id="subDropDown"
-            multiple
-            value={subCategory}
-            onChange={handleSubCategory}
-            displayEmpty
-            autoWidth
-            MenuProps={MenuProps}
-          >
-            {mainCategory.subMenu ? (
-              mainCategory.subMenu.map((element: any, i: number) => (
-                <MenuItem key={i} value={element.title}>
-                  {element.title}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem value="">Brak</MenuItem>
-            )}
-          </Select>
-        </FormControl>
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          defaultValue={"Brak"}
+          placeholder={"Nie wybrano"}
+          isMulti
+          name="color"
+          options={mapSubCategoriesToOptions(mainCategory)}
+          onChange={handleSubCategory}
+        />
       </div>
     </div>
   );
