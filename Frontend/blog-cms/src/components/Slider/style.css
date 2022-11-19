@@ -21,7 +21,6 @@
 }
 
 .slider_row {
-    width: 400%;
     height: 100%;
     /* border: 2px solid salmon; */
     display: flex;
@@ -30,7 +29,6 @@
 }
 
 .slider_slide{
-    width: 25%;
     height: 100%;
     /* border: 2px solid red; */
     display: flex;
@@ -45,6 +43,7 @@
     opacity: 0.5;
     transition: 2s ease;
     animation: infinite forwards linear;
+    display: flex;
     @apply 
     bg-cover bg-center
 }
@@ -57,33 +56,12 @@
     margin: auto;
     opacity: 1;
     transition: 2s ease;
+    display: flex;
         @apply 
     bg-cover bg-center
 }
 
-/* 
-.slider_container {
-    width: 100%;
-    height: 55rem;
-    overflow: hidden;
-}   
-
-.slider_allSlides {
-    display: flex;
-    height: 100%;
-}
-
-
-
-.slider_slide{
-    transition: 2s;
-    display: flex;
-    @apply 
-    h-full
-    bg-cover bg-center
-}
-
-.slide_content{
+ .slide_content{
     width: 100%;
     height: 100%;
     display: flex;
@@ -107,8 +85,6 @@
     text-shadow: 2px 2px #000000;
 }
 
-
- */
  .slider_navigation {
     position: absolute;
     width: 100%;
