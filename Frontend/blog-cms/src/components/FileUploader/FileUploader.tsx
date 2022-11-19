@@ -49,7 +49,7 @@ const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
       component="label"
       onClick={onFileUpload}
     >
-      Upload
+      Prześlij
       <input
         hidden
         accept="image/*"
