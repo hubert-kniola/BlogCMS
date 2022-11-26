@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { BEM } from "../../../tools";
-import { css } from "./cssBem";
+import {css} from "./cssBem"
 import { Navbar } from "./Navbar";
+
 
 export const MainPageMenu:FC = () => {
     return (

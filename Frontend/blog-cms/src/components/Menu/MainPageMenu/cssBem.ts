@@ -1,4 +1,4 @@
-export const css= {
+export const css = {
     nav: "navBar",
     mainPageMenu: "mainPageMenu",
     item: "item",
