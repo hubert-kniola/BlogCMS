@@ -1,18 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { BEM } from "../../tools";
 import { SlideType } from "../../types";
 import { css } from "./css";
 
-interface ISlide {
+type ISlide = {
     slidesLenght: number;
     active: boolean;
     idx: number;
     slide: SlideType
+    onClickHandler: () => void;
 }
 
-export const Slide = ({slidesLenght, active, idx, slide} : ISlide) => {
+export const Slide:FC<ISlide> = ({slidesLenght, active, idx, slide, onClickHandler}) => {
     return (
       <div
+        onClick={!active ? () => onClickHandler() : () => void 0}
         style={{
           width: `${100 / slidesLenght}%`,
         }}

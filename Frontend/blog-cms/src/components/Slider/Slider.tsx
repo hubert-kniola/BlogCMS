@@ -51,11 +51,13 @@ export const Slider = ({slides} : ISlider) => {
             {slides.map((item, idx) => {
               return (
                 <Slide
+                  key={idx}
                   slidesLenght={slides.length}
                   active={index === idx}
                   idx={idx}
                   slide={item}
-                />
+                  onClickHandler={() => setIndex(idx)}
+                  />
               );
             })}
           </div>
