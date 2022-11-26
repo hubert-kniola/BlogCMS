@@ -14,11 +14,13 @@ export const MenuItems = ({item, depthLvl} : IMenuItem) => {
   let ref: MutableRefObject<HTMLLIElement> = useRef();
 
   const onMouseEnter = () => {
-    window.innerWidth > 960 && setDropdown(true);
+    // window.innerWidth > 960 && setDropdown(true);
+    window.innerWidth > 600 && setDropdown(true);
    };
    
    const onMouseLeave = () => {
-    window.innerWidth > 960 && setDropdown(false);
+    // window.innerWidth > 960 && setDropdown(false);
+    window.innerWidth > 600 && setDropdown(false);
    };
 
   useEffect(() => {
@@ -48,9 +50,6 @@ export const MenuItems = ({item, depthLvl} : IMenuItem) => {
         <>
           <a
             href={item.url}
-            type="button"
-            aria-haspopup="menu"
-            aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((state) => !state)}
           >
             {item.title}{" "}
