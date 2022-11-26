@@ -2,10 +2,12 @@
 .aboutMe {
     width: 60%;
     max-width: 900px;
+    min-width: 630px;
     height: 35rem;
     margin: auto;
     margin-top: 4rem;
     display: flex;
+
 }
 
 .aboutMe_photo{
