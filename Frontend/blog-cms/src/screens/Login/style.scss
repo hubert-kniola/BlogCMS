@@ -1,0 +1,57 @@
+.loginContainer {
+  @apply 
+  shadow-2xl
+  w-1/2
+  max-w-[400px]
+  m-auto
+  mt-[10%]
+  items-center
+  p-2
+  px-4
+  bg-box
+  flex flex-col
+  min-w-[300px]
+}
+
+.loginInput, .loginInput--password {
+  @apply 
+    w-full
+    bg-secondary
+    h-8
+    mt-4
+    rounded
+    py-0 px-2
+}
+
+.loginButton {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+    
+  @apply
+  w-[30%]
+  m-auto
+  bg-[#d67370]
+  p-1
+  mt-4
+  rounded-[6px]
+  text-box
+}
+
+.loginValidText {
+  @apply text-red-500
+  text-sm font-bold
+}
+
+
+.loginRegister {
+  @apply 
+text-secondary-600 font-bold
+  mt-1
+  cursor-pointer
+  hover:text-[#d67370] 
+}
