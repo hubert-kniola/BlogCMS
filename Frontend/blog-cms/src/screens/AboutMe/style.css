@@ -1,0 +1,45 @@
+
+.aboutMe {
+    width: 60%;
+    max-width: 900px;
+    height: 35rem;
+    margin: auto;
+    margin-top: 4rem;
+    display: flex;
+}
+
+.aboutMe_photo{
+    width: 50%;
+    height: 100%;
+    box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+    border-radius: 15px 0px 15px 0px;
+    @apply 
+    bg-cover bg-center
+}
+
+.aboutMe_content{
+    width: calc(50% + 2rem);
+    min-height: 80%;
+    max-width: 90%;
+    margin: auto;
+    margin-left: -2rem;
+    padding: 1rem;
+    box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+    border-radius: 0px 15px 15px 15px;
+    @apply
+    bg-secondary
+}
+
+.aboutMe_content p {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.aboutMe_content div{
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
