@@ -16,13 +16,13 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
 
   const cssClasses = {
     /* header class */
-    header: "header",
+    header: "adminHeader",
     /* profil class */
-    profil: "profil",
+    profil: "adminProfil",
     /* menu class */
-    menu: "menu",
+    menu: "adminMenu",
     /* navigation class */
-    nav: "nav",
+    nav: "adminNav",
   };
 
   const navList = [
@@ -56,7 +56,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
                   {element.text}
                 </Link>
               </li>
-              {i !== navList.length - 1 && <div className="line" key={i+10}/>}
+              {i !== navList.length - 1 && <div className="adminLine" key={i+10}/>}
             </>
           ))}
         </ul>
