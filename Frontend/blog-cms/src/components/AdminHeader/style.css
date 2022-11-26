@@ -1,4 +1,4 @@
-.header {
+.adminHeader {
   width: 100%;
   height: 8vh;
   line-height: 8vh;
@@ -13,7 +13,7 @@
   left: 0;
   right: 0;
 }
-.line {
+.adminLine {
   display: inline-block;
   border-right: 1.5px solid rgb(221, 221, 221);
   height: 2rem;
@@ -22,13 +22,13 @@
   vertical-align: middle;
 }
 
-.profil {
+.adminProfil {
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 1rem;
 }
 
-ul {
+.adminHeader ul {
   color: rgb(168, 168, 168);
   margin-right: 3rem;
   margin-left: 3rem;
@@ -38,12 +38,12 @@ ul {
   display: flex;
 }
 
-li:hover {
+.adminHeader li:hover {
   cursor: pointer;
   color: rgb(201, 201, 201);
 }
 
-li {
+.adminHeader li {
   list-style: none;
   margin-left: 2rem;
   margin-right: 2rem;
