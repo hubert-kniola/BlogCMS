@@ -14,7 +14,8 @@ import Contact from "./components/Contact/Contact";
 import Configure from "./components/Configure/Configure";
 import Posts from "./components/Posts/Posts";
 import About from "./components/About/About";
-import { AboutMe } from "./screens/AboutMe/AboutMe"
+import { AboutMeView } from "./screens/AboutMeView/AboutMeView"
+import { ContactView } from "./screens/ContactView/ContactView"
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
   },
   {
     path: "aboutMe",
-    element: <AboutMe/>,
+    element: <AboutMeView/>,
+  },
+  {
+    path: "contact",
+    element: <ContactView/>,
   },
   {
     path: "main",

@@ -28,7 +28,7 @@ const menu: MenuItemType[] = [
       { title: "SEO", url: "/seo" },
     ],
   },
-  { title: "About", url: "/about" },
+  { title: "About", url: "/aboutme" },
   { title: "Contact", url: "/contact" },
 
 ];
