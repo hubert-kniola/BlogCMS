@@ -15,31 +15,39 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
     const [seconds, setSeconds] = useState(0);
     const [isTime, setIsTime] = useState(false);
 
+    const time = () => {
+        var now = new Date();
+        return (premiere.getTime() - now.getTime())/1000
+    }
+
+    const getPremiereDate = () => {
+        return `${premiere.toLocaleDateString('pl-Pl')} ${premiere.getHours()}:${premiere.getMinutes()}`
+    }
+
     useEffect(() => {
-      var now = new Date();
-      if(!isTime)
-      {
-        var delta = Math.abs(premiere.getTime() - now.getTime()) / 1000;
-        var days = Math.floor(delta / 86400);
-        delta -= days * 86400;
+        if (time() > 0) {
+           var now = new Date();
+          var delta = Math.abs(premiere.getTime() - now.getTime()) / 1000;
+          var days = Math.floor(delta / 86400);
+          delta -= days * 86400;
 
-        var hours = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
+          var hours = Math.floor(delta / 3600) % 24;
+          delta -= hours * 3600;
 
-        var minutes = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
+          var minutes = Math.floor(delta / 60) % 60;
+          delta -= minutes * 60;
 
-        var seconds = Math.floor(delta % 60);
+          var seconds = Math.floor(delta % 60);
 
-        setDays(days);
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
-        
-      }
+          setDays(days);
+          setHours(hours);
+          setMinutes(minutes);
+          setSeconds(seconds);
+        }
     }, []);
 
     useEffect(() => {
+        if(!isTime){
             let interval = setInterval(() => {
                 clearInterval(interval);
                 
@@ -67,14 +75,13 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
             }
         }
         , 1000);
-    }, [seconds])
+    }}, [seconds])
 
     useEffect(()=> {
-        if(isFirst){
+        if(isFirst && time() > 0){
             setIsFirst(false);
         }else{
-            if(days === 0 && hours === 0 && minutes === 0 && seconds === 0){
-                console.log("jestem");
+            if(time() < 1 && seconds === 0){
                 setIsTime(true);
             }
         }
@@ -89,7 +96,7 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
             Politechnice
             <br />- poradnik studenta{" "}
           </p>
-          {!isTime && <h1>20.11.2022 Premiera nowego postu </h1> }
+          {!isTime && <h1>Premiera: {getPremiereDate()}</h1> }
         </div>
         <div className="pomodoro_time">
           {isTime ? (
