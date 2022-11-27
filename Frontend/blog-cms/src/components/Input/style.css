@@ -1,0 +1,22 @@
+.input_container{
+    position: relative;
+    width: 100%;
+}
+
+.input_container input{
+    width: 100%;
+    padding: 0.3rem 1rem;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.5s ease;
+    @apply
+    border border-primary-300 bg-secondary text-primary
+}
+
+.input_container input:valid,
+.input_container input:focus {
+    @apply
+    border border-primary
+}
+
+

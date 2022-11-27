@@ -1,0 +1,124 @@
+
+.contact_view{
+    margin: 0;
+    width: 100%;
+    height: 93.8vh;
+    padding: 3rem;
+    @apply
+    bg-primary
+}
+
+.contact_box{
+    width: 50%;
+    min-width: 750px;
+    height: 70%;
+    margin: auto;
+    margin-top: 5rem;
+    display: flex;
+}
+
+.contact_info{
+    width: 45%;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    margin-right: auto;
+    flex-direction: column;
+    justify-content: center;
+    text-shadow: 1px 2px rgb(0, 0, 0);
+    @apply
+        text-secondary
+}
+
+.contact_info p {
+    font-size: x-large;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.contact_info div {
+    text-align: justify;
+}
+
+.contact_content{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    @apply
+    bg-primary
+}
+
+
+.contact_content div {
+    font-size: normal;
+    margin-left: 1rem;
+}
+
+.contact_content h1 {
+    font-size: large;
+    font-weight: bold;
+    heigh: auto;
+}
+
+
+.contact_form{
+    width: 50%;
+    height: 100%;
+    border-radius: 0 15px 0 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 1rem 2rem;
+    @apply
+    bg-secondary text-primary
+}
+
+.contact_form p{
+    font-size: x-large;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.contact_form h1{
+    margin: 1rem 0 0.5rem 0;
+    font-weight: bold;
+}
+
+.contact_form textarea{
+    width: 100%;
+    height: 40%;
+    resize: none;
+    overflow: auto;
+    padding: 0.5rem;
+    border-radius: 5px;
+    lighting-color: none;
+    outline: none;
+    @apply
+    bg-secondary text-primary border border-primary-300
+}
+
+.contact_form textarea:focus,
+.contact_form textarea:valid{
+    @apply
+    bg-secondary text-primary border border-primary
+}
+
+.contact_form button{
+    width:50%;
+    height: 2rem;
+    background-color: red;
+    display: block;
+    margin: auto;
+    margin-top: 1rem;
+    border-radius: 5px;
+    letter-spacing: 0.1rem;
+    @apply
+    bg-primary-300 text-secondary
+}
+
+.contact_form button:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    @apply
+    bg-primary
+}
