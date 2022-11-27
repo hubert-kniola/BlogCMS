@@ -1,17 +1,27 @@
 import React from "react"
 import { Input, MainPageMenu } from "../../components"
+import { BEM } from "../../tools"
 import "./style.css"
+
+const css = {
+  contact: "contact",
+  view: "view",
+  box: "box",
+  info: "info",
+  form: "form",
+  content: "content"
+}
 
 export const ContactView = () => {
     return (
       <>
         <MainPageMenu />
-        <div className="contact_view">
-          <div className="contact_box">
-            <div className="contact_info">
+        <div className={BEM(css.contact, css.view)}>
+          <div className={BEM(css.contact, css.box)}>
+            <div className={BEM(css.contact, css.info)}>
               <p> Chcesz się skontaktować? </p>
               <div>
-                Podziel się Twoimi doświadczeniami! Powiedz co Cię inspiruje, a
+                Podziel się Twoimi doświadczeniami! Powiedz co Cię inspiruje. A
                 może chcesz uzyskać wiecej informacji odnośnie jakiegoś postu?
               </div>
               <TextBox option="Mail" contact="mail@mail.com" />
@@ -21,7 +31,7 @@ export const ContactView = () => {
                 contact="www.instagram.com/instagram"
               />
             </div>
-            <div className="contact_form">
+            <div className={BEM(css.contact, css.form)}>
               <p>Formularz kontaktowy </p>
               <h1> Imię: </h1>
               <Input placeholder="Imię"/>
@@ -45,7 +55,7 @@ interface ITextBox {
 
 const TextBox = ({option, contact} : ITextBox) => {
     return (
-      <div className="contact_content">
+      <div className={BEM(css.contact, css.content)}>
         <h1> {option} </h1>
         <div>{contact}</div>
       </div>

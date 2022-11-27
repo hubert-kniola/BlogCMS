@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react"
+import { BEM } from "../../tools";
 import "./style.css"
 
 interface IPomodoro {
     premiere?: Date
+}
+
+const css = {
+    pomodoro: "pomodoro",
+    time: "time",
+    title: "title",
+    isTime: "isTime"
 }
 
 const image = 'https://img.freepik.com/free-photo/horizontal-shot-surprised-unshaven-young-male-points-down-opens-mouth-widely-sees-something-stunning-floor-wears-stylish-shirt-isolated-white-wall-people-emotions-concept_273609-16521.jpg?w=2000';
@@ -20,8 +28,12 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
         return (premiere.getTime() - now.getTime())/1000
     }
 
+    const formatTime = (time: number) => {
+        return time >= 10 ? time : `0${time}`
+    }
+
     const getPremiereDate = () => {
-        return `${premiere.toLocaleDateString('pl-Pl')} ${premiere.getHours()}:${premiere.getMinutes()}`
+        return `${premiere.toLocaleDateString('pl-Pl')} ${formatTime(premiere.getHours())}:${formatTime(premiere.getMinutes())}`
     }
 
     useEffect(() => {
@@ -88,8 +100,8 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
     },[seconds])
 
     return (
-      <div className="pomodoro">
-        <div className="pomodoro_title">
+      <div className={BEM(css.pomodoro)}>
+        <div className={BEM(css.pomodoro, css.title)}>
           {isTime ? <h2> Już jest </h2> : <h2> Już wkrótce </h2>}
           <p>
             O dwóch takich co spalili indexy - czyli jak przeżyć studia na
@@ -98,10 +110,10 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
           </p>
           {!isTime && <h1>Premiera: {getPremiereDate()}</h1> }
         </div>
-        <div className="pomodoro_time">
+        <div className={BEM(css.pomodoro, css.time)}>
           {isTime ? (
             <div
-              className="pomodoro_isTime"
+              className={BEM(css.pomodoro, css.isTime)}
               style={{ backgroundImage: `url(${image})` }}
             />
           ) : (
