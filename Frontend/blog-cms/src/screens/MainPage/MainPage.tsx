@@ -20,7 +20,7 @@ const MainPage = () => {
         <MainPageMenu/>
         <Slider slides={slides}/>
         <BestThree />
-        <Pomodoro/>
+        <Pomodoro premiere={new Date(2022,10,27,19,20,0)}/>
         <List />
         <Acordeon/>
         <Footer/>
