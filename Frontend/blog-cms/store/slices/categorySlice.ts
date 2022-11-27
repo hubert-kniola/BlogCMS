@@ -39,11 +39,8 @@ export const categorySlice = createSlice({
         (element: CategoryState) =>
           element.title === action.payload.categoryTitle
       );
-      console.log(state.categories[modifyIndex].subMenu);
-      if (modifyIndex) {
-        state.categories[modifyIndex].subMenu.push(
-          action.payload.subCategory
-        );
+      if (modifyIndex !== undefined) {
+        state.categories[modifyIndex].subMenu.push(action.payload.subCategory);
       }
     },
     deleteSubCategory: (state: any, action: PayloadAction<any>) => {
@@ -51,12 +48,11 @@ export const categorySlice = createSlice({
         (element: CategoryState) =>
           element.title === action.payload.categoryTitle
       );
-      const modifySubIndex = state.categories[modifyIndex].subMenu.findIndex(
-        (element: CategoryState) =>
-          element.title === action.payload.subCategoryTitle
-      );
-      if (modifyIndex) {
-        state.categories[modifyIndex].subMenu.splice(modifySubIndex, 1);
+      if (modifyIndex !== undefined) {
+        state.categories[modifyIndex].subMenu.splice(
+          action.payload.indexOfSubCategory,
+          1
+        );
       }
     },
     addTag: (state: any, action: PayloadAction<any>) => {
@@ -64,15 +60,10 @@ export const categorySlice = createSlice({
         (element: CategoryState) =>
           element.title === action.payload.categoryTitle
       );
-      const modifySubIndex = state.categories[modifyIndex].subMenu.findIndex(
-        (element: CategoryState) =>
-          element.title === action.payload.subCategoryTitle
-      );
-
-      if (modifyIndex && modifySubIndex) {
-        state.categories[modifyIndex].subMenu[modifySubIndex].subMenu.push(
-          action.payload.tag
-        );
+      if (modifyIndex !== undefined && action.payload.indexOfSubCategory !== undefined) {
+        state.categories[modifyIndex].subMenu[
+          action.payload.indexOfSubCategory
+        ].subMenu.push(action.payload.tag);
       }
     },
     deleteTag: (state: any, action: PayloadAction<any>) => {
@@ -80,20 +71,10 @@ export const categorySlice = createSlice({
         (element: CategoryState) =>
           element.title === action.payload.categoryTitle
       );
-      const modifySubIndex = state.categories[modifyIndex].subMenu.findIndex(
-        (element: CategoryState) =>
-          element.title === action.payload.subCategoryTitle
-      );
-      const modifyTagIndex = state.categories[modifyIndex].subMenu[
-        modifySubIndex
-      ].subMenu.findIndex(
-        (element: CategoryState) => element.title === action.payload.tagTitle
-      );
-      if (modifyIndex && modifySubIndex) {
-        state.categories[modifyIndex].subMenu[modifySubIndex].subMenu.splice(
-          modifyTagIndex,
-          1
-        );
+      if (modifyIndex !== undefined && action.payload.indexOfSubCategory !== undefined) {
+        state.categories[modifyIndex].subMenu[
+          action.payload.indexOfSubCategory
+        ].subMenu.splice(action.payload.indexOfTag, 1);
       }
     },
   },

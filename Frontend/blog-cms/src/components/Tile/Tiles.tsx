@@ -11,6 +11,8 @@ import {
   deleteTag,
 } from "../../../store/slices/categorySlice";
 import { BEM } from "../../tools";
+import IconButton from "@mui/material/IconButton";
+import CheckIcon from "@mui/icons-material/Check";
 
 interface TileProps {
   category: CategoryState;
@@ -82,7 +84,7 @@ const Tiles = ({ category, style }: TileProps) => {
         addTag({
           categoryTitle: category.title,
           subCategoryTitle: subCategory.title,
-          index: index,
+          indexOfSubCategory: index,
           tag: tag,
         })
       );
@@ -118,9 +120,21 @@ const Tiles = ({ category, style }: TileProps) => {
             <input
               className={BEM(cssClasses.tile, cssClasses.input)}
               type="button"
-              value="+"
+              value={"+"}
               onClick={addReduxSubCategory}
             />
+            {/* <IconButton
+              sx={{
+                borderRadius: "3px",
+                paddingLeft: "0.2rem",
+                paddingRight: "0.2rem",
+                backgroundColor: "rgb(156, 156, 156)",
+                color: "white",
+                height: "1.8rem"
+              }}
+            >
+              <CheckIcon />
+            </IconButton> */}
             <input
               className={BEM(cssClasses.tile, cssClasses.input)}
               type="button"
@@ -148,7 +162,7 @@ const Tiles = ({ category, style }: TileProps) => {
                     dispatch(
                       deleteSubCategory({
                         categoryTitle: category.title,
-                        subCategoryTitle: subCategory.title,
+                        indexOfSubCategory: i,
                       })
                     )
                   }
@@ -175,28 +189,31 @@ const Tiles = ({ category, style }: TileProps) => {
                   />
                 </div>
               )}
-              {subCategoriesRedux[i].subMenu.map((element: CategoryState) => {
-                return (
-                  <div>
-                    <div className={BEM(cssClasses.tile, cssClasses.tag)}>
-                      <p>{element.title}</p>
-                      <input
-                        className={BEM(cssClasses.tile, cssClasses.input)}
-                        type="button"
-                        value="-"
-                        onClick={() =>
-                          dispatch(
-                            deleteTag({
-                              categoryTitle: category.title,
-                              subCategoryTitle: subCategory.title,
-                            })
-                          )
-                        }
-                      />
+              {subCategoriesRedux[i].subMenu.map(
+                (element: CategoryState, index: number) => {
+                  return (
+                    <div>
+                      <div className={BEM(cssClasses.tile, cssClasses.tag)}>
+                        <p>{element.title}</p>
+                        <input
+                          className={BEM(cssClasses.tile, cssClasses.input)}
+                          type="button"
+                          value="-"
+                          onClick={() =>
+                            dispatch(
+                              deleteTag({
+                                categoryTitle: category.title,
+                                indexOfSubCategory: i,
+                                indexOfTag: index,
+                              })
+                            )
+                          }
+                        />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
           );
         })}

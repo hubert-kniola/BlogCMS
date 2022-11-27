@@ -23,7 +23,11 @@ const Category = () => {
     item: "item",
   };
   const [categories, setCategories] = useState<CategoryState[]>([]);
-  const [enteredCategory, setEnteredCategory] = useState<CategoryState>(null);
+  const [enteredCategory, setEnteredCategory] = useState<CategoryState>({
+    title: "",
+    url: "",
+    subMenu: [],
+  });
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
@@ -31,11 +35,17 @@ const Category = () => {
 
   const addReduxCategory = () => {
     setCategories([...categories, enteredCategory]);
-    const existedCategories = categoriesRedux.findIndex((element: CategoryState) => element.title === enteredCategory.title);
-    if(enteredCategory && existedCategories === -1)
-    {
+    const existedCategories = categoriesRedux.findIndex(
+      (element: CategoryState) => element.title === enteredCategory.title
+    );
+    if (enteredCategory && existedCategories === -1) {
       dispatch(addCategory(enteredCategory));
     }
+    setEnteredCategory({
+      title: "",
+      url: "",
+      subMenu: [],
+    });
   };
 
   useEffect(() => {
@@ -80,6 +90,7 @@ const Category = () => {
             <input
               className={BEM(cssClasses.category, cssClasses.title)}
               type="text"
+              value={enteredCategory.title}
               onChange={saveCategory}
             ></input>
             <input

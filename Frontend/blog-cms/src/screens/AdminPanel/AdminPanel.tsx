@@ -16,8 +16,7 @@ const AdminPanel = () => {
     dispatch(updateUser(initialState));
   };
 
-  const Tiles: any = [{ text: "tile1" }, { text: "tile2" }, { text: "tile3" }];``
-  const menuItems: any[] = [{ text: "LogOut", method: logoutUser }];
+  const menuItems: any[] = [{ text: "Wyloguj", method: logoutUser }];
   const gitItems: any[] = [
     { text: "~ Mateusz", link: "https://github.com/mateuszkuzniak" },
     { text: "~ Hubert", link: "https://github.com/hubert-kniola" },
@@ -26,7 +25,7 @@ const AdminPanel = () => {
   return (
     <div className={cssClasses.panel}>
       <AdminHeader menuItems={menuItems} />
-      <AdminContent tiles={Tiles} />
+      <AdminContent/>
       <AdminFooter items={gitItems} />
     </div>
   );

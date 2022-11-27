@@ -74,6 +74,7 @@
   display: flexbox;
   background-color: rgb(241, 241, 241);
   height: 40vh;
+  overflow: auto;
 }
 
 .category_content--input > input[type="text"] {

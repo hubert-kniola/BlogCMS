@@ -3,11 +3,7 @@ import { Outlet } from "react-router-dom";
 import Tile from "../Tile/Tiles";
 import "./style.css";
 
-interface AdminContentProps {
-  tiles: any;
-}
-
-export const AdminContent = ({ tiles }: AdminContentProps) => {
+export const AdminContent = () => {
   const cssClasses = {
     /* content class */
     content: "content",
