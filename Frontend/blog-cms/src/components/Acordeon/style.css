@@ -1,6 +1,7 @@
 
-.faqContainer {
+.faq_container {
     width: 80%;
+    min-width: 900px;
     margin: auto;
     display: flex;
     padding: 2rem 0;
