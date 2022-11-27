@@ -4,6 +4,7 @@ export type Post = {
     title: string,
     date: string,
     content: string,
+    snippet: string;
     imgUrl: string,
     category?: string[],
     timeToRead?: string,

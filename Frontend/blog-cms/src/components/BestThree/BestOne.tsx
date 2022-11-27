@@ -11,16 +11,20 @@ const css = {
     bestTitle: "bestTitle",
     bestDate: "bestDate",
     bestSnippet: "bestSnippet",
-    bestHidden: "bestHidden"
+    bestHidden: "bestHidden",
+    modifiers:{
+      second: "second"
+    }
 }
 interface IBestOne {
   post: Post
+  isSecond: boolean;
 }
 
-export const BestOne = ({post}: IBestOne) =>{
+export const BestOne = ({post, isSecond}: IBestOne) =>{
     return (
         <>
-            <div className={BEM(css.bestContainer, css.bestPost)}>
+            <div className={`${BEM(css.bestContainer, css.bestPost)} ${isSecond && BEM(css.bestContainer, css.bestPost, css.modifiers.second)}`}>
               <div
                 className={BEM(css.bestPost, css.bestPhoto)}
                 style={{ backgroundImage: `url(${post.imgUrl})` }}
@@ -28,7 +32,7 @@ export const BestOne = ({post}: IBestOne) =>{
               <div  className={BEM(css.bestPost, css.bestContent)}>
                 <div className={BEM(css.bestPost, css.bestTitle)}>{post.title}</div>
                 <div className={BEM(css.bestPost, css.bestDate)}>{post.date}</div>
-                <div className={BEM(css.bestPost, css.bestSnippet)}>{post.content}</div>
+                <div className={BEM(css.bestPost, css.bestSnippet)}>{post.snippet}</div>
                 <div className={BEM(css.bestPost, css.bestHidden)}>
                   <a href="https://google.pl">Read More</a>
                 </div>

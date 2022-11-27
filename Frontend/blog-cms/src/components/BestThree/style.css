@@ -1,59 +1,132 @@
+.bestContainer_header{
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin: 2rem auto 4rem auto;
+}
+
+.bestContainer_header h1,
+.bestContainer_header h2,
+.bestContainer_header p {
+    width: 60%;
+    min-width: 600px;
+    margin:auto;
+    display: block;
+    text-align: center;
+}
+
+.bestContainer_header h1{
+    font-size: large;
+    @apply
+        text-primary-200
+}
+
+.bestContainer_header h2{
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    @apply
+    text-primary
+}
+
+.bestContainer_header p{
+    font-size: medium;
+    @apply
+        text-primary-200
+}
+
+.bestContainer_header p span{
+    font-weight: bold;
+    @apply text-primary-300
+}
+
 .bestContainer{
-    @apply 
-    w-full h-48 
-    my-16 
-    bg-primary
-    flex 
-    shadow-xl
-    items-center
-    justify-center
+    width:50%;
+    min-width: 900px;
+    height: 20rem;
+    margin: auto;
+    margin-bottom: 4rem;
+    padding: 0 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .bestContainer_bestPost{
+    width: 17%;
+    height: 18rem;
+    min-width: 250px;
+    margin: 0 1rem;
+    overflow: hidden;
+    
     @apply 
-    w-[17%]  h-72 min-w-[250px] mx-8
-    bg-box 
-    border border-primary rounded-lg
+    bg-secondary 
     shadow-xl
-    p-2
+}
+
+.bestContainer_bestPost--second{
+    height: 20rem;
 }
 
 .bestPost_bestPhoto{
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    height: 7rem;
+
     @apply
-    m-auto p-0 
-    w-full h-28
-    rounded-lg
     bg-cover bg-center
 }
 
+.bestContainer_bestPost--second .bestPost_bestPhoto{
+    height: 9rem;
+}
+
 .bestPost_bestContent{
-    @apply relative m-auto h-40 
+    position: relative;
+    margin: auto;
+    height: 10rem;
+    padding: 0 0.5rem;
 }
 
 .bestPost_bestTitle{
+    font-size: large;
+    font-weight: bold;
+    margin-top: 0.5rem;
     @apply 
-    text-lg text-primary font-bold
+    text-primary-400
 }
 
 .bestPost_bestDate{
+    font-size: small;
     @apply 
-    text-sm text-date
+    text-secondary-600 
 }
 
 .bestPost_bestSnippet{
+    font-size: small;
+    height: 6rem;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    text-align: justify;
     @apply 
-    text-sm text-primary h-24 overflow-hidden text-justify
+    text-primary-400
 }
 
 .bestPost_bestHidden{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: small;
+    font-weight: bold;
     @apply 
-    absolute bottom-0 left-0
-    bg-gradient-to-b from-transparent to-box
-    w-full h-10
-    pt-6
-    text-center
-    text-sm font-bold
+    bg-gradient-to-b from-transparent to-secondary text-primary-400
 }
 
 

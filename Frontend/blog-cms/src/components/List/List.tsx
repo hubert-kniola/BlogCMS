@@ -15,13 +15,13 @@ const url1= 'https://previews.123rf.com/images/datsenkomarina/datsenkomarina1801
 const url2 = "https://res.klook.com/image/upload/c_fill,w_1160,h_460,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/51988759-Sarangkot-Sunrise-View.webp"
 
 const posts: Post[]= [
-    {title: "Post 1", date: "25/10/2022", content: lorem, imgUrl: url1},
-    {title: "Post 2", date: "26/10/2022", content: lorem, imgUrl: url2},
-    {title: "Post 3", date: "27/10/2022", content: lorem, imgUrl: url1},
-    {title: "Post 4", date: "28/10/2022", content: lorem, imgUrl: url2},
-    {title: "Post 5", date: "29/10/2022", content: lorem, imgUrl: url1},
-    {title: "Post 6", date: "29/10/2022", content: lorem, imgUrl: url1},
-    {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1},
+    {title: "Post 1", date: "25/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 2", date: "26/10/2022", content: lorem, imgUrl: url2, snippet: ""},
+    {title: "Post 3", date: "27/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 4", date: "28/10/2022", content: lorem, imgUrl: url2, snippet: ""},
+    {title: "Post 5", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 6", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
 ]
 
 export const List = () => {

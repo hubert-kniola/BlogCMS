@@ -1,18 +1,22 @@
 .listContainer{
-    @apply w-full m-0  py-10  flex
+    width: 100%;
+    min-width: 900px;
+    margin: auto;
+    @apply w-4/5 m-auto  py-10  flex
 }
 
 .listContainer_posts{
-    @apply 
-        w-2/3
-        p-4
+    width: 65%;
+    margin-left: auto;
+    padding: 2rem;
 }
 
 .listContainer_posts--title{
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 33%;
+    width: 20%;
+    margin: auto;
     display: flex;
     font-size: 3rem;
     font-weight: bold;
