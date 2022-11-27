@@ -1,5 +1,5 @@
 import React from "react";
-import { Acordeon, BestThree, Footer, List, Slider } from "../../components";
+import { Acordeon, BestThree, Footer, List, Pomodoro, Slider } from "../../components";
 import { MainPageMenu } from "../../components/Menu/MainPageMenu/MainPageMenu";
 import { SlideType, TextPosition } from "../../types";
 
@@ -19,9 +19,10 @@ const MainPage = () => {
       <>
         <MainPageMenu/>
         <Slider slides={slides}/>
-        <Acordeon/>
         <BestThree />
+        <Pomodoro/>
         <List />
+        <Acordeon/>
         <Footer/>
       </>
     );

@@ -28,7 +28,7 @@ const setAcriveFaq = (idx: number) => {
           ))}
         </div>
         <div className="faq_title">
-          <div>Dowiedz się o czym jest ten blog!</div>
+          <div>Najczęściej zadawane pytania!</div>
         </div>
       </div>
     );

@@ -1,8 +1,8 @@
 .listContainer{
-    width: 100%;
+    width: 80%;
     min-width: 900px;
     margin: auto;
-    @apply w-4/5 m-auto  py-10  flex
+    display: flex;
 }
 
 .listContainer_posts{
@@ -15,38 +15,40 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 20%;
+    width: 30%;
     margin: auto;
     display: flex;
     font-size: 3rem;
     font-weight: bold;
+
+    @apply text-primary-400
 }
 
+.listItem{
+    width: 100%;
+    margin-left: auto;
+    display: flex;
 
-
-
-.listItem {
     @apply 
-    w-full
-    ml-auto p-2
-    bg-box 
-    flex rounded-lg
+    bg-secondary  
     shadow-xl
 }
 
 
 .listItem--next {
-    @apply mt-2
+    margin-top: 0.5rem;
 }
 
 .listItem_photo {
+    margin: auto;
+    padding: 0;
+    width: 8rem;
+    min-width: 8rem;
+    height: 8rem;
+    min-height: 8rem;
     @apply 
-        m-auto p-0 
-        w-32 min-w-[8rem] h-32 min-h-[8rem]
-        rounded-lg
         bg-cover bg-center
 }
-
 
 .listItem_content {
     width: calc(100% - 8rem);
@@ -54,25 +56,34 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-left: 0.5rem;
+    padding: 0.5rem 0.25rem;
     @apply 
-    ml-2 py-2 px-1 
     rounded-lg
 }
 
 .listItem_title {
+    width: 100%;
+    font-size: large;
+    font-weight: bold;
     @apply 
-    w-full 
-    text-xl text-text-dark font-bold
+    text-primary
 }
 
 .listItem_date {
-    @apply w-full  text-xs text-text-light
+    width: 100%;
+    font-size: small;
+
+    @apply  text-secondary-600
 }
 
 .listItem_snippet {
+    width: 95%;
+    margin-right: auto;
+    max-height: 4rem;
+    font-size: small;
     @apply 
-    w-full  max-h-16
-    text-sm text-text-dark 
+    text-primary-400
     truncate
 }
 
