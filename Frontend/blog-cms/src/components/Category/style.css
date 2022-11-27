@@ -1,6 +1,5 @@
 .category_container {
   width: 45vw;
-  height: 84vh;
   background-color: white;
   box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
   margin-left: auto;
@@ -8,9 +7,9 @@
   justify-content: center;
   border-radius: 3px;
   position: relative;
-  top: 10%;
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .category_elements {
@@ -54,7 +53,6 @@
 }
 
 .category_content {
-  height: 60vh;
   width: 25vw;
   display: flex;
   flex-direction: column;
@@ -103,31 +101,4 @@
   color: rgb(196, 196, 196);
   font-size: large;
   font-weight: 600;
-}
-
-.draggable {
-  height: 3vh;
-  width: fit-content;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-radius: 3px;
-  background-color: rgb(241, 241, 241);
-  outline: 2px solid rgb(196, 196, 196);
-  color: rgb(196, 196, 196);
-  font-size: large;
-  font-weight: 600;
-}
-
-.droppable {
-  color: white;
-  text-align: center;
-  font-size: xx-large;
-  font-weight: 600;
-  height: 6vh;
-  width: 15vw;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-radius: 3px;
-  background-color: rgb(241, 241, 241);
-  outline: 2px dashed rgb(196, 196, 196);
 }

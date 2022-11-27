@@ -16,6 +16,8 @@ import Posts from "./components/Posts/Posts";
 import About from "./components/About/About";
 import { AboutMeView } from "./screens/AboutMeView/AboutMeView"
 import { ContactView } from "./screens/ContactView/ContactView"
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import apolloClient from "./apolloConfig";
 
 const router = createBrowserRouter([
   {
@@ -25,29 +27,29 @@ const router = createBrowserRouter([
   },
   {
     path: "admin/",
-    element: <SwitchPanel/>,
+    element: <SwitchPanel />,
     children: [
       {
         path: "",
-        element: <Configure/>
+        element: <Configure />,
       },
       {
         path: "category",
-        element: <Category/>
+        element: <Category />,
       },
       {
         path: "posts",
-        element: <Posts/>
+        element: <Posts />,
       },
       {
         path: "about",
-        element: <About/>
+        element: <About />,
       },
       {
         path: "contact",
-        element: <Contact/>
-      }
-    ]
+        element: <Contact />,
+      },
+    ],
   },
   {
     path: "aboutMe",
@@ -59,7 +61,7 @@ const router = createBrowserRouter([
   },
   {
     path: "main",
-    element: <MainPage/>,
+    element: <MainPage />,
   },
 ]);
 
@@ -67,7 +69,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <ApolloProvider client={apolloClient}>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </ApolloProvider>
 );

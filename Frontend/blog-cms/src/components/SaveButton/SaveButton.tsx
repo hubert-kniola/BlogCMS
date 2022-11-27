@@ -13,8 +13,10 @@ const SaveButton = ({handleSave}: SaveButtonProps) => {
       sx={{
         borderRadius: "2px",
         marginTop: "1rem",
+        marginRight: "1rem",
         color: "#00eadc",
         borderColor: "#00eadc",
+        width: "10rem",
         "&:hover": {
           backgroundColor: "#00eadc",
           color: "white",

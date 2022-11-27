@@ -1,13 +1,126 @@
+
 .tile {
-  width: 400px;
-  margin: 2rem;
-  height: 25px;
-  border-radius: 15px;
+  width: fit-content;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  height: fit-content;
+  border-radius: 3px;
   text-align: center;
-  background-color: white;
-  box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.tile_sub {
+  width: fit-content;
+  margin-top: 1rem;
+  margin-left: 4rem;
+  height: fit-content;
+  border-radius: 3px;
+  text-align: center;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.tile_tag {
+  width: fit-content;
+  margin-top: 1rem;
+  margin-left: 6rem;
+  height: fit-content;
+  border-radius: 3px;
+  text-align: center;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.tile_subInput {
+  border-radius: 3px;
+  width: 8vw;
+  outline-color: invert;
+  outline-width: 5px;
+  outline-color: white;
+  outline: none;
+  padding: 0 8px;
+}
+
+.tile_subButton {
+  border-radius: 3px;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  background-color: rgb(156, 156, 156);
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_subButton:hover {
+  background-color: #00eadc;
+  cursor: pointer;
 }
 
 .tile p {
-  margin-top: 1rem;
+  height: 3vh;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 3px;
+  background-color: #00eadc;
+  outline: 2px solid white;
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_sub p {
+  height: 3vh;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 3px;
+  background-color: #00eadc;
+  outline: 2px solid white;
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_tag p {
+  height: 3vh;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 3px;
+  background-color: #00eadc;
+  outline: 2px solid white;
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_input {
+  border-radius: 3px;
+  width: 2vw;
+  height: 3vh;
+  background-color: rgb(156, 156, 156);
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_inputSub {
+  border-radius: 3px;
+  width: 3vw;
+  height: 3vh;
+  background-color: rgb(156, 156, 156);
+  color: white;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tile_input:hover {
+  background-color: #00eadc;
+  cursor: pointer;
 }

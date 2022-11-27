@@ -1,7 +1,7 @@
 import React from "react";
 import { AdminHeader, AdminFooter, AdminContent } from "../../components";
 import { useAppDispatch } from "../../../store/hooks";
-import Tile from "../../components/Tile/Tile";
+import Tile from "../../components/Tile/Tiles";
 import "./style.css";
 import { updateUser, initialState } from "../../../store/slices/userSlice";
 

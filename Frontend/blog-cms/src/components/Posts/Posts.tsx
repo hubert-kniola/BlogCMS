@@ -8,6 +8,7 @@ import { WithContext as ReactTags } from "react-tag-input";
 import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 import { CategoryState } from "../../../store/slices/categorySlice";
+import SaveButton from "../SaveButton/SaveButton";
 
 const exampleCategories: CategoryState[] = [
   {
@@ -18,12 +19,22 @@ const exampleCategories: CategoryState[] = [
   {
     title: "Title 2",
     url: "xdd",
-    subMenu: [{ title: "SubTitle2.1", url: "", subMenu: [] }, { title: "SubTitle2.2", url: "", subMenu: [] }],
+    subMenu: [
+      { title: "SubTitle2.1", url: "", subMenu: [] },
+      {
+        title: "SubTitle2.2",
+        url: "",
+        subMenu: [
+          { title: "TagTitle3.1", url: "", subMenu: [] },
+          { title: "TagTitle3.2", url: "", subMenu: [] },
+        ],
+      },
+    ],
   },
 ];
 
 const Posts = () => {
-  const categories = useAppSelector(
+  const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
   const [mainCategory, setMainCategory] = useState<CategoryState>({
@@ -31,7 +42,13 @@ const Posts = () => {
     url: null,
     subMenu: [],
   });
-  const [subCategoryNames, setSubCategoryNames] = useState<string[]>([]);
+  const [subCategory, setSubCategory] = useState<CategoryState>({
+    title: null,
+    url: null,
+    subMenu: [],
+  });
+  const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
+  const [richValue, setRichValue] = useState("");
 
   const cssClasses = {
     post: "post",
@@ -42,7 +59,7 @@ const Posts = () => {
     tag: "tag",
   };
 
-  const mapMainCategoriesToOptions = (categories: CategoryState[]): any => {
+  const mapCategoriesToOptions = (categories: CategoryState[]): any => {
     const options = categories.map((element) => {
       return {
         value: element,
@@ -54,22 +71,43 @@ const Posts = () => {
 
   const mapSubCategoriesToOptions = (mainCategory: CategoryState): any => {
     const options = mainCategory.subMenu.map((element) => {
-      return { value: element.title, label: element.title };
+      return { value: element, label: element.title };
+    });
+    return options;
+  };
+
+  const mapTagCategoriesToOptions = (mainCategory: CategoryState): any => {
+    const options = mainCategory.subMenu.map((element) => {
+      return { value: element, label: element.title };
     });
     return options;
   };
 
   const handleMainCategory = (event: any) => {
     setMainCategory(event.value);
+    setSubCategory({
+      title: null,
+      url: null,
+      subMenu: [],
+    });
+    setTagCategory([]);
   };
 
   const handleSubCategory = (event: any) => {
-    console.log(event)
-    console.log(Object.values(event))
-    console.log(Object.values(event.value))
-    setSubCategoryNames(
-      Object.keys(event.value)
-    );
+    setSubCategory(event.value);
+    setTagCategory([]);
+  };
+
+  const handleTagCategory = (event: any) => {
+    setTagCategory(event);
+  };
+
+  const handleRich = (e: any) => {
+    setRichValue(e);
+  };
+
+  const savePost = () =>{
+
   };
 
   return (
@@ -86,31 +124,59 @@ const Posts = () => {
           type="text"
         ></input>
         <p>Treść:</p>
-
+        <textarea className="post_textarea" value={richValue} onChange={handleRich}/>
         <p>Zdjęcie:</p>
         <FileUploader />
         <p>Kategoria główna:</p>
         <Select
-          className="basic-single"
-          classNamePrefix="select"
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              outline: state.menuIsOpen && "1px solid #00eadc",
+            }),
+          }}
           defaultValue={"Brak"}
           placeholder={"Nie wybrano"}
+          noOptionsMessage={() => "Brak"}
           name="color"
-          options={mapMainCategoriesToOptions(exampleCategories)}
+          options={mapCategoriesToOptions(categoriesRedux)}
           onChange={handleMainCategory}
         />
         <p>Podkategoria:</p>
         <Select
-          className="basic-single"
-          classNamePrefix="select"
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              outline: state.menuIsOpen && "1px solid #00eadc",
+            }),
+          }}
           defaultValue={"Brak"}
+          escapeClearsValue={!subCategory.title}
           placeholder={"Nie wybrano"}
-          isMulti
+          noOptionsMessage={() => "Brak"}
           name="color"
           options={mapSubCategoriesToOptions(mainCategory)}
           onChange={handleSubCategory}
         />
+        <p>Tagi:</p>
+        <Select
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              outline: state.menuIsOpen && "1px solid #00eadc",
+            }),
+          }}
+          defaultValue={"Brak"}
+          isMulti
+          escapeClearsValue={!subCategory.title}
+          placeholder={"Nie wybrano"}
+          noOptionsMessage={() => "Brak"}
+          name="color"
+          options={mapTagCategoriesToOptions(subCategory)}
+          onChange={handleTagCategory}
+        />
       </div>
+      <SaveButton handleSave={savePost}/>
     </div>
   );
 };

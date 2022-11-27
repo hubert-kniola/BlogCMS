@@ -1,10 +1,13 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { BEM } from "../../tools";
 import "./style.css";
 import { DndContext } from "@dnd-kit/core";
-import Draggable from "./Draggable";
-import Droppable from "./Droppable";
-import { CategoryState } from "../../../store/slices/categorySlice";
+import { CategoryState, updateMenu } from "../../../store/slices/categorySlice";
+import Tiles from "../Tile/Tiles";
+import SaveButton from "../SaveButton/SaveButton";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { RootState } from "../../../store/store";
+import { addCategory } from "../../../store/slices/categorySlice";
 
 const Category = () => {
   const cssClasses = {
@@ -19,24 +22,39 @@ const Category = () => {
     table: "table",
     item: "item",
   };
-  const [isDropped, setIsDropped] = useState(false);
   const [categories, setCategories] = useState<CategoryState[]>([]);
   const [enteredCategory, setEnteredCategory] = useState<CategoryState>(null);
-  const draggableMarkup = <Draggable>Drag me</Draggable>;
+  const categoriesRedux = useAppSelector(
+    (state: RootState) => state.category.categories
+  );
+  const dispatch = useAppDispatch();
 
-  const addCategory = () => {
-    console.log(enteredCategory);
+  const addReduxCategory = () => {
     setCategories([...categories, enteredCategory]);
+    const existedCategories = categoriesRedux.findIndex((element: CategoryState) => element.title === enteredCategory.title);
+    if(enteredCategory && existedCategories === -1)
+    {
+      dispatch(addCategory(enteredCategory));
+    }
   };
+
+  useEffect(() => {
+    const fetchData = () => {
+      //dispatch(updateMenu());
+    };
+
+    fetchData();
+  });
 
   const saveCategory = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
     setEnteredCategory({
       title: e.currentTarget.value,
-      url: null,
-      subMenu: null,
+      url: `/${e.currentTarget.value}/`,
+      subMenu: [],
     });
   };
+
+  const saveMenu = () => {};
 
   return (
     <div className={BEM(cssClasses.category, cssClasses.container)}>
@@ -72,7 +90,7 @@ const Category = () => {
                 cssClasses.title,
                 cssClasses.add
               )}
-              onClick={addCategory}
+              onClick={addReduxCategory}
             ></input>
           </div>
           <div
@@ -82,35 +100,15 @@ const Category = () => {
               cssClasses.table
             )}
           >
-            {categories.map((element: any, i: number) => {
-              return (
-                <div
-                  key={i}
-                  className={BEM(
-                    cssClasses.category,
-                    cssClasses.content,
-                    cssClasses.item
-                  )}
-                >
-                  {element.title}
-                </div>
-              );
+            {categoriesRedux.map((element: CategoryState, i: number) => {
+              return <Tiles key={i} category={element} />;
             })}
-            {/* <DndContext onDragEnd={handleDragEnd}>
-              {!isDropped ? draggableMarkup : null}
-              <Droppable>{isDropped ? draggableMarkup : "Drop here"}</Droppable>
-            </DndContext> */}
           </div>
         </div>
       </div>
+      <SaveButton handleSave={saveMenu} />
     </div>
   );
-
-  function handleDragEnd(event: any) {
-    if (event.over && event.over.id === "droppable") {
-      setIsDropped(true);
-    }
-  }
 };
 
 export default Category;

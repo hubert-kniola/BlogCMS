@@ -1,6 +1,5 @@
 .contact_container {
   width: 45vw;
-  height: 60vh;
   background-color: white;
   box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
   margin-left: auto;
@@ -8,8 +7,8 @@
   justify-content: center;
   border-radius: 3px;
   position: relative;
-  top: 10%;
   display: flex;
+  padding: 20px;
   flex-direction: column;
 }
 

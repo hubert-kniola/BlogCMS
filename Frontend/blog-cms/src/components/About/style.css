@@ -1,6 +1,5 @@
 .about_container {
   width: 45vw;
-  height: 60vh;
   background-color: white;
   box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
   margin-left: auto;
@@ -8,9 +7,9 @@
   justify-content: center;
   border-radius: 3px;
   position: relative;
-  top: 10%;
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .about_elements {
@@ -37,6 +36,7 @@
   width: 15vw;
   height: 4vh;
   margin-top: 0.5rem;
+  padding: 0 8px;
 }
 
 .about_title--text {
@@ -58,4 +58,20 @@
 }
 .about_elements > input:focus {
   outline: 2px dashed rgb(196, 196, 196);
+}
+
+.submitButton {
+  border-radius: 2px;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  color: #00eadc;
+  border: 1px solid #00eadc;
+  width: 10rem;
+  padding: 0.5rem;
+}
+
+.submitButton:hover {
+  background-color: #00eadc;
+  color: white;
+  border-color: white;
 }

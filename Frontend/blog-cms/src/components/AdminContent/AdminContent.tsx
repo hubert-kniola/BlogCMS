@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Tile from "../../components/Tile/Tile";
+import Tile from "../Tile/Tiles";
 import "./style.css";
 
 interface AdminContentProps {
