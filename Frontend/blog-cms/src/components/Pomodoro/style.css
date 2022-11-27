@@ -1,0 +1,63 @@
+
+.pomodoro{
+    width: 70%;
+    min-width: 800px;
+    margin: auto;
+    display: flex;
+
+}
+
+.pomodoro_title{
+    width: 60%;
+    max-width: 700px;
+    padding: 2rem;
+    margin: auto;
+
+}
+
+.pomodoro_title h2{
+    width: 100%;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    @apply
+    text-primary-300
+}
+
+.pomodoro_title h1{
+    width: 100%;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    @apply
+    text-secondary-600
+}
+
+
+.pomodoro_title p{
+    width: 100%;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    @apply
+    text-primary-400
+}
+
+.pomodoro_time{
+    width: 45%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.pomodoro_time div{
+    font-size: xx-large;
+    font-weight: bold;
+    text-shadow: 1px 0px rgb(0, 0, 0);
+    @apply text-primary-400
+}
+
