@@ -1,7 +1,7 @@
 import axios, { HttpStatusCode } from 'axios';
 
 const axiosConfig = axios.create({
-    baseURL: 'https://51.124.85.170'
+    baseURL: 'https://generalauthapi.azurewebsites.net'
 });
 
 axiosConfig.defaults.headers.common["content-type"]= "application/json";
