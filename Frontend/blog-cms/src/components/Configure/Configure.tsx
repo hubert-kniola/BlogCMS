@@ -7,7 +7,7 @@ import { Post } from "../../types";
 import { lorem, url1, url2 } from "../BestThree/BestThree";
 import SaveButton from "../SaveButton/SaveButton";
 
-const posts: Post[] = [
+const posts: any[] = [
   { title: "Post 1", date: "25/10/2022", content: lorem, imgUrl: url1 },
   { title: "Post 2", date: "26/10/2022", content: lorem, imgUrl: url2 },
   { title: "Post 3", date: "27/10/2022", content: lorem, imgUrl: url1 },
