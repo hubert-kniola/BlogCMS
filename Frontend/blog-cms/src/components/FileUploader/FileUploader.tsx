@@ -20,11 +20,11 @@ const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
     if (event.target.files[0]) {
       setData(
         <div>
-          <p>Name: {event.target.files[0].name}</p>
-          <p>Type: {event.target.files[0].type.replace("image/", "")}</p>
+          <p>Nazwa: {event.target.files[0].name}</p>
+          <p>Typ: {event.target.files[0].type.replace("image/", "")}</p>
           {event.target.files[0].lastModifiedDate && (
             <p>
-              Last Modified:{" "}
+              Ostatnio zmieniany:{" "}
               {event.target.files[0].lastModifiedDate?.toDateString()}
             </p>
           )}
