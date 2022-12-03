@@ -7,6 +7,14 @@
      text-primary-500
 }
 
+.postPage_container br{
+    content: "A" !important;
+    width: 70%;
+    margin: auto;
+    display: block !important;
+    @apply border border-primary-400
+}
+
 .postPage_title{
     width: 100%;
     margin-top: 2rem;
@@ -90,6 +98,16 @@
     padding: 1rem;
 }
 
+.postPage_similar {
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    background-color: bisque;
+}
+
+.postPage_similar > div{
+    width: 25%;
+}
 
 
 

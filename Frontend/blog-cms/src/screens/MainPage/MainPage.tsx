@@ -1,6 +1,5 @@
 import React from "react";
 import { Acordeon, BestThree, Footer, List, Pomodoro, Slider } from "../../components";
-import { MainPageMenu } from "../../components/Menu/MainPageMenu/MainPageMenu";
 import { SlideType, TextPosition } from "../../types";
 
 

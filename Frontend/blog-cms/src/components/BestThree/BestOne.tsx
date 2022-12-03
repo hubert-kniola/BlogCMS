@@ -19,10 +19,10 @@ const css = {
 }
 interface IBestOne {
   post: Post
-  isSecond: boolean;
+  isSecond?: boolean;
 }
 
-export const BestOne = ({post, isSecond}: IBestOne) =>{
+export const BestOne = ({post, isSecond = false}: IBestOne) =>{
     return (
         <>
             <div className={`${BEM(css.bestContainer, css.bestPost)} ${isSecond && BEM(css.bestContainer, css.bestPost, css.modifiers.second)}`}>

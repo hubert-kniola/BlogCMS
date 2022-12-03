@@ -22,6 +22,8 @@ const posts: Post[]= [
     {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
 ]
 
+
+
 export const BestThree = () => {
     return (
       <>

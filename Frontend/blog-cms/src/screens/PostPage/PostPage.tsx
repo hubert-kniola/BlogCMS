@@ -1,11 +1,27 @@
 import React from "react"
-import { BackgroundDiv, Gallery, MainPageMenu } from "../../components"
+import { BackgroundDiv, BestThree, Gallery, MainPageMenu } from "../../components"
+import { BestOne } from "../../components/BestThree/BestOne"
 import { ClockIco } from "../../components/Ico"
 import { BEM } from "../../tools"
+import { Post } from "../../types"
 import "./style.css"
 
 const person = 'https://www.bentbusinessmarketing.com/wp-content/uploads/2013/02/35844588650_3ebd4096b1_b-1024x683.jpg'
 const img = 'https://pix10.agoda.net/hotelImages/951189/-1/a3ab86fcd2d8942c27e40e8fc5601663.jpg?ca=9&ce=1&s=1024x768'
+export const lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+export const url1= 'https://previews.123rf.com/images/datsenkomarina/datsenkomarina1801/datsenkomarina180100123/93153161-beautiful-view-of-the-tropical-beach-of-sri-lanka-on-a-sunny-day.jpg'
+export const url2 = "https://res.klook.com/image/upload/c_fill,w_1160,h_460,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/51988759-Sarangkot-Sunrise-View.webp"
+const posts: Post[]= [
+    {title: "Post 2", date: "25/10/2022", content: lorem, imgUrl: url1, snippet: "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika."},
+    {title: "Post 1", date: "26/10/2022", content: lorem, imgUrl: url2, snippet: "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika."},
+    {title: "Post 3", date: "27/10/2022", content: lorem, imgUrl: url1, snippet: "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika."},
+    {title: "Post 4", date: "28/10/2022", content: lorem, imgUrl: url2, snippet: ""},
+    {title: "Post 5", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 6", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+    {title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1, snippet: ""},
+]
+
+
 
 const css = {
     postPage: "postPage",
@@ -27,7 +43,7 @@ export const PostPage = () => {
           <div className={BEM(css.postPage, css.title)}>
             <br />
             <h1>
-              To jest tytuł pierwszego posta - ale nie wiem jak ma się nazywać,
+              To jest tytuł pierwszego wpisu - ale nie wiem jak ma się nazywać,
               ma być długi. Tak żeby zajmował dwie linie
             </h1>
             <p>
@@ -36,9 +52,17 @@ export const PostPage = () => {
             </p>
           </div>
           <div className={BEM(css.postPage, css.author)}>
-            <BackgroundDiv url={person} className={BEM(css.postPage, css.author, css.picture)}/>
-            <div className={BEM(css.postPage, css.author, css.name)}>Mateusz Kuźniak</div>
-            <div className={BEM(css.postPage, css.author, css.date)}> 02.12.2022 </div>
+            <BackgroundDiv
+              url={person}
+              className={BEM(css.postPage, css.author, css.picture)}
+            />
+            <div className={BEM(css.postPage, css.author, css.name)}>
+              Mateusz Kuźniak
+            </div>
+            <div className={BEM(css.postPage, css.author, css.date)}>
+              {" "}
+              02.12.2022{" "}
+            </div>
             <div className={BEM(css.postPage, css.author, css.time)}>
               <ClockIco />
               <p>5 min</p>
@@ -49,7 +73,9 @@ export const PostPage = () => {
             <Content />
           </div>
           <Gallery />
+          <br />
         </div>
+        <BestThree />
       </>
     );
 }
