@@ -2,6 +2,7 @@ export * from "./AboutMePage/AboutMePage"
 export * from "./AdminPanel/AdminPanel"
 export * from "./ContactPage/ContactPage"
 export * from './ErrorPage'
+export * from "./GuestSwitchPanel/GuestSwitchPanel"
 export * from "./Login/Login"
 export * from "./MainPage/MainPage"
 export * from "./PostPage/PostPage"

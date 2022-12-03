@@ -17,7 +17,6 @@ import { SlideType, TextPosition } from "../../types";
 export const MainPage = () => {
     return (
       <>
-        <MainPageMenu/>
         <Slider slides={slides}/>
         <BestThree />
         <Pomodoro premiere={new Date(2022,10,27,20,5,0)}/>

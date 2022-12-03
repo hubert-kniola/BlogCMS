@@ -15,7 +15,6 @@ const css = {
 export const ContactPage = () => {
     return (
       <>
-        <MainPageMenu />
         <div className={BEM(css.contact, css.view)}>
           <div className={BEM(css.contact, css.box)}>
             <div className={BEM(css.contact, css.info)}>

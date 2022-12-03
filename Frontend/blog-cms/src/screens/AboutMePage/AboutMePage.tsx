@@ -13,7 +13,6 @@ const css = {
 export const AboutMePage = () => {
     
     return <>
-        <MainPageMenu/>
         <div className={BEM(css.aboutMe)}>\
             <BackgroundDiv url={img} className={BEM(css.aboutMe, css.photo)}/>
             <div className={BEM(css.aboutMe, css.content)}>

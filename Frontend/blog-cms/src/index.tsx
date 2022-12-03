@@ -7,13 +7,27 @@ import { store } from "../store/store";
 import apolloClient from "./apolloConfig";
 import { About, Category, Configure, Contact, Posts } from "./components";
 import "./index.css";
-import { AboutMePage, ContactPage, ErrorPage, MainPage, PostPage, SwitchPanel } from "./screens";
+import { AboutMePage, ContactPage, ErrorPage, GuestSwitchPanel, MainPage, PostPage, SwitchPanel } from "./screens";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />,
+    element: <GuestSwitchPanel />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <MainPage />,
+      },
+      {
+        path: "aboutMe",
+        element: <AboutMePage />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+      },
+    ]
   },
   {
     path: "admin/",
@@ -40,18 +54,6 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
     ],
-  },
-  {
-    path: "aboutMe",
-    element: <AboutMePage />,
-  },
-  {
-    path: "contact",
-    element: <ContactPage />,
-  },
-  {
-    path: "main",
-    element: <MainPage />,
   },
   {
     path: "/:title/:id",
