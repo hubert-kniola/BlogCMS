@@ -5,9 +5,10 @@ import "./style.css";
 
 interface SaveButtonProps {
   handleSave: () => void;
+  text?: string;
 }
 
-export const SaveButton = ({handleSave}: SaveButtonProps) => {
+const SaveButton = ({handleSave, text}: SaveButtonProps) => {
   return (
     <Button
       sx={{
@@ -27,7 +28,7 @@ export const SaveButton = ({handleSave}: SaveButtonProps) => {
       component="label"
       onClick={handleSave}
     >
-      Zapisz
+      {text ? text : "Zapisz"}
     </Button>
   );
 };

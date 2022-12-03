@@ -66,7 +66,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           }}
         >
-          {userName.substring(0,1)}
+          {userName ? userName.substring(0,1) : null}
         </Avatar>
       </div>
       <div className={cssClasses.menu}>

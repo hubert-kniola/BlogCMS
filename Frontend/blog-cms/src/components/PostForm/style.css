@@ -1,0 +1,74 @@
+.post_container {
+    width: 45vw;
+    background-color: white;
+    box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .post_elements {
+    margin-top: 3rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .post_elements > p {
+    margin-top: 1rem;
+  }
+  
+  .post_container--text {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: large;
+    font-weight: 600;
+  }
+  
+  .post_title {
+    background-color: rgb(241, 241, 241);
+    border-radius: 3px;
+    width: 15vw;
+    height: 4vh;
+    margin-top: 0.5rem;
+  }
+  
+  .post_title--text {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: large;
+  }
+  
+  .post_content {
+    height: 15vh;
+    width: 25vw;
+    background-color: rgb(241, 241, 241);
+    border-radius: 3px;
+    outline-color: rgb(199, 199, 199);
+  }
+  
+  .post_elements > textarea:focus {
+    outline: 2px dashed rgb(196, 196, 196);
+  }
+  
+  .post_elements > input:focus {
+    outline: 2px dashed rgb(196, 196, 196);
+  }
+  
+  .post_select {
+    outline-color: #00eadc;
+  }
+  
+  .post_textarea {
+    background-color: rgb(241, 241, 241);
+    border-radius: 3px;
+    width: 15vw;
+    height: 4vh;
+    margin-top: 0.5rem;
+    padding: 0 8px;
+  }
+  
