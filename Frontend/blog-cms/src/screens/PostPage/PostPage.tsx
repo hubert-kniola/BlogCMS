@@ -1,17 +1,30 @@
 import React from "react"
 import { BackgroundDiv, Gallery, MainPageMenu } from "../../components"
 import { ClockIco } from "../../components/Ico"
+import { BEM } from "../../tools"
 import "./style.css"
 
 const person = 'https://www.bentbusinessmarketing.com/wp-content/uploads/2013/02/35844588650_3ebd4096b1_b-1024x683.jpg'
 const img = 'https://pix10.agoda.net/hotelImages/951189/-1/a3ab86fcd2d8942c27e40e8fc5601663.jpg?ca=9&ce=1&s=1024x768'
 
+const css = {
+    postPage: "postPage",
+    container: "container",
+    title: "title",
+    author: "author",
+    picture: "picture",
+    name: "name",
+    date: "date",
+    time: "time",
+    content: "content",
+}
+
 export const PostPage = () => {
     return (
       <>
         <MainPageMenu />
-        <div className="postPage_container">
-          <div className="postPage_title">
+        <div className={BEM(css.postPage, css.container)}>
+          <div className={BEM(css.postPage, css.title)}>
             <br />
             <h1>
               To jest tytuł pierwszego posta - ale nie wiem jak ma się nazywać,
@@ -22,17 +35,17 @@ export const PostPage = () => {
               gdzie? po co? dlaczego? co to ma na celu? Czy to ma sens?
             </p>
           </div>
-          <div className="postPage_author">
-            <BackgroundDiv url={person} className="postPage_author--picture" />
-            <div className="postPage_author--name">Mateusz Kuźniak</div>
-            <div className="postPage_author--date"> 02.12.2022 </div>
-            <div className="postPage_author--time">
+          <div className={BEM(css.postPage, css.author)}>
+            <BackgroundDiv url={person} className={BEM(css.postPage, css.author, css.picture)}/>
+            <div className={BEM(css.postPage, css.author, css.name)}>Mateusz Kuźniak</div>
+            <div className={BEM(css.postPage, css.author, css.date)}> 02.12.2022 </div>
+            <div className={BEM(css.postPage, css.author, css.time)}>
               <ClockIco />
               <p>5 min</p>
             </div>
           </div>
-          <BackgroundDiv url={img} className="postPage_picture" />
-          <div className="postPage_content">
+          <BackgroundDiv url={img} className={BEM(css.postPage, css.picture)} />
+          <div className={BEM(css.postPage, css.content)}>
             <Content />
           </div>
           <Gallery />

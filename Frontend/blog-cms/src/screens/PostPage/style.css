@@ -48,6 +48,7 @@
     width: 2rem;
     height: 2rem;
     border-radius: 100%;
+    box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
     @apply
         bg-cover bg-center
 
@@ -81,6 +82,7 @@
     height: 35rem;
     width: 100%;
     margin: 0 0 1rem 0;
+    box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
 }
 
 .postPage_content {
