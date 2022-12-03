@@ -7,7 +7,7 @@ export const SwitchPanel = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.user);
 
-  return !Object.values(user).every((x) => x === null || x === "") ? (
+  return Object.values(user).every((x) => x === null || x === "") ? (
     <AdminPanel />
   ) : (
     <Login />
