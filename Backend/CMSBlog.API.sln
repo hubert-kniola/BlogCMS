@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQL", "GraphQL", "{00A2760F-A2FA-4FD6-AFC8-846E01DC943F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureFunctions", "AzureFunctions", "{063A31AC-0098-482F-B34D-405599072A97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.API", "GraphQL\GraphQl.API\GraphQL.API.csproj", "{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Core", "GraphQL\GraphQL.Core\GraphQL.Core.csproj", "{D1E2696F-F923-408D-A783-E91AD5B18B84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Infrastructure", "GraphQL\GraphQL.Infrastructure\GraphQL.Infrastructure.csproj", "{04E75973-A95E-4EB4-B134-000A129AB38E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E2696F-F923-408D-A783-E91AD5B18B84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E2696F-F923-408D-A783-E91AD5B18B84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E2696F-F923-408D-A783-E91AD5B18B84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E2696F-F923-408D-A783-E91AD5B18B84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E75973-A95E-4EB4-B134-000A129AB38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E75973-A95E-4EB4-B134-000A129AB38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E75973-A95E-4EB4-B134-000A129AB38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E75973-A95E-4EB4-B134-000A129AB38E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43BA5FDD-C33D-4376-8DFB-6F8A5E4D9D71} = {00A2760F-A2FA-4FD6-AFC8-846E01DC943F}
+		{D1E2696F-F923-408D-A783-E91AD5B18B84} = {00A2760F-A2FA-4FD6-AFC8-846E01DC943F}
+		{04E75973-A95E-4EB4-B134-000A129AB38E} = {00A2760F-A2FA-4FD6-AFC8-846E01DC943F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05C7D412-7165-40F7-B433-2E1399DFAB94}
+	EndGlobalSection
+EndGlobal
