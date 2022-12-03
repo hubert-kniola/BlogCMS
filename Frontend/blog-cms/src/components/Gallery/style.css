@@ -1,0 +1,106 @@
+.galleryView_container{
+    max-width: 900px;
+    min-width: 600px;
+    width: auto;
+    margin: auto;
+    margin-bottom: 1rem;
+    @apply bg-secondary-500
+}
+
+
+.galleryView_image{
+    height: 35rem;
+    width: 100%;
+    margin: auto;
+    transition: 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @apply
+        bg-center bg-contain bg-no-repeat
+}
+
+.galleryView_image {
+    height: 35rem;
+    width: 100%;
+    margin: auto;
+    transition: 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.galleryView_active {
+    height: 100%;
+    max-height: 35rem;
+    margin: auto;
+}
+
+.galleryView_active > img{
+    height: 100%;
+    max-height: 35rem;
+    min-width: 300px;
+    margin: auto;
+}
+
+.galleryView_active > div {
+    position: absolute;
+    width: 20%;
+    bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    user-select: none;
+    @apply text-secondary-500
+}
+
+.galleryView_active > div:hover{
+    opacity: 0.5;
+    transition: 0.5s;
+    @apply
+    bg-secondary-200 text-primary-500
+}
+
+.galleryView_image--left{
+    left: 30%;
+}
+
+.galleryView_image--right{
+    right: 30%;
+}
+
+.galleryView_grid{
+    display: grid;
+    max-width: 900px;
+    margin: auto;
+    padding: 0.5rem;
+    grid-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    grid-auto-rows: 5rem;
+    grid-auto-flow: dense;
+}
+
+
+.galleryView_grid img{
+    max-width:100%;
+    height: auto;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.galleryView_grid > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.galleryView_grid > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
