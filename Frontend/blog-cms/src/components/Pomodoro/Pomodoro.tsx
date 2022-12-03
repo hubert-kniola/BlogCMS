@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
+import { BackgroundDiv } from "..";
 import { BEM } from "../../tools";
-import "./style.css"
+import "./style.css";
 
 interface IPomodoro {
     premiere?: Date
@@ -112,10 +113,7 @@ export const Pomodoro = ({premiere}:IPomodoro) => {
         </div>
         <div className={BEM(css.pomodoro, css.time)}>
           {isTime ? (
-            <div
-              className={BEM(css.pomodoro, css.isTime)}
-              style={{ backgroundImage: `url(${image})` }}
-            />
+            <BackgroundDiv url={image} className={BEM(css.pomodoro, css.isTime)} />
           ) : (
             <div>
               {days} dni {hours} h {minutes} min {seconds} s

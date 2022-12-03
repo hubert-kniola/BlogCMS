@@ -1,4 +1,5 @@
 import React from "react";
+import { BackgroundDiv } from "..";
 import { BEM } from "../../tools";
 import { Post } from "../../types";
 import  "./style.css"
@@ -25,10 +26,7 @@ export const BestOne = ({post, isSecond}: IBestOne) =>{
     return (
         <>
             <div className={`${BEM(css.bestContainer, css.bestPost)} ${isSecond && BEM(css.bestContainer, css.bestPost, css.modifiers.second)}`}>
-              <div
-                className={BEM(css.bestPost, css.bestPhoto)}
-                style={{ backgroundImage: `url(${post.imgUrl})` }}
-              />
+              <BackgroundDiv url={post.imgUrl} className={BEM(css.bestPost, css.bestPhoto)}/>
               <div  className={BEM(css.bestPost, css.bestContent)}>
                 <div className={BEM(css.bestPost, css.bestTitle)}>{post.title}</div>
                 <div className={BEM(css.bestPost, css.bestDate)}>{post.date}</div>

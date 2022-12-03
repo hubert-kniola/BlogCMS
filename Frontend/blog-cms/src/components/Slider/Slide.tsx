@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { BackgroundDiv } from "..";
 import { BEM } from "../../tools";
 import { SlideType } from "../../types";
 import { css } from "./css";
@@ -19,26 +20,22 @@ export const Slide:FC<ISlide> = ({slidesLenght, active, idx, slide, onClickHandl
           width: `${100 / slidesLenght}%`,
         }}
         className={BEM(css.slider, css.slide)}
-        key={idx}
-      >
-        <div
+        key={idx}>
+        <BackgroundDiv
+          url={slide.photoUrl}
           className={
             active
               ? BEM(css.slide, css.box, css.modifiers.active)
               : BEM(css.slide, css.box)
           }
-          style={{
-            backgroundImage: `url(${slide.photoUrl})`,
-          }}
         >
-
-            <div className="slide_content">
-                <div className="slide_content--title">
-                    <p className="slide_title">{slide.title}</p>
-                    <p>{slide.content}</p>
-                </div>
-            </div> 
-        </div>
+          <div className="slide_content">
+            <div className="slide_content--title">
+              <p className="slide_title">{slide.title}</p>
+              <p>{slide.content}</p>
+            </div>
+          </div>
+        </BackgroundDiv>
       </div>
     );
 }
