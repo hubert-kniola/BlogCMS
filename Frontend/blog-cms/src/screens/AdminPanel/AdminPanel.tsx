@@ -1,11 +1,10 @@
 import React from "react";
 import { AdminHeader, AdminFooter, AdminContent } from "../../components";
 import { useAppDispatch } from "../../../store/hooks";
-import Tile from "../../components/Tile/Tiles";
 import "./style.css";
 import { updateUser, initialState } from "../../../store/slices/userSlice";
 
-const AdminPanel = () => {
+export const AdminPanel = () => {
   const dispatch = useAppDispatch();
   const cssClasses = {
     /* panel class */
@@ -30,5 +29,3 @@ const AdminPanel = () => {
     </div>
   );
 };
-
-export default AdminPanel;

@@ -6,7 +6,7 @@ import { updateUser } from "../../../store/slices/userSlice";
 import "./style.scss";
 import { BEM } from "../../tools";
 
-const Login = () => {
+export const Login = () => {
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -85,4 +85,3 @@ const Login = () => {
   );
 };
 
-export default Login;

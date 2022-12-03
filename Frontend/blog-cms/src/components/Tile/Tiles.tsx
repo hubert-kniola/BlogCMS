@@ -19,7 +19,7 @@ interface TileProps {
   style?: string;
 }
 
-const Tiles = ({ category, style }: TileProps) => {
+export const Tiles = ({ category, style }: TileProps) => {
   const dispatch = useAppDispatch();
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
@@ -221,5 +221,3 @@ const Tiles = ({ category, style }: TileProps) => {
     </div>
   );
 };
-
-export default Tiles;

@@ -1,11 +1,9 @@
-import React from "react";
 import Avatar from "@mui/material/Avatar";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../../store/hooks";
 import { MenuButton } from "../../components/MenuButton/MenuButton";
 import "./style.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Category from "../Category/Category";
-import { useAppSelector } from "../../../store/hooks";
-import { UserState } from "../../../store/slices/userSlice";
 
 interface AdminHeaderProps {
   menuItems: any[];

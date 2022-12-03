@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { BEM } from "../../tools";
 import "./style.css";
 import Select, { GroupBase } from "react-select";
-import FileUploader from "../FileUploader/FileUploader";
 import { Post } from "../../types";
 import { lorem, url1, url2 } from "../BestThree/BestThree";
-import SaveButton from "../SaveButton/SaveButton";
+import { FileUploader, SaveButton } from "..";
 
 const posts: any[] = [
   { title: "Post 1", date: "25/10/2022", content: lorem, imgUrl: url1 },
@@ -17,7 +16,7 @@ const posts: any[] = [
   { title: "Post 7", date: "29/10/2022", content: lorem, imgUrl: url1 },
 ];
 
-const Configure = () => {
+export const Configure = () => {
   const cssClasses = {
     configure: "configure",
     container: "container",
@@ -261,4 +260,3 @@ const Configure = () => {
   );
 };
 
-export default Configure;

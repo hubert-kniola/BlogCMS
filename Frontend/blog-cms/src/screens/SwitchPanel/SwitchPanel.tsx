@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import React from "react";
+import { AdminPanel, Login } from "..";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
-import Login from "../Login/Login";
-import AdminPanel from "../AdminPanel/AdminPanel";
 
-const SwitchPanel = () => {
+export const SwitchPanel = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.user);
 
@@ -14,5 +13,3 @@ const SwitchPanel = () => {
     <Login />
   );
 };
-
-export default SwitchPanel;

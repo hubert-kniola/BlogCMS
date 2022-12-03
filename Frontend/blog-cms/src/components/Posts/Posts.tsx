@@ -3,12 +3,11 @@ import { BEM } from "../../tools";
 import Button from "@mui/material/Button";
 import Select from "react-select";
 import "./style.css";
-import FileUploader from "../FileUploader/FileUploader";
 import { WithContext as ReactTags } from "react-tag-input";
 import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 import { CategoryState } from "../../../store/slices/categorySlice";
-import SaveButton from "../SaveButton/SaveButton";
+import { SaveButton, FileUploader } from "..";
 
 const exampleCategories: CategoryState[] = [
   {
@@ -33,7 +32,7 @@ const exampleCategories: CategoryState[] = [
   },
 ];
 
-const Posts = () => {
+export const Posts = () => {
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
@@ -180,5 +179,3 @@ const Posts = () => {
     </div>
   );
 };
-
-export default Posts;

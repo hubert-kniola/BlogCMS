@@ -10,7 +10,7 @@ const css = {
     content: "content"
 }
 
-export const AboutMeView = () => {
+export const AboutMePage = () => {
     
     return <>
         <MainPageMenu/>

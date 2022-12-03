@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { BEM } from "../../tools";
-import FileUploader from "../FileUploader/FileUploader";
 import "./style.css";
-import SaveButton from "../SaveButton/SaveButton";
+import { FileUploader, SaveButton } from "..";
 
-const Contact = () => {
+export const Contact = () => {
   const cssClasses = {
     contact: "contact",
     container: "container",
@@ -52,5 +51,3 @@ const Contact = () => {
     </div>
   );
 };
-
-export default Contact;

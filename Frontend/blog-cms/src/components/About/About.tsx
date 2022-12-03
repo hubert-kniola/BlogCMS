@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { BEM } from "../../tools";
-import FileUploader from "../FileUploader/FileUploader";
 import "./style.css";
-import SaveButton from "../SaveButton/SaveButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { title } from "process";
 import { text } from "stream/consumers";
+import { FileUploader } from "..";
 
 interface IFormInput {
   title: string;
@@ -13,7 +12,7 @@ interface IFormInput {
   file: any;
 }
 
-const About = () => {
+export const About = () => {
   const cssClasses = {
     about: "about",
     container: "container",
@@ -63,5 +62,3 @@ const About = () => {
     </form>
   );
 };
-
-export default About;

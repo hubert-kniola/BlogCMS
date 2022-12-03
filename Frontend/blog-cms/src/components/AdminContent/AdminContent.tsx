@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Tile from "../Tile/Tiles";
 import "./style.css";
 
 export const AdminContent = () => {

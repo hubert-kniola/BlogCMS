@@ -7,7 +7,6 @@ const css = {
     item: "item",
 }
 
-
 export const Footer = () => {
     return (
       <>

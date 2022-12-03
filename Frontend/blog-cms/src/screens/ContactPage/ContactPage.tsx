@@ -12,7 +12,7 @@ const css = {
   content: "content"
 }
 
-export const ContactView = () => {
+export const ContactPage = () => {
     return (
       <>
         <MainPageMenu />
@@ -61,3 +61,4 @@ const TextBox = ({option, contact} : ITextBox) => {
       </div>
     );
 }
+

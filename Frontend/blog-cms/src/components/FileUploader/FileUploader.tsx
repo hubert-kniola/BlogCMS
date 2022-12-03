@@ -5,7 +5,7 @@ interface FileUploaderProps {
   changeInputFile?: () => void;
 }
 
-const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
+export const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [data, setData] = useState(null);
   const hiddenFileInput = useRef(null);
@@ -95,5 +95,3 @@ const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
     </>
   );
 };
-
-export default FileUploader;

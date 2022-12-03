@@ -3,13 +3,12 @@ import { BEM } from "../../tools";
 import "./style.css";
 import { DndContext } from "@dnd-kit/core";
 import { CategoryState, updateMenu } from "../../../store/slices/categorySlice";
-import Tiles from "../Tile/Tiles";
-import SaveButton from "../SaveButton/SaveButton";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 import { addCategory } from "../../../store/slices/categorySlice";
+import { SaveButton, Tiles } from "..";
 
-const Category = () => {
+export const Category = () => {
   const cssClasses = {
     category: "category",
     container: "container",
@@ -121,5 +120,3 @@ const Category = () => {
     </div>
   );
 };
-
-export default Category;

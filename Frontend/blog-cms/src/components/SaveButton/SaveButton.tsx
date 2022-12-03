@@ -7,7 +7,7 @@ interface SaveButtonProps {
   handleSave: () => void;
 }
 
-const SaveButton = ({handleSave}: SaveButtonProps) => {
+export const SaveButton = ({handleSave}: SaveButtonProps) => {
   return (
     <Button
       sx={{
@@ -31,5 +31,3 @@ const SaveButton = ({handleSave}: SaveButtonProps) => {
     </Button>
   );
 };
-
-export default SaveButton;

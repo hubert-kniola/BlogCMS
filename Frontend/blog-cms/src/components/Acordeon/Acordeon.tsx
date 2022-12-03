@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { BEM } from "../../tools";
 import { Faq } from "../../types";
 import { AcordeonItem } from "./AcoredeonItem";
-import  "./style.css"
+import "./style.css";
 
 let faq :Faq[] = [
     {question: "Czy mogę założyć konto", answer: "To jest moja odpowiedź numer 1"},
