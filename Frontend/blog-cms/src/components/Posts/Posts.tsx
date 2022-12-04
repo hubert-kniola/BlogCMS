@@ -9,6 +9,8 @@ import { RootState } from "../../../store/store";
 import { CategoryState } from "../../../store/slices/categorySlice";
 import SaveButton from "../SaveButton/SaveButton";
 import PostsTable from "../PostsTable/PostsTable";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Posts = () => {
   const cssClasses = {

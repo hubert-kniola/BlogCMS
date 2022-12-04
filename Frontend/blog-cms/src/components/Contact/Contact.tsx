@@ -17,6 +17,12 @@ interface IFormInput {
   file: any;
 }
 
+interface IFormInput {
+  title: string;
+  text: string;
+  file: any;
+}
+
 export const Contact = () => {
   const cssClasses = {
     contact: "contact",

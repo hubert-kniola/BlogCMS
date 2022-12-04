@@ -177,10 +177,12 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         <input
           className={BEM(cssClasses.post, cssClasses.title)}
           type="text"
+          value={title}
+          onChange={handleTitle}
         ></input>
         <p>Treść:</p>
         <textarea
-          className="post_textarea"
+          className={BEM(cssClasses.post, cssClasses.title)}
           value={richValue}
           onChange={handleRich}
         />
