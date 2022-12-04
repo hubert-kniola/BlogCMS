@@ -95,3 +95,5 @@ export const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
     </>
   );
 };
+
+export default FileUploader;
