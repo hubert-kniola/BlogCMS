@@ -9,6 +9,8 @@ import { RootState } from "../../../store/store";
 import { CategoryState } from "../../../store/slices/categorySlice";
 import PostsTable from "../PostsTable/PostsTable";
 import { FileUploader } from "..";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const exampleCategories: CategoryState[] = [
   {

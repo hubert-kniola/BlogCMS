@@ -1,0 +1,26 @@
+.postTable_container {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.MuiTableBody-root {
+  width: 75vw;
+}
+
+.postRow_title {
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.postRow_content {
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

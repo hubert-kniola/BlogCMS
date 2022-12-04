@@ -36,6 +36,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.6.1",
     "react-tag-input": "^6.8.1",
+    "react-toastify": "^9.1.1",
     "redux": "^4.2.0",
     "slate": "^0.85.0",
     "slate-react": "^0.83.2",

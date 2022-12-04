@@ -51,6 +51,15 @@
   outline-color: rgb(199, 199, 199);
 }
 
+.contact_textarea {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+}
+
 .contact_elements > textarea:focus {
   outline: 2px dashed rgb(196, 196, 196);
 }

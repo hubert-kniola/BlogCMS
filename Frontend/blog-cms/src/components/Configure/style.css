@@ -99,3 +99,19 @@
   margin-top: 0.5rem;
   padding: 0 8px;
 }
+
+.submitButton {
+  border-radius: 2px;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  color: #00eadc;
+  border: 1px solid #00eadc;
+  width: 10rem;
+  padding: 0.5rem;
+}
+
+.submitButton:hover {
+  background-color: #00eadc;
+  color: white;
+  border-color: white;
+}

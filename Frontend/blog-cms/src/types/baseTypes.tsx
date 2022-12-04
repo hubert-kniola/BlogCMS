@@ -1,3 +1,4 @@
+import { CategoryState } from "../../store/slices/categorySlice";
 import { TextPosition } from "./enums";
 
 export type Post = {
@@ -6,7 +7,7 @@ export type Post = {
     content: string,
     snippet: string;
     imgUrl: string,
-    category?: string[],
+    category?: CategoryState[],
     timeToRead?: string,
 }
 

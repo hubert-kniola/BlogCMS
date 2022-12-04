@@ -6,7 +6,10 @@ import { CategoryState, updateMenu } from "../../../store/slices/categorySlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 import { addCategory } from "../../../store/slices/categorySlice";
-import { SaveButton, Tiles } from "..";
+import { Tiles } from "..";
+import SaveButton from "../SaveButton/SaveButton";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Category = () => {
   const cssClasses = {
@@ -63,7 +66,16 @@ export const Category = () => {
     });
   };
 
-  const saveMenu = () => {};
+  const notify = () => {
+    toast.success(" Zapisano", {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      theme: "colored",
+    });
+  };
+
+  const saveMenu = () => {
+    notify();
+  };
 
   return (
     <div className={BEM(cssClasses.category, cssClasses.container)}>
@@ -117,6 +129,7 @@ export const Category = () => {
         </div>
       </div>
       <SaveButton handleSave={saveMenu} />
+      <ToastContainer/>
     </div>
   );
 };

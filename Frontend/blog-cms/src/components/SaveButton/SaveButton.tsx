@@ -32,3 +32,5 @@ const SaveButton = ({handleSave, text}: SaveButtonProps) => {
     </Button>
   );
 };
+
+export default SaveButton;

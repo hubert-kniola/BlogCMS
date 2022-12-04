@@ -10,20 +10,22 @@ export interface ContactState {
 export const initialState: ContactState = {
   title: null,
   text: null,
-  file: null
+  file: null,
 };
 
 export const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
-    updateForm: (state: any, action: PayloadAction<ContactState>) => {
-      state.categories = action.payload;
+    updateContact: (state: any, action: PayloadAction<ContactState>) => {
+      state.title = action.payload.title;
+      state.text = action.payload.text;
+      state.file = action.payload.file;
     },
   },
 });
 
-export const { updateForm } = contactSlice.actions;
+export const { updateContact } = contactSlice.actions;
 
 export const selectCategory = (state: RootState) => state.contact;
 

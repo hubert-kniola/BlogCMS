@@ -3,9 +3,18 @@ import { categorySlice } from "./slices/categorySlice";
 import { userSlice } from "./slices/userSlice";
 import { aboutSlice } from "./slices/aboutSlice";
 import { contactSlice } from "./slices/contactSlice";
+import { postSlice } from "./slices/postSlice";
+import { configureSlice } from "./slices/configureSlice";
 
 export const store = configureStore({
-  reducer: { user: userSlice.reducer, category: categorySlice.reducer, about: aboutSlice.reducer, contact: contactSlice.reducer },
+  reducer: {
+    user: userSlice.reducer,
+    category: categorySlice.reducer,
+    about: aboutSlice.reducer,
+    contact: contactSlice.reducer,
+    post: postSlice.reducer,
+    configure: configureSlice.reducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
