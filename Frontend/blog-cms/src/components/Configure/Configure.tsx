@@ -96,7 +96,7 @@ export const Configure = () => {
         </div>
       </div>
       <Footer onSubmit={notify}/>
-      <ToastContainer/>
+      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
     </div>
   );
 };

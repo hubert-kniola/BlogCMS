@@ -81,7 +81,7 @@ export const About = () => {
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
-      <ToastContainer/>
+      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
     </form>
   );
 };
