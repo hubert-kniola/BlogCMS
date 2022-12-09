@@ -1,16 +1,38 @@
 import Avatar from "@mui/material/Avatar";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import { MenuButton } from "../../components/MenuButton/MenuButton";
+import { BEM } from "../../tools";
 import "./style.css";
+
+const navList = [
+  { to: "/admin", text: "Strona główna" },
+  {
+    to: "/admin/category",
+    text: "Kategorie",
+  },
+  {
+    to: "/admin/posts",
+    text: "Posty",
+  },
+  {
+    to: "/admin/about",
+    text: "O mnie",
+  },
+  {
+    to: "/admin/contact",
+    text: "Kontakt",
+  },
+];
 
 interface AdminHeaderProps {
   menuItems: any[];
 }
 
 export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
-  const userName = useAppSelector((state: any) => state.user.userName)
+  const location = useLocation();
+  const userName = useAppSelector((state: any) => state.user.userName);
 
   const cssClasses = {
     /* header class */
@@ -21,27 +43,19 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
     menu: "adminMenu",
     /* navigation class */
     nav: "adminNav",
+    /* selected class */
+    selected: "selected"
   };
 
-  const navList = [
-    { to: "/admin", text: "Strona główna" },
+  const getNavClasses = (element: any) => {
+    let classes: string[] = [];
+    classes.push(cssClasses.nav);
+    if(element.to === location.pathname)
     {
-      to: "/admin/category",
-      text: "Kategorie",
-    },
-    {
-      to: "/admin/posts",
-      text: "Posty",
-    },
-    {
-      to: "/admin/about",
-      text: "O mnie",
-    },
-    {
-      to: "/admin/contact",
-      text: "Kontakt",
-    },
-  ];
+      classes.push(BEM(cssClasses.header, null, cssClasses.selected));
+    }
+    return classes;
+  }
 
   return (
     <div className={cssClasses.header}>
@@ -50,11 +64,13 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
           {navList.map((element: any, i: number) => (
             <>
               <li key={i}>
-                <Link key={i+10} className={cssClasses.nav} to={element.to}>
+                <Link key={i + 10} className={getNavClasses(element).join(" ")} to={element.to}>
                   {element.text}
                 </Link>
               </li>
-              {i !== navList.length - 1 && <div className="adminLine" key={i+10}/>}
+              {i !== navList.length - 1 && (
+                <div className="adminLine" key={i + 10} />
+              )}
             </>
           ))}
         </ul>
@@ -66,7 +82,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           }}
         >
-          {userName ? userName.substring(0,1) : null}
+          {userName ? userName.substring(0, 1) : null}
         </Avatar>
       </div>
       <div className={cssClasses.menu}>
