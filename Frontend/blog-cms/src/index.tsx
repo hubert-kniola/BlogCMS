@@ -8,6 +8,7 @@ import apolloClient from "./apolloConfig";
 import { About, Category, Configure, Contact, Posts } from "./components";
 import "./index.css";
 import { AboutMePage, ContactPage, ErrorPage, GuestSwitchPanel, MainPage, PostPage, SwitchPanel } from "./screens";
+import { SendFiles } from "./screens/SendFiles/SendFiles"
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
     path: "/:title/:id",
     element: <PostPage />,
   },
+  {
+    path: "/sendfiles",
+    element: <SendFiles />,
+  }
 ]);
 
 const root = ReactDOM.createRoot(
