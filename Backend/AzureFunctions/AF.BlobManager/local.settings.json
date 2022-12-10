@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "Azure:AzureWebJobsStorage": "",
+    "Azure:ContainerName": "cms-blog-images",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+  },
+  "Host": {
+    "CORS": "*"
+  }
+}

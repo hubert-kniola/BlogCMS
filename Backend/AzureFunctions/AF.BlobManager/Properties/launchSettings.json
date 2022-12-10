@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AF.BlobManager": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7011",
+      "launchBrowser": false
+    }
+  }
+}
