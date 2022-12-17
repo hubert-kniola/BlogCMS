@@ -15,6 +15,7 @@ import {
   ConfigureState,
 } from "../../../store/slices/configureSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
+import CarouselTable from "./CarouselTable";
 
 interface CarouselProps {
   onSubmit: () => void;
@@ -28,32 +29,29 @@ const CarouselConfigure = ({ onSubmit }: CarouselProps) => {
   const { register, setValue, handleSubmit } = useForm();
   const cssClasses = {
     configure: "configure",
+    carousel: "carousel",
     container: "container",
     title: "title",
     description: "description",
     textarea: "textarea",
   };
 
-  useEffect(() => {
-    const fetchData = () => {
-      if (carousel) {
-        setValue("title", carousel.title);
-        setValue("text", carousel.text);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     if (carousel) {
+  //       setValue("title", carousel.title);
+  //       setValue("text", carousel.text);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  const onSubmitCarousel: SubmitHandler<any> = async (data) => {
-    data["file"] = null;
-    dispatch(updateCarousel(data));
-    onSubmit();
-  };
+  const onSubmitCarousel: SubmitHandler<any> = async (data) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmitCarousel)}>
-      <div className={BEM(cssClasses.configure, cssClasses.container)}>
+      <div className={BEM(cssClasses.carousel, cssClasses.container)}>
         <h3
           className={BEM(
             cssClasses.configure,
@@ -73,22 +71,7 @@ const CarouselConfigure = ({ onSubmit }: CarouselProps) => {
           Sekcja wyświetlająca zmieniające się zdjęcia wraz z wprowadzonym
           tekstem
         </p>
-        <div className={BEM(cssClasses.title, cssClasses.container)}>
-          <p>Tytuł:</p>
-          <input
-            className={BEM(cssClasses.title, cssClasses.title)}
-            type="text"
-            {...register("title")}
-          ></input>
-          <p>Treść:</p>
-          <textarea
-            className={BEM(cssClasses.title, cssClasses.textarea)}
-            {...register("text")}
-          />
-          <p>Zdjęcie:</p>
-          <FileUploader />
-        </div>
-        <input className="submitButton" value="Zapisz" type="submit" />
+        <CarouselTable />
       </div>
     </form>
   );

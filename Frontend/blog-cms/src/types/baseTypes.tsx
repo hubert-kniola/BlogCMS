@@ -11,6 +11,12 @@ export type Post = {
     timeToRead?: string,
 }
 
+export type Carousel = {
+    title: string;
+    content: string;
+    imgUrl: string;
+}
+
 export type PostItemType = {
     post: Post
     index: number;

@@ -9,13 +9,14 @@ import { Post } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deletePost, updatePost } from "../../../store/slices/postSlice";
 
-interface PostsRowProps {
-  element: Post;
+interface RowProps {
+  element: any;
   index: number;
   openModal?: () => void;
+  actionOnDelete?: (index: number) => void;
 }
 
-const PostsRow = ({ index, element, openModal }: PostsRowProps) => {
+const Row = ({ index, element, openModal, actionOnDelete }: RowProps) => {
   const dispatch = useAppDispatch();
 
   const cssClasses = {
@@ -25,7 +26,7 @@ const PostsRow = ({ index, element, openModal }: PostsRowProps) => {
   };
 
   const deleteIcon = (
-    <IconButton onClick={(element) => dispatch(deletePost(element))}>
+    <IconButton onClick={() => actionOnDelete(index)}>
       <DeleteIcon sx={{ color: "#00eadc" }} />
     </IconButton>
   );
@@ -48,7 +49,7 @@ const PostsRow = ({ index, element, openModal }: PostsRowProps) => {
           {element.content}
         </div>
       </TableCell>
-      <TableCell>{element.date}</TableCell>
+      <TableCell>{element.date ? element.date : null}</TableCell>
       <TableCell component="th" scope="row">
         {editIcon}
         {deleteIcon}
@@ -57,4 +58,4 @@ const PostsRow = ({ index, element, openModal }: PostsRowProps) => {
   );
 };
 
-export default PostsRow;
+export default Row;

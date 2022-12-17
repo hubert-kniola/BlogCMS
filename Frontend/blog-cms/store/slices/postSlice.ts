@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 import { Post } from "../../src/types";
 
 export interface PostState {
-  posts: Post[];
+  posts: any[];
 }
 
 export const initialState: PostState = {
@@ -22,10 +22,8 @@ export const postSlice = createSlice({
         state.posts[action.payload.index] = action.payload.post;
     },
     deletePost: (state: any, action: PayloadAction<any>) => {
-      const modifyIndex = state.posts.findIndex(
-        (element: Post) => element.title === action.payload.title
-      );
-      state.posts.splice(modifyIndex, 1);
+      if (state.posts[action.payload.index])
+        state.posts.splice(action.payload.index, 1);
     },
   },
 });

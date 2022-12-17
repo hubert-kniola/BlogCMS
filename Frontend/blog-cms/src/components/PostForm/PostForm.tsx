@@ -12,6 +12,13 @@ import { addPost, updatePost } from "../../../store/slices/postSlice";
 import { Post } from "../../types";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import TextField from "@mui/material/TextField";
+import { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const exampleCategories: CategoryState[] = [
   {
@@ -61,6 +68,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
   const [richValue, setRichValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [placeInPopular, setPlaceInPopular] = useState<boolean>(false);
+  const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
+  const [publicOnDate, setPublicOnDate] = useState<boolean>(false);
 
   useEffect(() => {
     const initEditedPost = () => {
@@ -69,6 +79,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           let editedPost = posts[index];
           setTitle(editedPost.title);
           setRichValue(editedPost.content);
+          setPlaceInPopular(editedPost.placeInPopular);
+          setPublicOnDate(editedPost.publicOnDate);
+          setPublicDate(editedPost.publicDate);
           if (editedPost.category[0]) setMainCategory(editedPost.category[0]);
           if (editedPost.category[1]) setSubCategory(editedPost.category[1]);
           if (editedPost.category.length > 2)
@@ -140,15 +153,30 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setTitle(e.target.value);
   };
 
+  const handlePublicOnDate = (e: any) => {
+    setPublicOnDate(!publicOnDate);
+  };
+
+  const handlePlaceInPopular = (e: any) => {
+    setPlaceInPopular(!placeInPopular);
+  };
+
+  const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
   const savePost = () => {
     const current = new Date();
-    const payload: Post = {
+    const payload: any = {
       title: title,
-      date: `${current.getDate()}-${current.getMonth()}-${current.getFullYear()}`,
+      date: publicOnDate && publicDate
+        ? publicDate.toString()
+        : `${weekday[current.getDay()]}, ${current.getDate()} ${month[current.getMonth()]} ${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()} GMT`,
       content: richValue,
       snippet: "",
       imgUrl: "",
       category: [mainCategory, subCategory].concat(tagCategory),
+      publicOnDate: publicOnDate,
+      placeInPopular: placeInPopular,
     };
     if (type === "add") {
       dispatch(addPost(payload));
@@ -238,6 +266,63 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           options={mapTagCategoriesToOptions(subCategory)}
           onChange={handleTagCategory}
         />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={placeInPopular}
+              onChange={handlePlaceInPopular}
+              sx={{
+                color: "#00eadc",
+                "&.Mui-checked": {
+                  color: "#00eadc",
+                },
+              }}
+            />
+          }
+          label="Wyświetlaj w popularnych"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={publicOnDate}
+              onChange={handlePublicOnDate}
+              sx={{
+                color: "#00eadc",
+                "&.Mui-checked": {
+                  color: "#00eadc",
+                },
+              }}
+            />
+          }
+          label="Opublikuj w wybranym momencie"
+        />
+        {publicOnDate && (
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Data publikacji"
+              value={publicDate}
+              onChange={(newValue) => {
+                setPublicDate(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#00eadc",
+                        color: "#00eadc"
+                      }
+                    },
+                    "& label.Mui-focused": {
+                      color: "#00eadc"
+                    },
+                  }}
+                  {...params}
+                />
+              )}
+            />
+          </LocalizationProvider>
+        )}
       </div>
       <SaveButton
         handleSave={savePost}

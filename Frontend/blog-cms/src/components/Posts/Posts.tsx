@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 import { CategoryState } from "../../../store/slices/categorySlice";
 import SaveButton from "../SaveButton/SaveButton";
-import PostsTable from "../PostsTable/PostsTable";
+import PostsTable from "./PostsTable";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 

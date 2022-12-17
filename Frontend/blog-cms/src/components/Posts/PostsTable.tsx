@@ -10,7 +10,7 @@ import {
   updatePost,
   deletePost,
 } from "../../../store/slices/postSlice";
-import PostsRow from "./PostsRow";
+import Row from "../Table/Row";
 import PostForm from "../PostForm/PostForm";
 import PostModal from "../PostModal/PostModal";
 import { Post } from "../../types";
@@ -49,7 +49,7 @@ const PostsTable = () => {
           <TableBody sx={{ width: "fit-content" }}>
             {posts.map((element: Post, i: number) => {
               return (
-                <PostsRow
+                <Row
                   key={i}
                   element={element}
                   index={i}
@@ -57,6 +57,7 @@ const PostsTable = () => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
+                  actionOnDelete={(index: number) => dispatch(deletePost({index}))}
                 />
               );
             })}
