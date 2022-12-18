@@ -1,24 +1,23 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Dayjs } from "dayjs";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Select from "react-select";
 import { useAppSelector } from "../../../store/hooks";
 import { CategoryState } from "../../../store/slices/categorySlice";
-import { RootState } from "../../../store/store";
-import Select from "react-select";
-import { BEM } from "../../tools";
-import FileUploader from "../FileUploader/FileUploader";
-import "./style.css";
-import SaveButton from "../SaveButton/SaveButton";
-import { useDispatch } from "react-redux";
 import { addPost, updatePost } from "../../../store/slices/postSlice";
-import { Post } from "../../types";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TextField from "@mui/material/TextField";
-import { Dayjs } from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { RootState } from "../../../store/store";
+import { BEM, GetGTMDate } from "../../tools";
+import FileUploader from "../FileUploader/FileUploader";
+import SaveButton from "../SaveButton/SaveButton";
+import "./style.css";
 
 const exampleCategories: CategoryState[] = [
   {
@@ -160,17 +159,13 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const handlePlaceInPopular = (e: any) => {
     setPlaceInPopular(!placeInPopular);
   };
-
-  const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-
+  
   const savePost = () => {
-    const current = new Date();
     const payload: any = {
       title: title,
       date: publicOnDate && publicDate
         ? publicDate.toString()
-        : `${weekday[current.getDay()]}, ${current.getDate()} ${month[current.getMonth()]} ${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()} GMT`,
+        : GetGTMDate(),
       content: richValue,
       snippet: "",
       imgUrl: "",
@@ -298,8 +293,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         />
         {publicOnDate && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <DateTimePicker
               label="Data publikacji"
+              disablePast
               value={publicDate}
               onChange={(newValue) => {
                 setPublicDate(newValue);

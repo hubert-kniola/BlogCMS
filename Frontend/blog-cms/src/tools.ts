@@ -1,4 +1,5 @@
 import { TextPosition } from "./types";
+import { month, weekday } from "./types";
 
 export const BEM = (block: string, element: string = null, modifier: string = null) => {
   let result: string = "";
@@ -29,4 +30,9 @@ export const GetTextPositionStyle = (position: TextPosition) => {
     style.justifyContent = "center";
   
   return style;
+}
+
+export const GetGTMDate = () => {
+  const current = new Date();
+  return `${weekday[current.getDay()]}, ${current.getDate()} ${month[current.getMonth()]} ${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()} GMT`;
 }

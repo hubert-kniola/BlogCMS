@@ -14,7 +14,15 @@ export type Post = {
 export type Carousel = {
     title: string;
     content: string;
+    date: string;
     imgUrl: string;
+    active: boolean;
+}
+
+export type FAQ = {
+    question: string;
+    answer: string;
+    date: string;
 }
 
 export type PostItemType = {

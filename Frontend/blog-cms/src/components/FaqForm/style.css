@@ -1,4 +1,4 @@
-.carouselForm_container {
+.faqForm_container {
     width: 45vw;
     background-color: white;
     box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
@@ -12,33 +12,31 @@
     padding: 20px;
   }
   
-  .carouselForm_elements {
+  .faqForm_elements {
     margin-top: 3rem;
     margin-right: auto;
     margin-left: auto;
-    display: flex;
-    flex-direction: column;
   }
   
-  .carouselForm_close {
+  .faqForm_close {
     display: flex;
     margin-right: 0px;
     float: right;
     margin-left: auto;
   }
   
-  .carouselForm_elements > p {
+  .faqForm_elements > p {
     margin-top: 1rem;
   }
   
-  .carouselForm_container--text {
+  .faqForm_container--text {
     margin-left: auto;
     margin-right: auto;
     font-size: large;
     font-weight: 600;
   }
   
-  .carouselForm_title {
+  .faqForm_title {
     background-color: rgb(241, 241, 241);
     border-radius: 3px;
     width: 15vw;
@@ -47,13 +45,13 @@
     padding: 0 8px;
   }
   
-  .carouselForm_title--text {
+  .faqForm_title--text {
     margin-left: auto;
     margin-right: auto;
     font-size: large;
   }
   
-  .carouselForm_content {
+  .faqForm_content {
     height: 15vh;
     width: 25vw;
     background-color: rgb(241, 241, 241);
@@ -61,19 +59,19 @@
     outline-color: rgb(199, 199, 199);
   }
   
-  .carouselForm_elements > textarea:focus {
+  .faqForm_elements > textarea:focus {
     outline: 2px dashed rgb(196, 196, 196);
   }
   
-  .carouselForm_elements > input:focus {
+  .faqForm_elements > input:focus {
     outline: 2px dashed rgb(196, 196, 196);
   }
   
-  .carouselForm_select {
+  .faqForm_select {
     outline-color: #00eadc;
   }
   
-  .carouselForm_textarea {
+  .faqForm_textarea {
     background-color: rgb(241, 241, 241);
     border-radius: 3px;
     width: 15vw;
@@ -82,11 +80,11 @@
     padding: 0 8px;
   }
   
-  .carouselForm_elements > textarea:focus {
+  .faqForm_elements > textarea:focus {
     outline: 2px dashed rgb(196, 196, 196);
   }
   
-  .carouselForm_textarea:focus{
+  .faqForm_textarea:focus{
     outline: 2px dashed rgb(196, 196, 196);
   }
   

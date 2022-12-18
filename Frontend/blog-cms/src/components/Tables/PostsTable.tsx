@@ -1,33 +1,27 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import Select from "react-select";
-import { BEM } from "../../tools";
-import { TableBody, Table } from "@mui/material";
-import "./style.css";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { RootState } from "../../../store/store";
-import {
-  addPost,
-  updatePost,
-  deletePost,
-} from "../../../store/slices/postSlice";
-import Row from "../Table/Row"
-import PostForm from "../PostForm/PostForm";
-import PostModal from "../PostModal/PostModal";
-import { Post } from "../../types";
-import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { deleteCarousel } from "../../../store/slices/configureSlice";
-import CarouselModal from "../CarouselModal/CarouselModal";
+import { Table, TableBody } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import {
+  deletePost
+} from "../../../store/slices/postSlice";
+import { RootState } from "../../../store/store";
+import { BEM } from "../../tools";
+import { Post } from "../../types";
+import PostModal from "../PostModal/PostModal";
+import Row from "./Rows/Row";
+import "./style.css";
 
-const CarouselTable = () => {
+const PostsTable = () => {
   const dispatch = useAppDispatch();
-  const carousel = useAppSelector((state: RootState) => state.configure.carousel);
+  const posts = useAppSelector((state: RootState) => state.post.posts);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
 
   const cssClasses = {
-    carouselTable: "carouselTable",
+    postTable: "postTable",
     container: "container",
     dropdown: "dropdown",
     item: "item",
@@ -43,36 +37,37 @@ const CarouselTable = () => {
 
   return (
     <>
-      <div className={BEM(cssClasses.carouselTable, cssClasses.container)}>
+      <div className={BEM(cssClasses.postTable, cssClasses.container)}>
         <IconButton onClick={() => setOpenCreate(true)}>
           <AddBoxIcon sx={{ color: "#00eadc" }} />
         </IconButton>
         <Table style={{ width: "60vw" }}>
           <TableBody sx={{ width: "fit-content" }}>
-            {carousel.map((element: Post, i: number) => {
+            {posts.map((element: Post, i: number) => {
               return (
                 <Row
                   key={i}
-                  element={element}
+                  cells={[element.title, element.content]}
+                  date={element.date}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) => dispatch(deleteCarousel(index))}
+                  actionOnDelete={(index: number) => dispatch(deletePost({index}))}
                 />
               );
             })}
           </TableBody>
         </Table>
       </div>
-      <CarouselModal
+      <PostModal
         handleClose={handleCloseCreate}
         index={editedIndex}
         open={openCreate}
         type="add"
       />
-      <CarouselModal
+      <PostModal
         handleClose={handleCloseEdit}
         index={editedIndex}
         open={openEdit}
@@ -82,4 +77,4 @@ const CarouselTable = () => {
   );
 };
 
-export default CarouselTable;
+export default PostsTable;

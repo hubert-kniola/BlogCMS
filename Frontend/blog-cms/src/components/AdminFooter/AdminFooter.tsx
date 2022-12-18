@@ -1,6 +1,6 @@
+import GitHubIcon from "@mui/icons-material/GitHub";
 import React from "react";
 import "./style.css";
-import GitHubIcon from "@mui/icons-material/GitHub";
 interface AdminFooterProps {
   items: any[];
 }

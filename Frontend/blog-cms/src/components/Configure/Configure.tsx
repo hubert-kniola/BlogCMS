@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { BEM } from "../../tools";
-import "./style.css";
-import Select, { GroupBase } from "react-select";
-import { Post } from "../../types";
-import { lorem, url1, url2 } from "../BestThree/BestThree";
-import { FileUploader } from "..";
-import SaveButton from "../SaveButton/SaveButton";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { RootState } from "../../../store/store";
-import {
-  updateCarousel,
-  updateTop3,
-  updateFooter,
-  ConfigureState,
-} from "../../../store/slices/configureSlice";
-import { useForm, SubmitHandler } from "react-hook-form";
-import Carousel from "./Carousel";
-import Top3 from "./Top3";
-import Footer from "./Footer";
+import React from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch } from "../../../store/hooks";
+import { BEM } from "../../tools";
+import Carousel from "./Carousel";
+import Faq from "./Faq";
+import Footer from "./Footer";
+import "./style.css";
+import Top3 from "./Top3";
 
 interface IFormTop3Input {
   title: string;
@@ -56,14 +44,13 @@ export const Configure = () => {
   const notify = () => {
     toast.success(" Zapisano", {
       position: toast.POSITION.BOTTOM_RIGHT,
-      theme: "colored"
+      theme: "colored",
     });
   };
 
   return (
     <div>
-      <Carousel onSubmit={notify}/>
-      <Top3 onSubmit={notify}/>
+      <Top3 onSubmit={notify} />
       <div className={BEM(cssClasses.configure, cssClasses.container)}>
         <h3
           className={BEM(
@@ -95,8 +82,10 @@ export const Configure = () => {
           </h3>
         </div>
       </div>
-      <Footer onSubmit={notify}/>
-      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
+      <Footer onSubmit={notify} />
+      <Carousel />
+      <Faq />
+      <ToastContainer />
     </div>
   );
 };

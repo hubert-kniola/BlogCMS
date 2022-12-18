@@ -1,20 +1,19 @@
-import React from "react";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect, useState } from "react";
 import { BEM } from "../../tools";
-import PostsTable from "./PostsTable";
+import FaqTable from "../Tables/FaqTable";
 import "./style.css";
 
-const Posts = () => {
+const Faq = () => {
   const cssClasses = {
-    post: "post",
-    container: "container",
     configure: "configure",
+    faq: "faq",
+    container: "container",
     title: "title",
-    description: "description"
+    description: "description",
   };
 
   return (
-    <div className={BEM(cssClasses.post, cssClasses.container)}>
+    <div className={BEM(cssClasses.faq, cssClasses.container)}>
       <h3
         className={BEM(
           cssClasses.configure,
@@ -22,7 +21,7 @@ const Posts = () => {
           cssClasses.title
         )}
       >
-        Posty
+        FAQ
       </h3>
       <p
         className={BEM(
@@ -31,9 +30,11 @@ const Posts = () => {
           cssClasses.description
         )}
       >
-        Sekcja służąca do zarządzania postami
+        Sekcja wyświetla dodane pytania i odpowiedzi
       </p>
-      <PostsTable />
+      <FaqTable/>
     </div>
   );
 };
+
+export default Faq;

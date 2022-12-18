@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { BEM } from "../../tools";
-import "./style.css";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { title } from "process";
-import { text } from "stream/consumers";
-import { FileUploader } from "..";
-import { updateAbout } from "../../../store/slices/aboutSlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { Post } from "../../types";
-import { RootState } from "../../../store/store";
+import React, { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { FileUploader } from "..";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { updateAbout } from "../../../store/slices/aboutSlice";
+import { RootState } from "../../../store/store";
+import { BEM } from "../../tools";
+import "./style.css";
 
 interface IFormInput {
   title: string;

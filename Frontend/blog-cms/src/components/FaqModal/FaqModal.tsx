@@ -1,9 +1,12 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import PostForm from "../PostForm/PostForm";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
-import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
-import React from "react";
-import CarouselForm from "../CarouselForm/CarouselForm";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import FaqForm from "../FaqForm/FaqForm";
 import "./style.css";
 
 const style = {
@@ -14,14 +17,14 @@ const style = {
   bgcolor: "background.paper",
 };
 
-interface CarouselModalProps {
+interface FaqModalProps {
     handleClose: () => void;
     open: boolean;
     type: string;
     index: number;
 }
 
-const CarouselModal = ({handleClose, open, type, index}: CarouselModalProps) => {
+const FaqModal = ({handleClose, open, type, index}: FaqModalProps) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -36,11 +39,11 @@ const CarouselModal = ({handleClose, open, type, index}: CarouselModalProps) => 
     >
       <Fade in={open}>
         <Box sx={style}>
-          <CarouselForm handleClose={handleClose} index={index} type={type}/>
+          <FaqForm handleClose={handleClose} index={index} type={type}/>
         </Box>
       </Fade>
     </Modal>
   );
 };
 
-export default CarouselModal;
+export default FaqModal;

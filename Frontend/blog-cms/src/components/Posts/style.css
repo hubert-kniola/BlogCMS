@@ -14,3 +14,12 @@
   padding: 20px;
 }
 
+.configure_container--title {
+  font-size: large;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.configure_container--description {
+  margin-left: 1rem;
+}

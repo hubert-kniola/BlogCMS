@@ -1,15 +1,13 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
-import { BEM } from "../../tools";
-import "./style.css";
-import { DndContext } from "@dnd-kit/core";
-import { CategoryState, updateMenu } from "../../../store/slices/categorySlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { RootState } from "../../../store/store";
-import { addCategory } from "../../../store/slices/categorySlice";
-import { Tiles } from "..";
-import SaveButton from "../SaveButton/SaveButton";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Tiles } from "..";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { addCategory, CategoryState } from "../../../store/slices/categorySlice";
+import { RootState } from "../../../store/store";
+import { BEM } from "../../tools";
+import SaveButton from "../SaveButton/SaveButton";
+import "./style.css";
 
 export const Category = () => {
   const cssClasses = {

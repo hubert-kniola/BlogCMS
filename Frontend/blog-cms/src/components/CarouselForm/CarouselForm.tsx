@@ -1,20 +1,19 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useAppSelector } from "../../../store/hooks";
-import { CategoryState } from "../../../store/slices/categorySlice";
-import { RootState } from "../../../store/store";
-import Select from "react-select";
-import { BEM } from "../../tools";
-import FileUploader from "../FileUploader/FileUploader";
-import "./style.css";
-import SaveButton from "../SaveButton/SaveButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../store/hooks";
 import {
   addCarousel,
-  updateCarousel,
+  updateCarousel
 } from "../../../store/slices/configureSlice";
-import { Carousel } from "../../types";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
+import { RootState } from "../../../store/store";
+import { BEM, GetGTMDate } from "../../tools";
+import FileUploader from "../FileUploader/FileUploader";
+import SaveButton from "../SaveButton/SaveButton";
+import "./style.css";
 
 interface CarouselFormProps {
   type: string;
@@ -24,33 +23,21 @@ interface CarouselFormProps {
 
 const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   const dispatch = useDispatch();
-  const categoriesRedux = useAppSelector(
-    (state: RootState) => state.category.categories
-  );
-  const carousel = useAppSelector(
+  const carousels = useAppSelector(
     (state: RootState) => state.configure.carousel
   );
-  const [mainCategory, setMainCategory] = useState<CategoryState>({
-    title: null,
-    url: null,
-    subMenu: [],
-  });
-  const [subCategory, setSubCategory] = useState<CategoryState>({
-    title: null,
-    url: null,
-    subMenu: [],
-  });
-  const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
   const [richValue, setRichValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [activeSlide, setActiveSlide] = useState<boolean>(false);
 
   useEffect(() => {
     const initEditedPost = () => {
       if (type === "edit") {
-        if (carousel[index]) {
-          let editedPost = carousel[index];
-          setTitle(editedPost.title);
-          setRichValue(editedPost.content);
+        if (carousels[index]) {
+          let carousel = carousels[index];
+          setTitle(carousel.title);
+          setRichValue(carousel.content);
+          setActiveSlide(carousel.active)
         }
       }
     };
@@ -58,7 +45,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   }, []);
 
   const cssClasses = {
-    post: "carouselForm",
+    carousel: "carouselForm",
     container: "container",
     text: "text",
     elements: "elements",
@@ -75,12 +62,17 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
     setTitle(e.target.value);
   };
 
+  const handleActiveSlide = (e: any) => {
+    setActiveSlide(!activeSlide);
+  }
+
   const savePost = () => {
     const current = new Date();
     const payload: any = {
       title: title,
-      date: `${current.getDate()}-${current.getMonth()}-${current.getFullYear()}`,
+      date: GetGTMDate(),
       content: richValue,
+      active: activeSlide
     };
     if (type === "add") {
       dispatch(addCarousel(payload));
@@ -97,29 +89,46 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   );
 
   return (
-    <div className={BEM(cssClasses.post, cssClasses.container)}>
-      <div className={BEM(cssClasses.post, cssClasses.close)}>{closeIcon}</div>
+    <div className={BEM(cssClasses.carousel, cssClasses.container)}>
+      <div className={BEM(cssClasses.carousel, cssClasses.close)}>{closeIcon}</div>
       <h3
-        className={BEM(cssClasses.post, cssClasses.container, cssClasses.text)}
+        className={BEM(cssClasses.carousel, cssClasses.container, cssClasses.text)}
       >
         {type === "add" ? "Utwórz slajd" : "Edytuj slajd"}
       </h3>
-      <div className={BEM(cssClasses.post, cssClasses.elements)}>
+      <div className={BEM(cssClasses.carousel, cssClasses.elements)}>
         <p>Tytuł:</p>
         <input
-          className={BEM(cssClasses.post, cssClasses.title)}
+          className={BEM(cssClasses.carousel, cssClasses.title)}
           type="text"
           value={title}
           onChange={handleTitle}
         ></input>
         <p>Treść:</p>
         <textarea
-          className={BEM(cssClasses.post, cssClasses.title)}
+          className={BEM(cssClasses.carousel, cssClasses.title)}
           value={richValue}
           onChange={handleRich}
         />
-        <p>Zdjęcie:</p>
+        <p>Zdjęcie główne:</p>
         <FileUploader />
+        <p>Zdjęcia poboczne:</p>
+        <FileUploader />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={activeSlide}
+              onChange={handleActiveSlide}
+              sx={{
+                color: "#00eadc",
+                "&.Mui-checked": {
+                  color: "#00eadc",
+                },
+              }}
+            />
+          }
+          label="Aktywuj slajd"
+        />
       </div>
       <SaveButton
         handleSave={savePost}
