@@ -10,6 +10,7 @@ import { Post } from "../../types";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../../../store/store";
+import { mainColor } from "../../types/consts";
 
 interface IFormInput {
   title: string;
@@ -88,7 +89,7 @@ export const Contact = () => {
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
-      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }}/>
     </form>
   );
 };

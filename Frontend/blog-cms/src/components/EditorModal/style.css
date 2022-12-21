@@ -1,0 +1,73 @@
+.editorModal_container {
+  width: 40vw;
+  background-color: white;
+  box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.editorModal_elements {
+  margin-top: 3rem;
+  margin-right: auto;
+  margin-left: auto;
+  flex-direction: column;
+  display: flex;
+  overflow-y: auto;
+}
+
+.editorModal_close {
+  display: flex;
+  margin-right: 0px;
+  float: right;
+  margin-left: auto;
+}
+
+.editorModal_elements > p {
+  margin-top: 1rem;
+}
+
+.editorModal_container--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+  font-weight: 600;
+}
+
+.editorModal_title {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+}
+
+.editorModal_title--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+}
+
+div.DraftEditor-root {
+  background-color: rgb(236, 236, 236);
+  height: 50vh;
+  overflow-y: auto;
+}
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+  height: 100%;
+}
+div.rdw-editor-toolbar {
+  width: 35vw;
+}
+
+.editor_container {
+  min-height: 25vh;
+}

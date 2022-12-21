@@ -4,6 +4,7 @@ import { IconButton, TableCell, TableRow } from "@mui/material";
 import React from "react";
 import { useAppDispatch } from "../../../../store/hooks";
 import { BEM } from "../../../tools";
+import { mainColor } from "../../../types/consts";
 import "./style.css";
 
 interface RowProps {
@@ -25,7 +26,7 @@ const Row = ({ index, cells, date, openModal, actionOnDelete }: RowProps) => {
 
   const deleteIcon = (
     <IconButton onClick={() => actionOnDelete(index)}>
-      <DeleteIcon sx={{ color: "#00eadc" }} />
+      <DeleteIcon sx={{ color: mainColor }} />
     </IconButton>
   );
 

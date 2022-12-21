@@ -24,4 +24,5 @@ export const month = [
   "Nov",
   "Dec",
 ];
+
 export const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

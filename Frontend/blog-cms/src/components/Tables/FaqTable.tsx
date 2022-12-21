@@ -1,5 +1,11 @@
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Table, TableBody } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -7,6 +13,7 @@ import { deleteFaq } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
 import { FAQ } from "../../types";
+import { mainColor } from "../../types/consts";
 import FaqModal from "../FaqModal/FaqModal";
 import Row from "./Rows/Row";
 import "./style.css";
@@ -37,9 +44,24 @@ const FaqTable = () => {
     <>
       <div className={BEM(cssClasses.faqTable, cssClasses.container)}>
         <IconButton onClick={() => setOpenCreate(true)}>
-          <AddBoxIcon sx={{ color: "#00eadc" }} />
+          <AddBoxIcon sx={{ color: mainColor }} />
         </IconButton>
         <Table style={{ width: "60vw" }}>
+          {faqs.length > 0 && (
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Pytanie
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Odpowiedź
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Data
+                </TableCell>
+              </TableRow>
+            </TableHead>
+          )}
           <TableBody sx={{ width: "fit-content" }}>
             {faqs.map((element: FAQ, i: number) => {
               return (
@@ -52,7 +74,9 @@ const FaqTable = () => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) => dispatch(deleteFaq({index}))}
+                  actionOnDelete={(index: number) =>
+                    dispatch(deleteFaq({ index }))
+                  }
                 />
               );
             })}

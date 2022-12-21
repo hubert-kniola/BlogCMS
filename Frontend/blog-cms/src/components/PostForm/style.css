@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .postForm_elements {
@@ -19,6 +19,7 @@
   margin-left: auto;
   flex-direction: column;
   display: flex;
+  overflow-y: auto;
 }
 
 .postForm_close {
@@ -87,6 +88,6 @@
   outline: 2px dashed rgb(196, 196, 196);
 }
 
-.postForm_textarea:focus{
+.postForm_textarea:focus {
   outline: 2px dashed rgb(196, 196, 196);
 }

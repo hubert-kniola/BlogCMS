@@ -1,19 +1,26 @@
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Table, TableBody } from "@mui/material";
+import {
+  Table,
+  TableBody, TableCell, TableHead,
+  TableRow
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteCarousel } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
-import { Carousel, Post } from "../../types";
+import { Carousel } from "../../types";
+import { mainColor } from "../../types/consts";
 import CarouselModal from "../CarouselModal/CarouselModal";
 import Row from "./Rows/Row";
 import "./style.css";
 
 const CarouselTable = () => {
   const dispatch = useAppDispatch();
-  const carousel = useAppSelector((state: RootState) => state.configure.carousel);
+  const carousel = useAppSelector(
+    (state: RootState) => state.configure.carousel
+  );
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
@@ -37,22 +44,46 @@ const CarouselTable = () => {
     <>
       <div className={BEM(cssClasses.carouselTable, cssClasses.container)}>
         <IconButton onClick={() => setOpenCreate(true)}>
-          <AddBoxIcon sx={{ color: "#00eadc" }} />
+          <AddBoxIcon sx={{ color: mainColor }} />
         </IconButton>
         <Table style={{ width: "60vw" }}>
+          {carousel.length > 0 && (
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Tytuł
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Treść
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Aktywność
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Data
+                </TableCell>
+              </TableRow>
+            </TableHead>
+          )}
           <TableBody sx={{ width: "fit-content" }}>
             {carousel.map((element: Carousel, i: number) => {
               return (
                 <Row
                   key={i}
-                  cells={[element.title, element.content, element.active ? "Aktywny" : "Nieaktywny"]}
+                  cells={[
+                    element.title,
+                    element.content,
+                    element.active ? "Aktywny" : "Nieaktywny",
+                  ]}
                   date={element.date}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) => dispatch(deleteCarousel({index}))}
+                  actionOnDelete={(index: number) =>
+                    dispatch(deleteCarousel({ index }))
+                  }
                 />
               );
             })}

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import { MenuButton } from "../../components/MenuButton/MenuButton";
 import { BEM } from "../../tools";
+import { mainColor } from "../../types/consts";
 import "./style.css";
 
 const navList = [
@@ -78,7 +79,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
       <div className={cssClasses.profil}>
         <Avatar
           sx={{
-            bgcolor: "#00eadc",
+            bgcolor: mainColor,
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           }}
         >

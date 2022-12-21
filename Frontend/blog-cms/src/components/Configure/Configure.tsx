@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch } from "../../../store/hooks";
 import { BEM } from "../../tools";
+import { mainColor } from "../../types/consts";
 import Carousel from "./Carousel";
 import Faq from "./Faq";
 import Footer from "./Footer";
@@ -85,7 +86,7 @@ export const Configure = () => {
       <Footer onSubmit={notify} />
       <Carousel />
       <Faq />
-      <ToastContainer />
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }}/>
     </div>
   );
 };

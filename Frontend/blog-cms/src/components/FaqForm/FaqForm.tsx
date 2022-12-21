@@ -9,6 +9,7 @@ import {
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM, GetGTMDate } from "../../tools";
+import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
 
@@ -73,7 +74,7 @@ const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
 
   const closeIcon = (
     <IconButton onClick={handleClose}>
-      <CloseIcon sx={{ color: "#00eadc" }} />
+      <CloseIcon sx={{ color: mainColor }} />
     </IconButton>
   );
 

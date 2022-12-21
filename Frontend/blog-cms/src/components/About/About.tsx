@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FileUploader } from "..";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
+import { mainColor } from "../../types/consts";
 import "./style.css";
 
 interface IFormInput {
@@ -37,7 +38,7 @@ export const About = () => {
     const fetchData = () => {
       setValue("title", about.title);
       setValue("text", about.text);
-    }
+    };
 
     fetchData();
   });
@@ -45,7 +46,7 @@ export const About = () => {
   const notify = () => {
     toast.success(" Zapisano", {
       position: toast.POSITION.BOTTOM_RIGHT,
-      theme: "colored"
+      theme: "colored",
     });
   };
 
@@ -78,7 +79,7 @@ export const About = () => {
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
-      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
     </form>
   );
 };

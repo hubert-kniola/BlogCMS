@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import React from "react";
+import { mainColor } from "../../types/consts";
 import "./style.css";
 
 interface SaveButtonProps {
@@ -14,11 +15,11 @@ const SaveButton = ({handleSave, text}: SaveButtonProps) => {
         borderRadius: "2px",
         marginTop: "1rem",
         marginRight: "1rem",
-        color: "#00eadc",
-        borderColor: "#00eadc",
+        color: mainColor,
+        borderColor: mainColor,
         width: "10rem",
         "&:hover": {
-          backgroundColor: "#00eadc",
+          backgroundColor: mainColor,
           color: "white",
           borderColor: "white",
         },

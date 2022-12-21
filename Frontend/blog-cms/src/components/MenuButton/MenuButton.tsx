@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import { mainColor } from "../../types/consts";
 
 interface MenuButtonProps {
   menuItems: string[];
@@ -24,7 +25,7 @@ export const MenuButton = ({ menuItems }: MenuButtonProps) => {
   return (
     <div>
       <IconButton color="primary" onClick={handleClick} size="large">
-        <MenuIcon fontSize="large" sx={{ color: "#00eadc" }} />
+        <MenuIcon fontSize="large" sx={{ color: mainColor }} />
       </IconButton>
       <Menu
         id="fade-menu"

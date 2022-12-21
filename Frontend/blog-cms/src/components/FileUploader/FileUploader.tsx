@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Button from "@mui/material/Button";
+import { mainColor } from "../../types/consts";
 
 interface FileUploaderProps {
   changeInputFile?: () => void;
@@ -68,10 +69,10 @@ export const FileUploader = ({ changeInputFile }: FileUploaderProps) => {
         sx={{
           borderRadius: "2px",
           marginTop: "1rem",
-          color: "#00eadc",
-          borderColor: "#00eadc",
+          color: mainColor,
+          borderColor: mainColor,
           "&:hover": {
-            backgroundColor: "#00eadc",
+            backgroundColor: mainColor,
             color: "white",
             borderColor: "white",
           },

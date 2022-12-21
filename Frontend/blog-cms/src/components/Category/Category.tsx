@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { addCategory, CategoryState } from "../../../store/slices/categorySlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
+import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
 
@@ -127,7 +128,7 @@ export const Category = () => {
         </div>
       </div>
       <SaveButton handleSave={saveMenu} />
-      <ToastContainer toastStyle={{ backgroundColor: "#00eadc" }}/>
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }}/>
     </div>
   );
 };

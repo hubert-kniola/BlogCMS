@@ -11,6 +11,7 @@ import {
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM, GetGTMDate } from "../../tools";
+import { mainColor } from "../../types/consts";
 import FileUploader from "../FileUploader/FileUploader";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
@@ -84,7 +85,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
 
   const closeIcon = (
     <IconButton onClick={handleClose}>
-      <CloseIcon sx={{ color: "#00eadc" }} />
+      <CloseIcon sx={{ color: mainColor }} />
     </IconButton>
   );
 
@@ -112,17 +113,15 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
         />
         <p>Zdjęcie główne:</p>
         <FileUploader />
-        <p>Zdjęcia poboczne:</p>
-        <FileUploader />
         <FormControlLabel
           control={
             <Checkbox
               checked={activeSlide}
               onChange={handleActiveSlide}
               sx={{
-                color: "#00eadc",
+                color: mainColor,
                 "&.Mui-checked": {
-                  color: "#00eadc",
+                  color: mainColor,
                 },
               }}
             />

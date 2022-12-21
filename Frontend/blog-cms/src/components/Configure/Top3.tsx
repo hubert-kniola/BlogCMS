@@ -15,6 +15,7 @@ import {
   ConfigureState,
 } from "../../../store/slices/configureSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { mainColor } from "../../types/consts";
 
 interface Top3Props {
   onSubmit: () => void;
@@ -94,7 +95,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && "1px solid #00eadc",
+                outline: state.menuIsOpen && `1px solid ${mainColor}`,
                 width: "15rem",
               }),
             }}
@@ -110,7 +111,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && "1px solid #00eadc",
+                outline: state.menuIsOpen && `1px solid ${mainColor}`,
                 width: "15rem",
               }),
             }}
@@ -126,7 +127,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && "1px solid #00eadc",
+                outline: state.menuIsOpen && `1px solid ${mainColor}`,
                 width: "15rem",
               }),
             }}
