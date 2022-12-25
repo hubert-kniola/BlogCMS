@@ -1,4 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
@@ -7,22 +8,21 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
+import { convertToHTML } from "draft-convert";
+import { EditorState } from "draft-js";
 import React, { useEffect, useState } from "react";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { useAppSelector } from "../../../store/hooks";
 import { CategoryState } from "../../../store/slices/categorySlice";
 import { addPost, updatePost } from "../../../store/slices/postSlice";
 import { RootState } from "../../../store/store";
-import { BEM, GetGTMDate } from "../../tools";
+import { BEM, ConvertFromHtmlToEditorState, GetGTMDate } from "../../tools";
 import { mainColor } from "../../types/consts";
+import EditorModal from "../EditorModal/EditorModal";
 import FileUploader from "../FileUploader/FileUploader";
 import SaveButton from "../SaveButton/SaveButton";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import EditorModal from "../EditorModal/EditorModal";
-import Button from "@mui/material/Button";
 
 import "./style.css";
 
@@ -73,6 +73,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   });
   const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
+  const [mainSelectedFile, setMainSelectedFile] = useState<File>(null);
+  const [sideSelectedFiles, setSideSelectedFiles] = useState<File>(null);
   const [title, setTitle] = useState<string>("");
   const [placeInPopular, setPlaceInPopular] = useState<boolean>(false);
   const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
@@ -85,7 +87,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         if (posts[index]) {
           let editedPost = posts[index];
           setTitle(editedPost.title);
-          setRichValue(editedPost.content);
+          console.log(richValue);
+          console.log(editedPost.content);
+          setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
           setPlaceInPopular(editedPost.placeInPopular);
           setPublicOnDate(editedPost.publicOnDate);
           setPublicDate(editedPost.publicDate);
@@ -108,6 +112,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     title: "title",
     tag: "tag",
     close: "close",
+    padding: "padding",
   };
 
   const mapCategoriesToOptions = (categories: CategoryState[]): any => {
@@ -153,19 +158,15 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setTagCategory(event.value);
   };
 
-  const handleRich = (e: any) => {
-    setRichValue(e.target.value);
-  };
-
   const handleTitle = (e: any) => {
     setTitle(e.target.value);
   };
 
-  const handlePublicOnDate = (e: any) => {
+  const handlePublicOnDate = () => {
     setPublicOnDate(!publicOnDate);
   };
 
-  const handlePlaceInPopular = (e: any) => {
+  const handlePlaceInPopular = () => {
     setPlaceInPopular(!placeInPopular);
   };
 
@@ -173,11 +174,20 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setOpenEditor(false);
   };
 
+  const handleMainSelectedFile = (e: File) => {
+    setMainSelectedFile(e);
+  };
+
+  //TODO
+  const handleSideSelectedFiles = (e: File) => {
+    setSideSelectedFiles(e);
+  };
+
   const savePost = () => {
     const payload: any = {
       title: title,
       date: publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
-      content: richValue,
+      content: convertToHTML(richValue.getCurrentContent()),
       snippet: "",
       imgUrl: "",
       category: [mainCategory, subCategory].concat(tagCategory),
@@ -213,145 +223,159 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         >
           {type === "add" ? "Utwórz post" : "Edytuj post"}
         </h3>
-        <div className={BEM(cssClasses.post, cssClasses.elements)}>
-          <p>Tytuł:</p>
-          <input
-            className={BEM(cssClasses.post, cssClasses.title)}
-            type="text"
-            value={title}
-            onChange={handleTitle}
-          ></input>
-          <p>Treść:</p>
-          <Button
-            sx={{
-              borderRadius: "2px",
-              marginTop: "1rem",
-              color: mainColor,
-              borderColor: mainColor,
-              "&:hover": {
-                backgroundColor: mainColor,
-                color: "white",
-                borderColor: "white",
-              },
-            }}
-            variant="outlined"
-            component="label"
-            onClick={() => setOpenEditor(true)}
-          >
-            Modyfikuj
-          </Button>
-          <p>Zdjęcie główne:</p>
-          <FileUploader />
-          <p>Zdjęcia poboczne:</p>
-          <FileUploader />
-          <p>Kategoria główna:</p>
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
-              }),
-            }}
-            defaultValue={mainCategory.title ? mainCategory.title : "Brak"}
-            placeholder={"Nie wybrano"}
-            noOptionsMessage={() => "Brak"}
-            name="color"
-            options={mapCategoriesToOptions(categoriesRedux)}
-            onChange={handleMainCategory}
-            defaultInputValue={mainCategory.title}
-          />
-          <p>Podkategoria:</p>
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
-              }),
-            }}
-            defaultValue={"Brak"}
-            escapeClearsValue={!subCategory.title}
-            placeholder={"Nie wybrano"}
-            noOptionsMessage={() => "Brak"}
-            name="color"
-            options={mapSubCategoriesToOptions(mainCategory)}
-            onChange={handleSubCategory}
-            defaultInputValue={subCategory.title}
-          />
-          <p>Tagi:</p>
-          <Select
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
-              }),
-            }}
-            defaultValue={"Brak"}
-            isMulti
-            escapeClearsValue={!subCategory.title}
-            placeholder={"Nie wybrano"}
-            noOptionsMessage={() => "Brak"}
-            name="color"
-            options={mapTagCategoriesToOptions(subCategory)}
-            onChange={handleTagCategory}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={placeInPopular}
-                onChange={handlePlaceInPopular}
-                sx={{
-                  color: mainColor,
-                  "&.Mui-checked": {
+        <div
+          className={BEM(
+            cssClasses.post,
+            cssClasses.elements,
+            cssClasses.padding
+          )}
+        >
+          <div className={BEM(cssClasses.post, cssClasses.elements)}>
+            <p>Tytuł:</p>
+            <input
+              className={BEM(cssClasses.post, cssClasses.title)}
+              type="text"
+              value={title}
+              onChange={handleTitle}
+            ></input>
+            <p>Treść:</p>
+            <Button
+              sx={{
+                borderRadius: "2px",
+                marginTop: "1rem",
+                color: mainColor,
+                borderColor: mainColor,
+                "&:hover": {
+                  backgroundColor: mainColor,
+                  color: "white",
+                  borderColor: "white",
+                },
+              }}
+              variant="outlined"
+              component="label"
+              onClick={() => setOpenEditor(true)}
+            >
+              Modyfikuj
+            </Button>
+            <p>Zdjęcie główne:</p>
+            <FileUploader
+              inputFile={mainSelectedFile}
+              changeInputFile={handleMainSelectedFile}
+            />
+            <p>Zdjęcia poboczne:</p>
+            <FileUploader
+              inputFile={sideSelectedFiles}
+              changeInputFile={handleSideSelectedFiles}
+            />
+            <p>Kategoria główna:</p>
+            <Select
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                }),
+              }}
+              defaultValue={mainCategory.title ? mainCategory.title : "Brak"}
+              placeholder={"Nie wybrano"}
+              noOptionsMessage={() => "Brak"}
+              name="color"
+              options={mapCategoriesToOptions(categoriesRedux)}
+              onChange={handleMainCategory}
+              defaultInputValue={mainCategory.title}
+            />
+            <p>Podkategoria:</p>
+            <Select
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                }),
+              }}
+              defaultValue={"Brak"}
+              escapeClearsValue={!subCategory.title}
+              placeholder={"Nie wybrano"}
+              noOptionsMessage={() => "Brak"}
+              name="color"
+              options={mapSubCategoriesToOptions(mainCategory)}
+              onChange={handleSubCategory}
+              defaultInputValue={subCategory.title}
+            />
+            <p>Tagi:</p>
+            <Select
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                }),
+              }}
+              defaultValue={"Brak"}
+              isMulti
+              escapeClearsValue={!subCategory.title}
+              placeholder={"Nie wybrano"}
+              noOptionsMessage={() => "Brak"}
+              name="color"
+              options={mapTagCategoriesToOptions(subCategory)}
+              onChange={handleTagCategory}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={placeInPopular}
+                  onChange={handlePlaceInPopular}
+                  sx={{
                     color: mainColor,
-                  },
-                }}
-              />
-            }
-            label="Wyświetlaj w popularnych"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={publicOnDate}
-                onChange={handlePublicOnDate}
-                sx={{
-                  color: mainColor,
-                  "&.Mui-checked": {
+                    "&.Mui-checked": {
+                      color: mainColor,
+                    },
+                  }}
+                />
+              }
+              label="Wyświetlaj w popularnych"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={publicOnDate}
+                  onChange={handlePublicOnDate}
+                  sx={{
                     color: mainColor,
-                  },
-                }}
-              />
-            }
-            label="Opublikuj w wybranym momencie"
-          />
-          {publicOnDate && (
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                label="Data publikacji"
-                disablePast
-                value={publicDate}
-                onChange={(newValue) => {
-                  setPublicDate(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: mainColor,
+                    "&.Mui-checked": {
+                      color: mainColor,
+                    },
+                  }}
+                />
+              }
+              label="Opublikuj w wybranym momencie"
+            />
+            {publicOnDate && (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="Data publikacji"
+                  disablePast
+                  value={publicDate}
+                  onChange={(newValue) => {
+                    setPublicDate(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "&.Mui-focused fieldset": {
+                            borderColor: mainColor,
+                            color: mainColor,
+                          },
+                        },
+                        "& label.Mui-focused": {
                           color: mainColor,
                         },
-                      },
-                      "& label.Mui-focused": {
-                        color: mainColor,
-                      },
-                    }}
-                    {...params}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-          )}
+                      }}
+                      {...params}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+            )}
+          </div>
         </div>
         <SaveButton
           handleSave={savePost}

@@ -51,6 +51,7 @@ export const Category = () => {
 
   useEffect(() => {
     const fetchData = () => {
+      //TODO - implement load from redux after login fetch
       //dispatch(updateMenu());
     };
 

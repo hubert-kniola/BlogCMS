@@ -1,4 +1,7 @@
-import React, { useEffect } from "react";
+import Button from "@mui/material/Button";
+import { convertToHTML } from "draft-convert";
+import { EditorState } from "draft-js";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,8 +9,9 @@ import { FileUploader } from "..";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { RootState } from "../../../store/store";
-import { BEM } from "../../tools";
+import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
 import { mainColor } from "../../types/consts";
+import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
 
 interface IFormInput {
@@ -28,20 +32,34 @@ export const About = () => {
   const dispatch = useAppDispatch();
   const about = useAppSelector((state: RootState) => state.about);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
+  const [openEditor, setOpenEditor] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    data["file"] = null;
+    data["file"] = selectedFile;
+    data["text"] = convertToHTML(richValue.getCurrentContent());
     dispatch(updateAbout(data));
     notify();
   };
 
   useEffect(() => {
-    const fetchData = () => {
+    const fetchData = () => {3
+      //TODO - implement load from redux after login fetch
       setValue("title", about.title);
-      setValue("text", about.text);
+      about.text && setRichValue(ConvertFromHtmlToEditorState(about.text));
+      setSelectedFile(about.file);
     };
 
     fetchData();
-  });
+  }, []);
+
+  const handleCloseEditor = () => {
+    setOpenEditor(false);
+  }
+
+  const handleSelectedFile = (e: File) => {
+    setSelectedFile(e);
+  }
 
   const notify = () => {
     toast.success(" Zapisano", {
@@ -70,15 +88,35 @@ export const About = () => {
             {...register("title", { required: true })}
           />
           <p>Treść:</p>
-          <textarea
-            className={BEM(cssClasses.about, cssClasses.textarea)}
-            {...register("text", { required: true })}
-          />
+          <Button
+            sx={{
+              borderRadius: "2px",
+              marginTop: "1rem",
+              color: mainColor,
+              borderColor: mainColor,
+              "&:hover": {
+                backgroundColor: mainColor,
+                color: "white",
+                borderColor: "white",
+              },
+            }}
+            variant="outlined"
+            component="label"
+            onClick={() => setOpenEditor(true)}
+          >
+            Modyfikuj
+          </Button>
           <p>Zdjęcie:</p>
-          <FileUploader />
+          <FileUploader inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
+      <EditorModal
+        handleClose={handleCloseEditor}
+        open={openEditor}
+        editorValue={richValue}
+        setEditorValue={(element: any) => setRichValue(element)}
+      />
       <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
     </form>
   );

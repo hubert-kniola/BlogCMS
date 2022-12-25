@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 
 export interface AboutState {
   title: string;
-  text: string;
+  text: any;
   file?: any;
 }
 

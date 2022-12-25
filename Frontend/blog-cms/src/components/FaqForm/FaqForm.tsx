@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../store/hooks";
 import {
-    addFaq,
-    updateFaq
+  addFaq,
+  updateFaq
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM, GetGTMDate } from "../../tools";

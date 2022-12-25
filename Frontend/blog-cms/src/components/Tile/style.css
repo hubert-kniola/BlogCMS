@@ -62,7 +62,6 @@
 }
 
 .tile p {
-  height: 3vh;
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -75,7 +74,6 @@
 }
 
 .tile_sub p {
-  height: 3vh;
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -88,7 +86,6 @@
 }
 
 .tile_tag p {
-  height: 3vh;
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -103,7 +100,6 @@
 .tile_input {
   border-radius: 3px;
   width: 2vw;
-  height: 3vh;
   background-color: rgb(156, 156, 156);
   color: white;
   font-size: large;

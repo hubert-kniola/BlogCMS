@@ -11,6 +11,16 @@
     flex-direction: column;
     padding: 20px;
   }
+
+  .carouselForm_elements--padding {
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    flex-direction: column;
+    display: flex;
+  }
   
   .carouselForm_elements {
     margin-top: 3rem;

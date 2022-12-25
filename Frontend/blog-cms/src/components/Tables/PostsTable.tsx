@@ -7,7 +7,7 @@ import {
   TableCell,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deletePost } from "../../../store/slices/postSlice";
 import { RootState } from "../../../store/store";
@@ -16,6 +16,7 @@ import { Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import PostModal from "../PostModal/PostModal";
 import Row from "./Rows/Row";
+import { removeTags } from "../../tools";
 import "./style.css";
 
 const PostsTable = () => {
@@ -35,6 +36,14 @@ const PostsTable = () => {
     label: "label",
     date: "date",
   };
+
+  useEffect(() => {
+    const fetchData = () => {
+      //TODO - implement load from redux after login fetch
+    };
+
+    fetchData();
+  }, []);
 
   const handleCloseCreate = () => setOpenCreate(false);
 
@@ -67,7 +76,7 @@ const PostsTable = () => {
               return (
                 <Row
                   key={i}
-                  cells={[element.title, element.content]}
+                  cells={[element.title, removeTags(element.content)]}
                   date={element.date}
                   index={i}
                   openModal={() => {

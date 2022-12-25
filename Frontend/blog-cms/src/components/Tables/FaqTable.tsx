@@ -7,7 +7,7 @@ import {
   TableCell,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteFaq } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
@@ -35,6 +35,14 @@ const FaqTable = () => {
     label: "label",
     date: "date",
   };
+
+  useEffect(() => {
+    const fetchData = () => {
+      //TODO - implement load from redux after login fetch
+    };
+
+    fetchData();
+  }, []);
 
   const handleCloseCreate = () => setOpenCreate(false);
 

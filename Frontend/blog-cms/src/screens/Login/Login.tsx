@@ -74,7 +74,7 @@ export const Login = () => {
         >
           LOGIN
         </button>
-        <div className={cssClasses.register}>REGISTER</div>
+        <div className={cssClasses.register}><a href="https://www.rsx.page.com/1234-5678-9876-5432">VISIT PAGE</a></div>
         {!isValid && (
           <p className={cssClasses.valid}>
             You entered wrong e-mail or password!

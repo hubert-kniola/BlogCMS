@@ -4,7 +4,7 @@ import { TextPosition } from "./enums";
 export type Post = {
     title: string,
     date: string,
-    content: string,
+    content: any,
     snippet: string;
     imgUrl: string,
     category?: CategoryState[],

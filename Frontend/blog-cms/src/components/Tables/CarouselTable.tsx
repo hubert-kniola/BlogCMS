@@ -1,11 +1,13 @@
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import {
   Table,
-  TableBody, TableCell, TableHead,
-  TableRow
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteCarousel } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
@@ -35,6 +37,13 @@ const CarouselTable = () => {
     label: "label",
     date: "date",
   };
+
+  useEffect(() => {
+    const fetchData = () => {
+      //TODO - implement load from redux after login fetch
+    };
+    fetchData();
+  }, []);
 
   const handleCloseCreate = () => setOpenCreate(false);
 

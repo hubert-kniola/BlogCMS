@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../store/hooks";
 import {
   addCarousel,
-  updateCarousel
+  updateCarousel,
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM, GetGTMDate } from "../../tools";
@@ -29,6 +29,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   );
   const [richValue, setRichValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<File>(null);
   const [activeSlide, setActiveSlide] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           let carousel = carousels[index];
           setTitle(carousel.title);
           setRichValue(carousel.content);
-          setActiveSlide(carousel.active)
+          setActiveSlide(carousel.active);
         }
       }
     };
@@ -53,6 +54,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
     title: "title",
     tag: "tag",
     close: "close",
+    padding: "padding",
   };
 
   const handleRich = (e: any) => {
@@ -65,7 +67,11 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
 
   const handleActiveSlide = (e: any) => {
     setActiveSlide(!activeSlide);
-  }
+  };
+
+  const handleSelectedFile = (e: File) => {
+    setSelectedFile(e);
+  };
 
   const savePost = () => {
     const current = new Date();
@@ -73,7 +79,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       title: title,
       date: GetGTMDate(),
       content: richValue,
-      active: activeSlide
+      active: activeSlide,
     };
     if (type === "add") {
       dispatch(addCarousel(payload));
@@ -91,43 +97,60 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
 
   return (
     <div className={BEM(cssClasses.carousel, cssClasses.container)}>
-      <div className={BEM(cssClasses.carousel, cssClasses.close)}>{closeIcon}</div>
+      <div className={BEM(cssClasses.carousel, cssClasses.close)}>
+        {closeIcon}
+      </div>
       <h3
-        className={BEM(cssClasses.carousel, cssClasses.container, cssClasses.text)}
+        className={BEM(
+          cssClasses.carousel,
+          cssClasses.container,
+          cssClasses.text
+        )}
       >
         {type === "add" ? "Utwórz slajd" : "Edytuj slajd"}
       </h3>
-      <div className={BEM(cssClasses.carousel, cssClasses.elements)}>
-        <p>Tytuł:</p>
-        <input
-          className={BEM(cssClasses.carousel, cssClasses.title)}
-          type="text"
-          value={title}
-          onChange={handleTitle}
-        ></input>
-        <p>Treść:</p>
-        <textarea
-          className={BEM(cssClasses.carousel, cssClasses.title)}
-          value={richValue}
-          onChange={handleRich}
-        />
-        <p>Zdjęcie główne:</p>
-        <FileUploader />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={activeSlide}
-              onChange={handleActiveSlide}
-              sx={{
-                color: mainColor,
-                "&.Mui-checked": {
+      <div
+        className={BEM(
+          cssClasses.carousel,
+          cssClasses.elements,
+          cssClasses.padding
+        )}
+      >
+        <div className={BEM(cssClasses.carousel, cssClasses.elements)}>
+          <p>Tytuł:</p>
+          <input
+            className={BEM(cssClasses.carousel, cssClasses.title)}
+            type="text"
+            value={title}
+            onChange={handleTitle}
+          ></input>
+          <p>Treść:</p>
+          <textarea
+            className={BEM(cssClasses.carousel, cssClasses.title)}
+            value={richValue}
+            onChange={handleRich}
+          />
+          <p>Zdjęcie główne:</p>
+          <FileUploader
+            inputFile={selectedFile}
+            changeInputFile={handleSelectedFile}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={activeSlide}
+                onChange={handleActiveSlide}
+                sx={{
                   color: mainColor,
-                },
-              }}
-            />
-          }
-          label="Aktywuj slajd"
-        />
+                  "&.Mui-checked": {
+                    color: mainColor,
+                  },
+                }}
+              />
+            }
+            label="Aktywuj slajd"
+          />
+        </div>
       </div>
       <SaveButton
         handleSave={savePost}

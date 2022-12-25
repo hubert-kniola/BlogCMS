@@ -1,16 +1,17 @@
+import Button from "@mui/material/Button";
+import { EditorState } from "draft-js";
 import React, { useEffect, useState } from "react";
-import { BEM } from "../../tools";
-import "./style.css";
-import { FileUploader } from "..";
-import SaveButton from "../SaveButton/SaveButton";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { updateContact } from "../../../store/slices/contactSlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { Post } from "../../types";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FileUploader } from "..";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { updateContact } from "../../../store/slices/contactSlice";
 import { RootState } from "../../../store/store";
+import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
 import { mainColor } from "../../types/consts";
+import EditorModal from "../EditorModal/EditorModal";
+import "./style.css";
 
 interface IFormInput {
   title: string;
@@ -35,8 +36,11 @@ export const Contact = () => {
   };
 
   const dispatch = useAppDispatch();
-  const about = useAppSelector((state: RootState) => state.contact);
+  const contact = useAppSelector((state: RootState) => state.contact);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
+  const [openEditor, setOpenEditor] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     data["file"] = null;
     dispatch(updateContact(data));
@@ -45,12 +49,21 @@ export const Contact = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      setValue("title", about.title);
-      setValue("text", about.text);
+      //TODO - implement load from redux after login fetch
+      setValue("title", contact.title);
+      contact.text && setRichValue(ConvertFromHtmlToEditorState(contact.text));
     };
 
     fetchData();
   });
+
+  const handleCloseEditor = () => {
+    setOpenEditor(false);
+  };
+
+  const handleSelectedFile = (e: File) => {
+    setSelectedFile(e);
+  }
 
   const notify = () => {
     toast.success(" Zapisano", {
@@ -80,16 +93,36 @@ export const Contact = () => {
             {...register("title", { required: true })}
           ></input>
           <p>Treść:</p>
-          <textarea
-            className={BEM(cssClasses.contact, cssClasses.textarea)}
-            {...register("text", { required: true })}
-          />
+          <Button
+            sx={{
+              borderRadius: "2px",
+              marginTop: "1rem",
+              color: mainColor,
+              borderColor: mainColor,
+              "&:hover": {
+                backgroundColor: mainColor,
+                color: "white",
+                borderColor: "white",
+              },
+            }}
+            variant="outlined"
+            component="label"
+            onClick={() => setOpenEditor(true)}
+          >
+            Modyfikuj
+          </Button>
           <p>Zdjęcie:</p>
-          <FileUploader />
+          <FileUploader inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
-      <ToastContainer toastStyle={{ backgroundColor: mainColor }}/>
+      <EditorModal
+        handleClose={handleCloseEditor}
+        open={openEditor}
+        editorValue={richValue}
+        setEditorValue={(element: any) => setRichValue(element)}
+      />
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
     </form>
   );
 };
