@@ -1,16 +1,16 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { BEM } from "../../tools";
-import PostsTable from "./PostsTable";
+import PostsTable from "../Tables/PostsTable";
 import "./style.css";
 
-const Posts = () => {
+export const Posts = () => {
   const cssClasses = {
     post: "post",
     container: "container",
     configure: "configure",
     title: "title",
-    description: "description"
+    description: "description",
   };
 
   return (

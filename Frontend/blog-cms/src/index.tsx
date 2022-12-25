@@ -4,12 +4,10 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { store } from "../store/store";
-import apolloClient from "./apolloConfig";
+import apolloClient from "./apollo/apolloConfig";
 import { About, Category, Configure, Contact, Posts } from "./components";
 import "./index.css";
 import { AboutMePage, ContactPage, ErrorPage, GuestSwitchPanel, MainPage, PostPage, SwitchPanel } from "./screens";
-import { AboutMeView } from "./screens/AboutMeView/AboutMeView";
-import { ContactView } from "./screens/ContactView/ContactView";
 import { SendFiles } from "./screens/SendFiles/SendFiles";
 
 const router = createBrowserRouter([
@@ -68,11 +66,11 @@ const router = createBrowserRouter([
   },
   {
     path: "aboutMe",
-    element: <AboutMeView />,
+    element: <AboutMePage />,
   },
   {
     path: "contact",
-    element: <ContactView />,
+    element: <ContactPage />,
   },
   {
     path: "main",

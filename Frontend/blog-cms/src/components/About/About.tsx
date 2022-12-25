@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FileUploader } from "..";
+import FileUploader from "../FileUploader/FileUploader";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { RootState } from "../../../store/store";
