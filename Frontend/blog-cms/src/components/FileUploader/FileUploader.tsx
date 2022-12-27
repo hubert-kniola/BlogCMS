@@ -1,23 +1,35 @@
-import React, { useEffect, useState, useRef } from "react";
 import Button from "@mui/material/Button";
-import { mainColor } from "../../types/consts";
+import React, { useRef, useState } from "react";
 import { BEM } from "../../tools";
+import { UploadType } from "../../types";
+import { mainColor } from "../../types/consts";
 import "./style.css";
 
 interface FileUploaderProps {
-  inputFile?: File;
-  changeInputFile?: (file: File) => void;
+  inputFile?: any;
+  changeInputFile?: (files: any) => void;
+  type: UploadType;
+  count?: number;
 }
 
-const FileUploader = ({ inputFile, changeInputFile }: FileUploaderProps) => {
+const FileUploader = ({
+  inputFile,
+  changeInputFile,
+  type,
+  count,
+}: FileUploaderProps) => {
   const cssClasses = {
     fileUploader: "fileUploader",
     container: "container",
     delete: "delete",
     image: "image",
+    multi: "multi",
   };
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const sizeErrors = ["Możesz wstawić tylko 1 plik", "Wybrałeś za dużo plików"];
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>(null);
+  const [error, setError] = useState<string>(null);
   const [data, setData] = useState(null);
   const hiddenFileInput = useRef(null);
 
@@ -26,24 +38,30 @@ const FileUploader = ({ inputFile, changeInputFile }: FileUploaderProps) => {
   };
 
   const removeSelectedFile = () => {
-    setSelectedFile(null);
+    setSelectedFiles(null);
     changeInputFile(null);
   };
 
   const handleFileChange = (event: any) => {
-    setSelectedFile(event.target.files[0]);
-    changeInputFile(event.target.files[0]);
-    if (event.target.files[0]) {
+    let isError = true;
+    if (type === UploadType.Multi && event.target.files.length >= 1) {
+      isError = false;
+      setSelectedFiles(event.target.files);
+      changeInputFile(event.target.files);
+    } else if (event.target.files.length === 1) {
+      isError = false;
+      setSelectedFiles(event.target.files[0]);
+      changeInputFile(event.target.files[0]);
+    }
+
+    if (
+      (type === UploadType.Single ||
+        (type === UploadType.Multi && event.target.files.length === 1)) &&
+      !isError
+    ) {
       setData(
         <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-          <p>Nazwa: {event.target.files[0].name}</p>
-          <p>Typ: {event.target.files[0].type.replace("image/", "")}</p>
-          {event.target.files[0].lastModifiedDate && (
-            <p>
-              Ostatnio zmieniany:{" "}
-              {event.target.files[0].lastModifiedDate?.toDateString()}
-            </p>
-          )}
+          <p>Dodano plik: {event.target.files[0].name}</p>
           <div className={BEM(cssClasses.image, cssClasses.container)}>
             <img
               className={BEM(cssClasses.image, cssClasses.image)}
@@ -61,9 +79,49 @@ const FileUploader = ({ inputFile, changeInputFile }: FileUploaderProps) => {
       );
     } else {
       setData(
-        <div>
-          <br />
-          <h4>Wybierz</h4>
+        <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
+          <p>Dodano pliki:</p>
+          {event.target.files &&
+            Array.from(event.target.files).map(
+              (element: File, index: number) => {
+                return (
+                  <p>
+                    {index}. 
+                    {element.name}
+                  </p>
+                );
+              }
+            )}
+          <div className={BEM(cssClasses.image, cssClasses.container)}>
+            <div
+              className={BEM(
+                cssClasses.image,
+                cssClasses.container,
+                cssClasses.multi
+              )}
+            >
+              {event.target.files &&
+                Array.from(event.target.files).map((element: File) => {
+                  return (
+                    <img
+                      className={BEM(
+                        cssClasses.image,
+                        cssClasses.image,
+                        cssClasses.multi
+                      )}
+                      src={URL.createObjectURL(element)}
+                      alt="Thumb"
+                    />
+                  );
+                })}
+            </div>
+          </div>
+          <button
+            className={BEM(cssClasses.image, cssClasses.delete)}
+            onClick={removeSelectedFile}
+          >
+            Usuń obrazy
+          </button>
         </div>
       );
     }
@@ -87,9 +145,9 @@ const FileUploader = ({ inputFile, changeInputFile }: FileUploaderProps) => {
         component="label"
         onClick={handleClick}
       >
-        {selectedFile ? "Zmień" : "Dodaj"}
+        {selectedFiles ? "Zmień" : "Dodaj"}
       </Button>
-      {selectedFile && data}
+      {selectedFiles && data}
       <input
         ref={hiddenFileInput}
         hidden

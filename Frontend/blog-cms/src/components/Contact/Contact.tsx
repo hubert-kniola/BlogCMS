@@ -12,6 +12,7 @@ import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
+import { UploadType } from "../../types";
 
 interface IFormInput {
   title: string;
@@ -39,7 +40,7 @@ export const Contact = () => {
   const contact = useAppSelector((state: RootState) => state.contact);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     data["file"] = null;
@@ -61,9 +62,9 @@ export const Contact = () => {
     setOpenEditor(false);
   };
 
-  const handleSelectedFile = (e: File) => {
-    setSelectedFile(e);
-  }
+  const handleSelectedFiles = (e: File[]) => {
+    setSelectedFiles(e);
+  };
 
   const notify = () => {
     toast.success(" Zapisano", {
@@ -112,7 +113,11 @@ export const Contact = () => {
             Modyfikuj
           </Button>
           <p>Zdjęcie:</p>
-          <FileUploader inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
+          <FileUploader
+            type={UploadType.Single}
+            inputFile={selectedFiles}
+            changeInputFile={handleSelectedFiles}
+          />
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>

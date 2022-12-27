@@ -30,3 +30,16 @@
     max-width: 15vw;
     max-height: 15vw;
 }
+
+.image_image--multi {
+    max-width: 5vw;
+    max-height: 5vw;
+    display: flex;
+}
+
+.image_container--multi {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 15vw;
+}

@@ -19,6 +19,7 @@ import { CategoryState } from "../../../store/slices/categorySlice";
 import { addPost, updatePost } from "../../../store/slices/postSlice";
 import { RootState } from "../../../store/store";
 import { BEM, ConvertFromHtmlToEditorState, GetGTMDate } from "../../tools";
+import { UploadType } from "../../types";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import FileUploader from "../FileUploader/FileUploader";
@@ -74,7 +75,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const [mainSelectedFile, setMainSelectedFile] = useState<File>(null);
-  const [sideSelectedFiles, setSideSelectedFiles] = useState<File>(null);
+  const [sideSelectedFiles, setSideSelectedFiles] = useState<File[]>(null);
   const [title, setTitle] = useState<string>("");
   const [placeInPopular, setPlaceInPopular] = useState<boolean>(false);
   const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
@@ -179,7 +180,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   };
 
   //TODO
-  const handleSideSelectedFiles = (e: File) => {
+  const handleSideSelectedFiles = (e: File[]) => {
     setSideSelectedFiles(e);
   };
 
@@ -259,11 +260,14 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
             </Button>
             <p>Zdjęcie główne:</p>
             <FileUploader
+              type={UploadType.Single}
               inputFile={mainSelectedFile}
               changeInputFile={handleMainSelectedFile}
             />
             <p>Zdjęcia poboczne:</p>
             <FileUploader
+              type={UploadType.Multi}
+              count={10}
               inputFile={sideSelectedFiles}
               changeInputFile={handleSideSelectedFiles}
             />

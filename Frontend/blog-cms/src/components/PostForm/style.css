@@ -14,13 +14,14 @@
 }
 
 .postForm_elements--padding {
-  overflow-y: auto;
   max-height: 80vh;
+  width: 22vw;
   padding: 1rem;
   margin-right: auto;
   margin-left: auto;
   flex-direction: column;
   display: flex;
+  overflow-x: hidden;
 }
 
 .postForm_elements {
@@ -29,6 +30,7 @@
   margin-left: auto;
   flex-direction: column;
   display: flex;
+  overflow-x: hidden;
 }
 
 .postForm_close {

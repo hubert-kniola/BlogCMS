@@ -13,6 +13,7 @@ import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
+import { UploadType } from "../../types";
 
 interface IFormInput {
   title: string;
@@ -107,7 +108,7 @@ export const About = () => {
             Modyfikuj
           </Button>
           <p>Zdjęcie:</p>
-          <FileUploader inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
+          <FileUploader type={UploadType.Single} inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>

@@ -11,6 +11,7 @@ import {
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM, GetGTMDate } from "../../tools";
+import { UploadType } from "../../types";
 import { mainColor } from "../../types/consts";
 import FileUploader from "../FileUploader/FileUploader";
 import SaveButton from "../SaveButton/SaveButton";
@@ -132,6 +133,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           />
           <p>Zdjęcie główne:</p>
           <FileUploader
+            type={UploadType.Single}
             inputFile={selectedFile}
             changeInputFile={handleSelectedFile}
           />

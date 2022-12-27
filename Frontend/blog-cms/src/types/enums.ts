@@ -26,3 +26,8 @@ export const month = [
 ];
 
 export const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export enum UploadType {
+  Single = 0,
+  Multi = 1,
+}

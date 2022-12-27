@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import {
+  updateFooter
+} from "../../../store/slices/configureSlice";
+import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
 import "./style.css";
-import Select, { GroupBase } from "react-select";
-import FileUploader from "../FileUploader/FileUploader";
-import { Post } from "../../types";
-import { lorem, url1, url2 } from "../BestThree/BestThree";
-import SaveButton from "../SaveButton/SaveButton";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { RootState } from "../../../store/store";
-import {
-  updateCarousel,
-  updateTop3,
-  updateFooter,
-  ConfigureState,
-} from "../../../store/slices/configureSlice";
-import { useForm, SubmitHandler } from "react-hook-form";
 
 interface FooterProps {
   onSubmit: () => void;
