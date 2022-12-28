@@ -48,7 +48,7 @@ export const About = () => {
       //TODO - implement load from redux after login fetch
       setValue("title", about.title);
       about.text && setRichValue(ConvertFromHtmlToEditorState(about.text));
-      setSelectedFile(about.file);
+      about.file && setSelectedFile(about.file);
     };
 
     fetchData();

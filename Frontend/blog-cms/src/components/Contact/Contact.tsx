@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import { convertToHTML } from "draft-convert";
 import { EditorState } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -40,10 +41,11 @@ export const Contact = () => {
   const contact = useAppSelector((state: RootState) => state.contact);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>(null);
+  const [selectedFile, setSelectedFile] = useState<File>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    data["file"] = null;
+    data["file"] = selectedFile;
+    data["text"] = convertToHTML(richValue.getCurrentContent());
     dispatch(updateContact(data));
     notify();
   };
@@ -52,18 +54,19 @@ export const Contact = () => {
     const fetchData = () => {
       //TODO - implement load from redux after login fetch
       setValue("title", contact.title);
+      contact.file && setSelectedFile(contact.file);
       contact.text && setRichValue(ConvertFromHtmlToEditorState(contact.text));
     };
 
     fetchData();
-  });
+  }, []);
 
   const handleCloseEditor = () => {
     setOpenEditor(false);
   };
 
-  const handleSelectedFiles = (e: File[]) => {
-    setSelectedFiles(e);
+  const handleSelectedFile = (e: File) => {
+    setSelectedFile(e);
   };
 
   const notify = () => {
@@ -115,8 +118,8 @@ export const Contact = () => {
           <p>Zdjęcie:</p>
           <FileUploader
             type={UploadType.Single}
-            inputFile={selectedFiles}
-            changeInputFile={handleSelectedFiles}
+            inputFile={selectedFile}
+            changeInputFile={handleSelectedFile}
           />
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />

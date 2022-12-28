@@ -42,7 +42,102 @@ const FileUploader = ({
     changeInputFile(null);
   };
 
-  const handleFileChange = (event: any) => {
+  const singleData = (event?: any) => {
+    return (
+      <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
+        <p>
+          Dodano plik: {inputFile ? inputFile.name : event.target.files[0].name}
+        </p>
+        <div className={BEM(cssClasses.image, cssClasses.container)}>
+          <img
+            className={BEM(cssClasses.image, cssClasses.image)}
+            src={URL.createObjectURL(
+              inputFile ? inputFile : event.target.files[0]
+            )}
+            alt="Thumb"
+          />
+          <button
+            className={BEM(cssClasses.image, cssClasses.delete)}
+            onClick={removeSelectedFile}
+          >
+            Usuń obraz
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const multiData = (event?: any) => {
+    return (
+      <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
+        <p>Dodano pliki:</p>
+        {inputFile
+          ? Array.from(inputFile).map((element: File, index: number) => {
+              return (
+                <p>
+                  {index}.{element.name}
+                </p>
+              );
+            })
+          : event.target.files &&
+            Array.from(event.target.files).map(
+              (element: File, index: number) => {
+                return (
+                  <p>
+                    {index}.{element.name}
+                  </p>
+                );
+              }
+            )}
+        <div className={BEM(cssClasses.image, cssClasses.container)}>
+          <div
+            className={BEM(
+              cssClasses.image,
+              cssClasses.container,
+              cssClasses.multi
+            )}
+          >
+            {inputFile
+              ? Array.from(inputFile).map((element: File) => {
+                  return (
+                    <img
+                      className={BEM(
+                        cssClasses.image,
+                        cssClasses.image,
+                        cssClasses.multi
+                      )}
+                      src={URL.createObjectURL(element)}
+                      alt="Thumb"
+                    />
+                  );
+                })
+              : event.target.files &&
+                Array.from(event.target.files).map((element: File) => {
+                  return (
+                    <img
+                      className={BEM(
+                        cssClasses.image,
+                        cssClasses.image,
+                        cssClasses.multi
+                      )}
+                      src={URL.createObjectURL(element)}
+                      alt="Thumb"
+                    />
+                  );
+                })}
+          </div>
+        </div>
+        <button
+          className={BEM(cssClasses.image, cssClasses.delete)}
+          onClick={removeSelectedFile}
+        >
+          Usuń obrazy
+        </button>
+      </div>
+    );
+  };
+
+  const handleFileSet = (event: any) => {
     let isError = true;
     if (type === UploadType.Multi && event.target.files.length >= 1) {
       isError = false;
@@ -59,71 +154,17 @@ const FileUploader = ({
         (type === UploadType.Multi && event.target.files.length === 1)) &&
       !isError
     ) {
-      setData(
-        <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-          <p>Dodano plik: {event.target.files[0].name}</p>
-          <div className={BEM(cssClasses.image, cssClasses.container)}>
-            <img
-              className={BEM(cssClasses.image, cssClasses.image)}
-              src={URL.createObjectURL(event.target.files[0])}
-              alt="Thumb"
-            />
-            <button
-              className={BEM(cssClasses.image, cssClasses.delete)}
-              onClick={removeSelectedFile}
-            >
-              Usuń obraz
-            </button>
-          </div>
-        </div>
-      );
+      setData(singleData(event));
     } else {
-      setData(
-        <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-          <p>Dodano pliki:</p>
-          {event.target.files &&
-            Array.from(event.target.files).map(
-              (element: File, index: number) => {
-                return (
-                  <p>
-                    {index}. 
-                    {element.name}
-                  </p>
-                );
-              }
-            )}
-          <div className={BEM(cssClasses.image, cssClasses.container)}>
-            <div
-              className={BEM(
-                cssClasses.image,
-                cssClasses.container,
-                cssClasses.multi
-              )}
-            >
-              {event.target.files &&
-                Array.from(event.target.files).map((element: File) => {
-                  return (
-                    <img
-                      className={BEM(
-                        cssClasses.image,
-                        cssClasses.image,
-                        cssClasses.multi
-                      )}
-                      src={URL.createObjectURL(element)}
-                      alt="Thumb"
-                    />
-                  );
-                })}
-            </div>
-          </div>
-          <button
-            className={BEM(cssClasses.image, cssClasses.delete)}
-            onClick={removeSelectedFile}
-          >
-            Usuń obrazy
-          </button>
-        </div>
-      );
+      setData(multiData(event));
+    }
+  };
+
+  const handleFileEdit = () => {
+    if (inputFile.length > 1) {
+      return multiData();
+    } else {
+      return singleData();
     }
   };
 
@@ -145,16 +186,16 @@ const FileUploader = ({
         component="label"
         onClick={handleClick}
       >
-        {selectedFiles ? "Zmień" : "Dodaj"}
+        {inputFile ? "Zmień" : selectedFiles ? "Zmień" : "Dodaj"}
       </Button>
-      {selectedFiles && data}
+      {inputFile ? handleFileEdit() : selectedFiles && data}
       <input
         ref={hiddenFileInput}
         hidden
         accept="image/*"
         multiple
         type="file"
-        onChange={handleFileChange}
+        onChange={handleFileSet}
         style={{ display: "none" }}
       />
     </>

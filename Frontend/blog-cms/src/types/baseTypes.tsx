@@ -16,6 +16,7 @@ export type Carousel = {
     content: string;
     date: string;
     imgUrl: string;
+    file: File;
     active: boolean;
 }
 

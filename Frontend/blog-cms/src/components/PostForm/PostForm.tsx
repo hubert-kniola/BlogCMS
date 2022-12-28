@@ -88,8 +88,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         if (posts[index]) {
           let editedPost = posts[index];
           setTitle(editedPost.title);
-          console.log(richValue);
-          console.log(editedPost.content);
+          setMainSelectedFile(editedPost.mainImage);
+          setSideSelectedFiles(editedPost.sideImages);
           setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
           setPlaceInPopular(editedPost.placeInPopular);
           setPublicOnDate(editedPost.publicOnDate);
@@ -191,6 +191,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
       content: convertToHTML(richValue.getCurrentContent()),
       snippet: "",
       imgUrl: "",
+      mainImage: mainSelectedFile,
+      sideImages: sideSelectedFiles,
       category: [mainCategory, subCategory].concat(tagCategory),
       publicOnDate: publicOnDate,
       placeInPopular: placeInPopular,

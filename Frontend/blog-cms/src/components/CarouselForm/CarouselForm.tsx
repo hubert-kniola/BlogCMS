@@ -41,6 +41,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           setTitle(carousel.title);
           setRichValue(carousel.content);
           setActiveSlide(carousel.active);
+          setSelectedFile(carousel.file);
         }
       }
     };
@@ -80,6 +81,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       title: title,
       date: GetGTMDate(),
       content: richValue,
+      file: selectedFile,
       active: activeSlide,
     };
     if (type === "add") {
