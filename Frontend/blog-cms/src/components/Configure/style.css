@@ -86,6 +86,10 @@
   outline: 2px dashed rgb(196, 196, 196);
 }
 
+.title_container > p {
+  margin-top: 1rem;
+}
+
 .title_select {
   outline-color: #00eadc;
 }

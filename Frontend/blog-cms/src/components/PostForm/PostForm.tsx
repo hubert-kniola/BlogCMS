@@ -114,6 +114,11 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     tag: "tag",
     close: "close",
     padding: "padding",
+    header: "header",
+    content: "content",
+    footer: "footer",
+    selects: "selects",
+    datepicker: "datepicker",
   };
 
   const mapCategoriesToOptions = (categories: CategoryState[]): any => {
@@ -214,25 +219,21 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   return (
     <>
       <div className={BEM(cssClasses.post, cssClasses.container)}>
-        <div className={BEM(cssClasses.post, cssClasses.close)}>
-          {closeIcon}
+        <div className={BEM(cssClasses.post, cssClasses.header)}>
+          <div className={BEM(cssClasses.post, cssClasses.close)}>
+            {closeIcon}
+          </div>
+          <h3
+            className={BEM(
+              cssClasses.post,
+              cssClasses.container,
+              cssClasses.text
+            )}
+          >
+            {type === "add" ? "Utwórz post" : "Edytuj post"}
+          </h3>
         </div>
-        <h3
-          className={BEM(
-            cssClasses.post,
-            cssClasses.container,
-            cssClasses.text
-          )}
-        >
-          {type === "add" ? "Utwórz post" : "Edytuj post"}
-        </h3>
-        <div
-          className={BEM(
-            cssClasses.post,
-            cssClasses.elements,
-            cssClasses.padding
-          )}
-        >
+        <div className={BEM(cssClasses.post, cssClasses.content)}>
           <div className={BEM(cssClasses.post, cssClasses.elements)}>
             <p>Tytuł:</p>
             <input
@@ -248,6 +249,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                 marginTop: "1rem",
                 color: mainColor,
                 borderColor: mainColor,
+                width: "10vw",
                 "&:hover": {
                   backgroundColor: mainColor,
                   color: "white",
@@ -273,56 +275,88 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               inputFile={sideSelectedFiles}
               changeInputFile={handleSideSelectedFiles}
             />
-            <p>Kategoria główna:</p>
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
-                }),
-              }}
-              defaultValue={mainCategory.title ? mainCategory.title : "Brak"}
-              placeholder={"Nie wybrano"}
-              noOptionsMessage={() => "Brak"}
-              name="color"
-              options={mapCategoriesToOptions(categoriesRedux)}
-              onChange={handleMainCategory}
-              defaultInputValue={mainCategory.title}
-            />
-            <p>Podkategoria:</p>
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
-                }),
-              }}
-              defaultValue={"Brak"}
-              escapeClearsValue={!subCategory.title}
-              placeholder={"Nie wybrano"}
-              noOptionsMessage={() => "Brak"}
-              name="color"
-              options={mapSubCategoriesToOptions(mainCategory)}
-              onChange={handleSubCategory}
-              defaultInputValue={subCategory.title}
-            />
-            <p>Tagi:</p>
-            <Select
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  outline: state.menuIsOpen && `1px solid ${mainColor}`,
-                }),
-              }}
-              defaultValue={"Brak"}
-              isMulti
-              escapeClearsValue={!subCategory.title}
-              placeholder={"Nie wybrano"}
-              noOptionsMessage={() => "Brak"}
-              name="color"
-              options={mapTagCategoriesToOptions(subCategory)}
-              onChange={handleTagCategory}
-            />
+            <div className={BEM(cssClasses.post, cssClasses.selects)}>
+              <p>Kategoria główna:</p>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    marginTop: "1rem",
+                    marginLeft: "0.1rem",
+                  }),
+                }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "hotpink",
+                    primary: mainColor,
+                  },
+                })}
+                defaultValue={mainCategory.title ? mainCategory.title : "Brak"}
+                placeholder={"Nie wybrano"}
+                noOptionsMessage={() => "Brak"}
+                name="color"
+                options={mapCategoriesToOptions(categoriesRedux)}
+                onChange={handleMainCategory}
+                defaultInputValue={mainCategory.title}
+              />
+              <p>Podkategoria:</p>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    marginTop: "1rem",
+                    marginLeft: "0.1rem",
+                  }),
+                }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "hotpink",
+                    primary: mainColor,
+                  },
+                })}
+                defaultValue={"Brak"}
+                escapeClearsValue={!subCategory.title}
+                placeholder={"Nie wybrano"}
+                noOptionsMessage={() => "Brak"}
+                name="color"
+                options={mapSubCategoriesToOptions(mainCategory)}
+                onChange={handleSubCategory}
+                defaultInputValue={subCategory.title}
+              />
+              <p>Tagi:</p>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    marginTop: "1rem",
+                    marginLeft: "0.1rem",
+                  }),
+                }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "hotpink",
+                    primary: mainColor,
+                  },
+                })}
+                defaultValue={"Brak"}
+                isMulti
+                escapeClearsValue={!subCategory.title}
+                placeholder={"Nie wybrano"}
+                noOptionsMessage={() => "Brak"}
+                name="color"
+                options={mapTagCategoriesToOptions(subCategory)}
+                onChange={handleTagCategory}
+              />
+            </div>
             <FormControlLabel
               control={
                 <Checkbox
@@ -354,39 +388,43 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               label="Opublikuj w wybranym momencie"
             />
             {publicOnDate && (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                  label="Data publikacji"
-                  disablePast
-                  value={publicDate}
-                  onChange={(newValue) => {
-                    setPublicDate(newValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          "&.Mui-focused fieldset": {
-                            borderColor: mainColor,
+              <div className={BEM(cssClasses.post, cssClasses.datepicker)}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    label="Data publikacji"
+                    disablePast
+                    value={publicDate}
+                    onChange={(newValue) => {
+                      setPublicDate(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              borderColor: mainColor,
+                              color: mainColor,
+                            },
+                          },
+                          "& label.Mui-focused": {
                             color: mainColor,
                           },
-                        },
-                        "& label.Mui-focused": {
-                          color: mainColor,
-                        },
-                      }}
-                      {...params}
-                    />
-                  )}
-                />
-              </LocalizationProvider>
+                        }}
+                        {...params}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </div>
             )}
           </div>
         </div>
-        <SaveButton
-          handleSave={savePost}
-          text={type === "add" ? "Dodaj" : "Edytuj"}
-        />
+        <div className={BEM(cssClasses.post, cssClasses.footer)}>
+          <SaveButton
+            handleSave={savePost}
+            text={type === "add" ? "Dodaj" : "Edytuj"}
+          />
+        </div>
       </div>
       <EditorModal
         handleClose={handleCloseEditor}

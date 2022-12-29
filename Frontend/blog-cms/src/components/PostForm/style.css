@@ -25,12 +25,12 @@
 }
 
 .postForm_elements {
-  margin-top: 3rem;
   margin-right: auto;
   margin-left: auto;
   flex-direction: column;
   display: flex;
   overflow-x: hidden;
+  margin-left: 10vw;
 }
 
 .postForm_close {
@@ -57,6 +57,7 @@
   width: 15vw;
   height: 4vh;
   margin-top: 0.5rem;
+  margin-left: 0.1rem;
   padding: 0 8px;
 }
 
@@ -66,12 +67,44 @@
   font-size: large;
 }
 
+.postForm_header {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.postForm_footer {
+  width: 100%;
+  height: 6vh;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .postForm_content {
-  height: 15vh;
-  width: 25vw;
-  background-color: rgb(241, 241, 241);
-  border-radius: 3px;
-  outline-color: rgb(199, 199, 199);
+  width: 100%;
+  height: 70vh;
+  overflow-y: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2rem;
+}
+
+.postForm_selects {
+  width: 20vw;
+}
+
+.postForm_datepicker {
+  width: 20vw;
+}
+
+.postForm_selects > p{
+  margin-top: 1rem;
 }
 
 .postForm_elements > textarea:focus {

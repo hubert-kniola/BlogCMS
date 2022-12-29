@@ -103,6 +103,7 @@ export const Contact = () => {
               marginTop: "1rem",
               color: mainColor,
               borderColor: mainColor,
+              width: "10vw",
               "&:hover": {
                 backgroundColor: mainColor,
                 color: "white",

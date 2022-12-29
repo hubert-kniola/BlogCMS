@@ -95,10 +95,20 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                marginTop: "0.5rem",
+                marginLeft: "0.1rem",
                 width: "15rem",
               }),
             }}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: "hotpink",
+                primary: mainColor,
+              },
+            })}
             defaultValue={"Brak"}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
@@ -111,10 +121,20 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                marginTop: "0.5rem",
+                marginLeft: "0.1rem",
                 width: "15rem",
               }),
             }}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: "hotpink",
+                primary: mainColor,
+              },
+            })}
             defaultValue={"Brak"}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
@@ -127,10 +147,20 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                outline: state.menuIsOpen && `1px solid ${mainColor}`,
+                marginTop: "0.5rem",
+                marginLeft: "0.1rem",
                 width: "15rem",
               }),
             }}
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: "hotpink",
+                primary: mainColor,
+              },
+            })}
             defaultValue={"Brak"}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
