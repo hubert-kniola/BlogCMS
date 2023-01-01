@@ -26,7 +26,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   const posts = useAppSelector((state: RootState) => state.post.posts);
   const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const [avaiblePosts, setAvaiblePosts] = useState(posts);
-  const [selectedPosts, setSelectedPosts] = useState<Post[]>([]);
+  const [selectedPosts, setSelectedPosts] = useState([]);
   const { register, setValue, handleSubmit } = useForm();
 
   const cssClasses = {
@@ -39,14 +39,19 @@ const Top3 = ({ onSubmit }: Top3Props) => {
 
   useEffect(() => {
     const fetchData = () => {
-      console.log(top3);
+      top3 && setSelectedPosts(mapPostsToOptions(top3));
+      let avaiblePosts;
+      if (top3 && posts) {
+        avaiblePosts = posts.filter((element) => !top3.includes(element));
+        setAvaiblePosts(avaiblePosts);
+      }
     };
 
     fetchData();
   }, []);
 
   const onSubmitTop3: SubmitHandler<any> = async (data) => {
-    dispatch(updateTop3(selectedPosts));
+    dispatch(updateTop3(selectedPosts.map((element: any) => element.value)));
     onSubmit();
   };
 
@@ -60,12 +65,18 @@ const Top3 = ({ onSubmit }: Top3Props) => {
     return options;
   };
 
-  const handlePostSelection = (e: any) => {
+  const handlePostSelection = (e: any, index: number) => {
     const restPosts = avaiblePosts.filter(
       (elem) => elem.title !== e.label.split("-")[0]
     );
     setAvaiblePosts(restPosts);
-    setSelectedPosts([...selectedPosts, e]);
+    let items = [...selectedPosts];
+    if (items[index]) {
+      items[index] = e;
+      setSelectedPosts([selectedPosts]);
+    } else {
+      setSelectedPosts([...selectedPosts, e]);
+    }
   };
 
   return (
@@ -105,16 +116,16 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               borderRadius: 0,
               colors: {
                 ...theme.colors,
-                primary25: "hotpink",
                 primary: mainColor,
               },
             })}
             defaultValue={"Brak"}
+            value={selectedPosts.length >= 1 && (selectedPosts[0] as any)}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
             options={mapPostsToOptions(avaiblePosts)}
-            onChange={handlePostSelection}
+            onChange={(e) => handlePostSelection(e, 0)}
           />
           <p>Post 2:</p>
           <Select
@@ -131,16 +142,16 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               borderRadius: 0,
               colors: {
                 ...theme.colors,
-                primary25: "hotpink",
                 primary: mainColor,
               },
             })}
             defaultValue={"Brak"}
+            value={selectedPosts.length >= 1 && (selectedPosts[1] as any)}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
             options={mapPostsToOptions(avaiblePosts)}
-            onChange={handlePostSelection}
+            onChange={(e) => handlePostSelection(e, 1)}
           />
           <p>Post 3:</p>
           <Select
@@ -157,16 +168,16 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               borderRadius: 0,
               colors: {
                 ...theme.colors,
-                primary25: "hotpink",
                 primary: mainColor,
               },
             })}
             defaultValue={"Brak"}
+            value={selectedPosts.length >= 1 && (selectedPosts[2] as any)}
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
             options={mapPostsToOptions(avaiblePosts)}
-            onChange={handlePostSelection}
+            onChange={(e) => handlePostSelection(e, 2)}
           />
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />

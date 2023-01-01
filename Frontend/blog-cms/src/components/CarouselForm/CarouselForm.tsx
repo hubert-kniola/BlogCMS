@@ -52,6 +52,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
     carousel: "carouselForm",
     container: "container",
     text: "text",
+    textarea: "textarea",
     elements: "elements",
     title: "title",
     tag: "tag",
@@ -129,7 +130,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           ></input>
           <p>Treść:</p>
           <textarea
-            className={BEM(cssClasses.carousel, cssClasses.title)}
+            className={BEM(cssClasses.carousel, cssClasses.textarea)}
             value={richValue}
             onChange={handleRich}
           />

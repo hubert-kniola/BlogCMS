@@ -62,21 +62,24 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     (state: RootState) => state.category.categories
   );
   const posts = useAppSelector((state: RootState) => state.post.posts);
-  const [mainCategory, setMainCategory] = useState<CategoryState>({
+  const [mainCategory, setMainCategory] = useState({
     title: null,
     url: null,
     subMenu: [],
   });
-  const [subCategory, setSubCategory] = useState<CategoryState>({
+  const [subCategory, setSubCategory] = useState({
     title: null,
     url: null,
     subMenu: [],
   });
-  const [tagCategory, setTagCategory] = useState<CategoryState[]>([]);
+  const [tagCategory, setTagCategory] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const [mainSelectedFile, setMainSelectedFile] = useState<File>(null);
   const [sideSelectedFiles, setSideSelectedFiles] = useState<File[]>(null);
+  const [snippet, setSnippet] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [timeToRead, setTimeToRead] = useState(null);
   const [placeInPopular, setPlaceInPopular] = useState<boolean>(false);
   const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
   const [publicOnDate, setPublicOnDate] = useState<boolean>(false);
@@ -91,6 +94,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           setMainSelectedFile(editedPost.mainImage);
           setSideSelectedFiles(editedPost.sideImages);
           setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
+          setSelectedCategories(mapCategoriesToOptions(editedPost.category));
+          setSnippet(editedPost.snippet);
+          setTimeToRead(editedPost.timeToRead);
           setPlaceInPopular(editedPost.placeInPopular);
           setPublicOnDate(editedPost.publicOnDate);
           setPublicDate(editedPost.publicDate);
@@ -108,6 +114,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     post: "postForm",
     container: "container",
     text: "text",
+    textarea: "textarea",
     editor: "editor",
     elements: "elements",
     title: "title",
@@ -145,7 +152,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     return options;
   };
 
-  const handleMainCategory = (event: any) => {
+  const handleMainCategory = (event: any, index: number) => {
     setMainCategory(event.value);
     setSubCategory({
       title: null,
@@ -153,19 +160,48 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
       subMenu: [],
     });
     setTagCategory([]);
+    let items = selectedCategories;
+    if (items[index]) {
+      items[index] = event;
+      setSelectedCategories(items);
+    } else {
+      setSelectedCategories([...selectedCategories, event]);
+    }
   };
 
-  const handleSubCategory = (event: any) => {
+  const handleSubCategory = (event: any, index: number) => {
     setSubCategory(event.value);
     setTagCategory([]);
+    let items = selectedCategories;
+    if (items[index]) {
+      items[index] = event;
+      setSelectedCategories(items);
+    } else {
+      setSelectedCategories([...selectedCategories, event]);
+    }
   };
 
-  const handleTagCategory = (event: any) => {
+  const handleTagCategory = (event: any, index: number) => {
     setTagCategory(event.value);
+    let items = selectedCategories;
+    if (items[index]) {
+      items[index] = event;
+      setSelectedCategories(items);
+    } else {
+      setSelectedCategories([...selectedCategories, event]);
+    }
   };
 
   const handleTitle = (e: any) => {
     setTitle(e.target.value);
+  };
+
+  const handleSnippet = (e: any) => {
+    setSnippet(e.target.value);
+  };
+
+  const handleTimeToRead = (e: any) => {
+    setTimeToRead(+e.target.value);
   };
 
   const handlePublicOnDate = () => {
@@ -190,15 +226,22 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   };
 
   const savePost = () => {
+    let category = [];
+    if (mainCategory) {
+      category.push(mainCategory);
+      subCategory.title !== null && category.push(subCategory);
+      tagCategory && category.concat(tagCategory);
+    }
     const payload: any = {
       title: title,
       date: publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
       content: convertToHTML(richValue.getCurrentContent()),
-      snippet: "",
+      snippet: snippet,
+      timeToRead: timeToRead,
       imgUrl: "",
       mainImage: mainSelectedFile,
       sideImages: sideSelectedFiles,
-      category: [mainCategory, subCategory].concat(tagCategory),
+      category: category,
       publicOnDate: publicOnDate,
       placeInPopular: placeInPopular,
     };
@@ -241,6 +284,19 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               type="text"
               value={title}
               onChange={handleTitle}
+            ></input>
+            <p>Krótki opis (snippet):</p>
+            <textarea
+              className={BEM(cssClasses.post, cssClasses.textarea)}
+              value={snippet}
+              onChange={handleSnippet}
+            />
+            <p>Czas na przeczytanie (min):</p>
+            <input
+              className={BEM(cssClasses.post, cssClasses.title)}
+              type="number"
+              value={timeToRead}
+              onChange={handleTimeToRead}
             ></input>
             <p>Treść:</p>
             <Button
@@ -294,12 +350,13 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                     primary: mainColor,
                   },
                 })}
-                defaultValue={mainCategory.title ? mainCategory.title : "Brak"}
+                defaultValue={"Brak"}
+                value={selectedCategories.length >= 1 && selectedCategories[0]}
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"
                 options={mapCategoriesToOptions(categoriesRedux)}
-                onChange={handleMainCategory}
+                onChange={(e) => handleMainCategory(e, 0)}
                 defaultInputValue={mainCategory.title}
               />
               <p>Podkategoria:</p>
@@ -322,11 +379,12 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                 })}
                 defaultValue={"Brak"}
                 escapeClearsValue={!subCategory.title}
+                value={selectedCategories.length >= 1 && selectedCategories[1]}
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"
                 options={mapSubCategoriesToOptions(mainCategory)}
-                onChange={handleSubCategory}
+                onChange={(e) => handleSubCategory(e, 1)}
                 defaultInputValue={subCategory.title}
               />
               <p>Tagi:</p>
@@ -348,13 +406,17 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                   },
                 })}
                 defaultValue={"Brak"}
+                value={
+                  selectedCategories.length >= 3 &&
+                  selectedCategories.splice(0, 2)
+                }
                 isMulti
                 escapeClearsValue={!subCategory.title}
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"
                 options={mapTagCategoriesToOptions(subCategory)}
-                onChange={handleTagCategory}
+                onChange={(e) => handleTagCategory(e, 2)}
               />
             </div>
             <FormControlLabel

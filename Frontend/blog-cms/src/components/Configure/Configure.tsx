@@ -7,6 +7,7 @@ import { mainColor } from "../../types/consts";
 import Carousel from "./Carousel";
 import Faq from "./Faq";
 import Footer from "./Footer";
+import Newest from "./Newest";
 import "./style.css";
 import Top3 from "./Top3";
 
@@ -52,37 +53,7 @@ export const Configure = () => {
   return (
     <div>
       <Top3 onSubmit={notify} />
-      <div className={BEM(cssClasses.configure, cssClasses.container)}>
-        <h3
-          className={BEM(
-            cssClasses.configure,
-            cssClasses.container,
-            cssClasses.title
-          )}
-        >
-          Najnowsze posty
-        </h3>
-        <p
-          className={BEM(
-            cssClasses.configure,
-            cssClasses.container,
-            cssClasses.description
-          )}
-        >
-          Sekcja wyświetlająca zbiór najnowszych postów
-        </p>
-        <div className={BEM(cssClasses.title, cssClasses.container)}>
-          <h3
-            className={BEM(
-              cssClasses.configure,
-              cssClasses.container,
-              cssClasses.title
-            )}
-          >
-            Posty zostaną dobrane automatycznie według daty dodania
-          </h3>
-        </div>
-      </div>
+      <Newest onSubmit={notify}/>
       <Footer onSubmit={notify} />
       <Carousel />
       <Faq />

@@ -57,6 +57,7 @@
     height: 4vh;
     margin-top: 0.5rem;
     margin-left: 0.1rem;
+    margin-right: 0.1rem;
     padding: 0 8px;
   }
   
@@ -89,8 +90,10 @@
   .carouselForm_textarea {
     background-color: rgb(241, 241, 241);
     border-radius: 3px;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
     width: 15vw;
-    height: 4vh;
+    height: 6vh;
     margin-top: 0.5rem;
     padding: 0 8px;
   }

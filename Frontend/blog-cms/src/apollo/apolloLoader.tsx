@@ -20,7 +20,7 @@ import {
 } from "./apolloQueries";
 import { useAppDispatch } from "../../store/hooks";
 
-export const loader = () => {
+export const loader = (): boolean => {
   const dispatch = useAppDispatch();
   const {
     data: aboutData,
@@ -74,7 +74,8 @@ export const loader = () => {
     contactLoading ||
     postsLoading
   )
-    return null;
+    return true;
+
   if (
     aboutError ||
     faqError ||
@@ -85,14 +86,27 @@ export const loader = () => {
     contactError ||
     postsError
   )
-    return `Error!`;
+    return true;
 
-  aboutData && dispatch(updateAbout());
-  faqData && dispatch(addFaq());
-//   footerData && dispatch(updateFooter());
-  categoryData && dispatch(addCategory());
-//   top3Data && dispatch(updateTop3());
-  carouselData && dispatch(addCarousel());
-  contactData && dispatch(updateContact());
-//   postsData && dispatch(addPosts());
+  if (
+    aboutData &&
+    faqData &&
+    footerData &&
+    categoryData &&
+    top3Data &&
+    carouselData &&
+    contactData &&
+    postsData
+  ) {
+    dispatch(updateAbout());
+    dispatch(addFaq());
+    //dispatch(updateFooter());
+    dispatch(addCategory());
+    //dispatch(updateTop3());
+    dispatch(addCarousel());
+    dispatch(updateContact());
+    dispatch(updateContact());
+    return false;
+  }
+
 };

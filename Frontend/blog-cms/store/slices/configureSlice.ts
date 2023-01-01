@@ -7,6 +7,7 @@ export interface ConfigureState {
   top3: Post[];
   faq: FAQ[];
   footer: any;
+  newest: string;
 }
 
 export const initialState: ConfigureState = {
@@ -14,6 +15,7 @@ export const initialState: ConfigureState = {
   top3: null,
   faq: [],
   footer: null,
+  newest: null,
 };
 
 export const configureSlice = createSlice({
@@ -33,6 +35,9 @@ export const configureSlice = createSlice({
     },
     updateTop3: (state: any, action: PayloadAction<any>) => {
       state.top3 = action.payload;
+    },
+    updateNewest: (state: any, action: PayloadAction<any>) => {
+      state.newest = action.payload;
     },
     addFaq: (state: any, action: PayloadAction<FAQ>) => {
       state.faq.push(action.payload);
@@ -56,6 +61,7 @@ export const {
   updateCarousel,
   deleteCarousel,
   updateTop3,
+  updateNewest,
   addFaq,
   updateFaq,
   deleteFaq,

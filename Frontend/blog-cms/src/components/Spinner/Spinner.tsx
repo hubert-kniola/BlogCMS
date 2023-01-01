@@ -24,7 +24,8 @@ const Spinner = () => {
     const interval = setInterval(() => {
       i += 1;
       setText(loadTexts[i]);
-    }, 10000);
+      if (i > 5) i = 0;
+    }, 2000);
 
     return () => {
       clearInterval(interval);
