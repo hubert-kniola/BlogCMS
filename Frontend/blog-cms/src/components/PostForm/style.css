@@ -14,8 +14,8 @@
 }
 
 .postForm_elements--padding {
+  overflow-y: auto;
   max-height: 80vh;
-  width: 22vw;
   padding: 1rem;
   margin-right: auto;
   margin-left: auto;
@@ -25,12 +25,12 @@
 }
 
 .postForm_elements {
+  margin-top: 3rem;
   margin-right: auto;
   margin-left: auto;
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   overflow-x: hidden;
-  margin-left: 10vw;
 }
 
 .postForm_close {
@@ -113,7 +113,7 @@
   width: 20vw;
 }
 
-.postForm_selects > p{
+.postForm_selects > p {
   margin-top: 1rem;
 }
 

@@ -79,7 +79,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const [sideSelectedFiles, setSideSelectedFiles] = useState<File[]>(null);
   const [snippet, setSnippet] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [timeToRead, setTimeToRead] = useState(null);
+  const [timeToRead, setTimeToRead] = useState<number>(null);
   const [placeInPopular, setPlaceInPopular] = useState<boolean>(false);
   const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
   const [publicOnDate, setPublicOnDate] = useState<boolean>(false);

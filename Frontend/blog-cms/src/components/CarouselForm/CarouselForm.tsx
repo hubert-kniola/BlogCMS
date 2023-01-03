@@ -58,6 +58,9 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
     tag: "tag",
     close: "close",
     padding: "padding",
+    header: "header",
+    content: "content",
+    footer: "footer",
   };
 
   const handleRich = (e: any) => {
@@ -101,25 +104,21 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
 
   return (
     <div className={BEM(cssClasses.carousel, cssClasses.container)}>
-      <div className={BEM(cssClasses.carousel, cssClasses.close)}>
-        {closeIcon}
+      <div className={BEM(cssClasses.carousel, cssClasses.header)}>
+        <div className={BEM(cssClasses.carousel, cssClasses.close)}>
+          {closeIcon}
+        </div>
+        <h3
+          className={BEM(
+            cssClasses.carousel,
+            cssClasses.container,
+            cssClasses.text
+          )}
+        >
+          {type === "add" ? "Utwórz slajd" : "Edytuj slajd"}
+        </h3>
       </div>
-      <h3
-        className={BEM(
-          cssClasses.carousel,
-          cssClasses.container,
-          cssClasses.text
-        )}
-      >
-        {type === "add" ? "Utwórz slajd" : "Edytuj slajd"}
-      </h3>
-      <div
-        className={BEM(
-          cssClasses.carousel,
-          cssClasses.elements,
-          cssClasses.padding
-        )}
-      >
+      <div className={BEM(cssClasses.carousel, cssClasses.content)}>
         <div className={BEM(cssClasses.carousel, cssClasses.elements)}>
           <p>Tytuł:</p>
           <input
@@ -157,10 +156,12 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           />
         </div>
       </div>
-      <SaveButton
-        handleSave={savePost}
-        text={type === "add" ? "Dodaj" : "Edytuj"}
-      />
+      <div className={BEM(cssClasses.carousel, cssClasses.footer)}>
+        <SaveButton
+          handleSave={savePost}
+          text={type === "add" ? "Dodaj" : "Edytuj"}
+        />
+      </div>
     </div>
   );
 };
