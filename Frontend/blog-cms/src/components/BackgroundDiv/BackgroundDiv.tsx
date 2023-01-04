@@ -1,12 +1,12 @@
-import React from "react"
+import React from "react";
 
-interface IBackgroundDiv  {
-    url: string;
-    height?: string;
-    width?: string;
-    margin?: string;
-    className? : string;
-    children?: React.ReactNode
+interface IBackgroundDiv {
+  url: string;
+  height?: string;
+  width?: string;
+  margin?: string;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 export const BackgroundDiv = ({
@@ -15,7 +15,7 @@ export const BackgroundDiv = ({
   width,
   margin,
   className,
-  children
+  children,
 }: IBackgroundDiv) => {
   return (
     <div
@@ -25,9 +25,8 @@ export const BackgroundDiv = ({
         height: height,
         width: width,
         margin: margin,
-      }}
-    >
-        {children && children}
-        </div>
+      }}>
+      {children && children}
+    </div>
   );
 };
