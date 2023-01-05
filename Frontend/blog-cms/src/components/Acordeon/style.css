@@ -1,5 +1,5 @@
 
-.faq_container {
+.faqMain_container {
     width: 80%;
     min-width: 900px;
     margin: auto;
@@ -10,7 +10,7 @@
 
 }
 
-.faq_section {
+.faqMain_section {
     width: 60%;
     height: 100%;
     display: flex;
@@ -22,7 +22,7 @@
     text-primary
 }
 
-.faq_title {
+.faqMain_title {
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -36,7 +36,7 @@
     text-primary-400
 }
 
-.faq_item {
+.faqMain_item {
     width: 50%;
     min-width: 450px;
     display: flex;
@@ -47,26 +47,30 @@
     @apply bg-secondary shadow-2xl 
 }
 
-.faq_item--tilte{
+.faqMain_item--tilte{
     margin: 0.5rem 0;
     display: flex;
     font-weight: bold;
 }
 
-.faq_item--mark{
+.faqMain_item--tilte div{
+    cursor: pointer;
+}
+
+.faqMain_item--mark{
     font-weight: bold;
 }
 
-.faq_item--question{
+.faqMain_item--question{
     width: 95%;
 }
 
-.faq_item--mark{
+.faqMain_item--mark{
     width: 5%;
     text-align: center;
 }
 
-.faq_item--content{
+.faqMain_item--content{
     font-size: 0.8rem;
     text-align: justify;
     max-height: 0;
@@ -75,7 +79,7 @@
     
 }
 
-.faq_item--content.faq_item--active{
+.faqMain_item--content.faqMain_item--active{
     height: auto;
     max-height: 500px;
     transition: all 0.5s cubic-bezier(1,0,1,0);
