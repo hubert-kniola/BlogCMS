@@ -31,3 +31,8 @@ export enum UploadType {
   Single = 0,
   Multi = 1,
 }
+
+export enum RouteObjectType {
+  Category,
+  Post,
+}

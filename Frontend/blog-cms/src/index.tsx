@@ -7,8 +7,61 @@ import { store } from "../store/store";
 import apolloClient from "./apollo/apolloConfig";
 import { About, Category, Configure, Contact, Posts } from "./components";
 import "./index.css";
-import { AboutMePage, ContactPage, ErrorPage, GuestSwitchPanel, MainPage, PostPage, SwitchPanel } from "./screens";
+import {
+  AboutMePage,
+  ContactPage,
+  ErrorPage,
+  GuestSwitchPanel,
+  MainPage,
+  SwitchPanel,
+} from "./screens";
 import { SendFiles } from "./screens/SendFiles/SendFiles";
+import { MenuItemType, RouteObjectType } from "./types";
+import { generatePath } from "./routeManager";
+
+const menu: MenuItemType[] = [
+  {
+    title: "services",
+    path: "services",
+    subMenu: [
+      {
+        title: "web design",
+        path: "web-design",
+        routeObjectType: RouteObjectType.Category,
+      },
+      {
+        title: "web development",
+        path: "web-dev",
+        routeObjectType: RouteObjectType.Category,
+        subMenu: [
+          {
+            title: "Backend",
+            path: "b-end",
+            routeObjectType: RouteObjectType.Category,
+            subMenu: [
+              {
+                title: ".NET",
+                path: "dotnet",
+                routeObjectType: RouteObjectType.Category,
+              },
+              {
+                title: "Python",
+                path: "python",
+                routeObjectType: RouteObjectType.Category,
+              },
+            ],
+          },
+          {
+            title: "Frontend",
+            path: "f-end",
+            routeObjectType: RouteObjectType.Category,
+          },
+        ],
+      },
+      { title: "SEO", path: "seo", routeObjectType: RouteObjectType.Category },
+    ],
+  },
+];
 
 const router = createBrowserRouter([
   {
@@ -28,7 +81,7 @@ const router = createBrowserRouter([
         path: "contact",
         element: <ContactPage />,
       },
-    ]
+    ],
   },
   {
     path: "admin/",
@@ -57,11 +110,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/:title/:id",
-    element: <PostPage />,
-  },
-  {
-    path: "/sendfiles",
+    path: "sendfiles",
     element: <SendFiles />,
   },
   {
@@ -72,10 +121,7 @@ const router = createBrowserRouter([
     path: "contact",
     element: <ContactPage />,
   },
-  {
-    path: "main",
-    element: <MainPage />,
-  },
+  ...generatePath(menu),
 ]);
 
 const root = ReactDOM.createRoot(
