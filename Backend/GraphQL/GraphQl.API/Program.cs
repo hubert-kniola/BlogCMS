@@ -21,9 +21,20 @@ builder.Services
             .Configure<MongoDbConfiguration>(builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
 
 //Repository
-builder.Services.AddSingleton<ICatalogContext, CatalogContext>();
+builder.Services.AddScoped<ICatalogContext, CatalogContext>(); 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("*")
+                   .AllowAnyHeader();
+        });
+});
 
 //GraphQL
 builder.Services
@@ -32,13 +43,16 @@ builder.Services
     .AddQueryType(d => d.Name("Query"))
         .AddTypeExtension<PostQuery>()
         .AddTypeExtension<CategoryQuery>()
+        .AddTypeExtension<AboutQuery>()
     .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<PostMutation>()
         .AddTypeExtension<CategoryMutation>()
+        .AddTypeExtension<AboutMutation>()
     .AddType<PostType>()
     .AddType<CategoryType>()
     .AddType<CategoryResolver>()
-    .AddType<PostResolver>();
+    .AddType<PostResolver>()
+    .AddType<AboutType>();
 
 
 builder.Services
@@ -70,6 +84,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors(x => x
+    .WithOrigins("*")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowAnyOrigin()
+    );
 
 app.UseEndpoints(endpoint =>
 {

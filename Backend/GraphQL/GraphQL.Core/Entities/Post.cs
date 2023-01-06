@@ -10,3 +10,4 @@ namespace GraphQL.Core.Entities
         public string CategoryId { get; set; }
     }
 }
+ 
