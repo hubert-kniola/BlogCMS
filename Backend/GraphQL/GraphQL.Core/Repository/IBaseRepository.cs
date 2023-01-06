@@ -1,4 +1,5 @@
 ﻿using GraphQL.Core.Entities;
+using System.Collections.Generic;
 
 namespace GraphQL.Core.Repository
 {
@@ -7,6 +8,7 @@ namespace GraphQL.Core.Repository
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(string id);
         Task<T> InsertAsync(T entity);
+        Task<IEnumerable<T>> InsertManyAsync(IEnumerable<T> entities);
         Task<bool> RemoveAsync(string id);
         Task<bool> RemoveAllAsync();
     }

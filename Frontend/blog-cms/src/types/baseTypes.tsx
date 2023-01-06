@@ -12,12 +12,14 @@ export type Post = {
 };
 
 export type Carousel = {
+  id: string;
   title: string;
   content: string;
-  date: string;
-  imgUrl: string;
+  publicationDate: string;
+  imgName: string;
   file: File;
   active: boolean;
+  postId: string;
 };
 
 export type FAQ = {

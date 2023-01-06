@@ -1,6 +1,7 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
 using GraphQL.Core.Services;
+using System;
 using System.Diagnostics.Contracts;
 
 namespace GraphQL.Infrastructure.Services
@@ -12,6 +13,8 @@ namespace GraphQL.Infrastructure.Services
         private IAboutRepository _aboutRepository;
         private IContactInfoRepository _contactInfoRepository;
         private IContactFormRepository _contactFormRepository;
+        private ICarouselRepository _carouselRepository;
+
 
 
         public DummyDataService(
@@ -19,7 +22,8 @@ namespace GraphQL.Infrastructure.Services
             IPostRepository postRepository,
             IAboutRepository aboutRepository,
             IContactInfoRepository contactInfoRepository,
-            IContactFormRepository contactFormRepository
+            IContactFormRepository contactFormRepository,
+            ICarouselRepository carouselRepository
             )
         {
             _categoryRepository = categoryRepository;
@@ -27,6 +31,7 @@ namespace GraphQL.Infrastructure.Services
             _aboutRepository = aboutRepository;
             _contactInfoRepository = contactInfoRepository;
             _contactFormRepository = contactFormRepository;
+            _carouselRepository = carouselRepository;
         }
 
         public async Task<bool> Execute()
@@ -34,7 +39,8 @@ namespace GraphQL.Infrastructure.Services
             bool success;
             //success = await SetDummyAbout();
             //success = await SetDummyContactInfo();
-            success = await SetDummyContactForm();
+            //success = await SetDummyContactForm();
+            success = await SetDummyCarousels();
 
             return success;
         }
@@ -109,6 +115,94 @@ namespace GraphQL.Infrastructure.Services
                 });
 
                 success = contact1 != null && contact2 != null && contact3 != null;
+            }
+            return success;
+        }
+
+        private async Task<bool> SetDummyCarousels()
+        {
+            bool success = await _carouselRepository.RemoveAllAsync();
+            if (success)
+            {
+                List<Carousel> data = new()
+                {
+                    new Carousel()
+                    {
+                        Title = "Pierwszy element",
+                        Content = "1: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Drugi element",
+                        Content = "2: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "1cc8655b-0aca-44da-af78-7d712d92cece.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Trzeci element",
+                        Content = "3: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Czwarty element",
+                        Content = "4: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Piąty element",
+                        Content = "5: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "a62860cd-5115-4ae2-982c-7f365cea160a.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Szósty element",
+                        Content = "6: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "f8c99c62-b222-4555-bc8f-9cc154b6919d.jpg",
+                        Active = true,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Czwarty element",
+                        Content = "7: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                        Active = false,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Piąty element",
+                        Content = "8: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
+                        Active = false,
+                    },
+                    new Carousel()
+                    {
+                        Title = "Szósty element",
+                        Content = "9: Tutaj jakis krotki opis ",
+                        PublicationDate = DateTime.Now,
+                        ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                        Active = false,
+                    }
+                };
+
+               IEnumerable<Carousel> carousels = await _carouselRepository.InsertManyAsync(data);
+
+                success = data.Count == carousels.Count();
             }
             return success;
         }

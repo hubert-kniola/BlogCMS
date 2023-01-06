@@ -36,6 +36,7 @@ export const Acordeon = () => {
       <div className={BEM(css.faq, css.section)}>
         {faq.map((item, idx) => (
           <AcordeonItem
+            key={idx}
             setActiveFaq={() => setAcriveFaq(idx)}
             isActive={idx === activeIdx}
             faq={item}

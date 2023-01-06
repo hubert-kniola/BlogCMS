@@ -84,7 +84,7 @@ const CarouselTable = () => {
                     element.content,
                     element.active ? "Aktywny" : "Nieaktywny",
                   ]}
-                  date={element.date}
+                  date={element.publicationDate}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);

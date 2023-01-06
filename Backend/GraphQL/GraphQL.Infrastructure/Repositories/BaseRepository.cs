@@ -32,10 +32,23 @@ namespace GraphQL.Infrastructure.Repositories
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = DateTime.Now;
-            
+
             await _collection.InsertOneAsync(entity);
 
             return entity;
+        }
+
+        public async Task<IEnumerable<T>> InsertManyAsync(IEnumerable<T> entities)
+        {
+            foreach(var entity in entities)
+            {
+                entity.CreatedOn = DateTime.Now;
+                entity.ModifiedOn = DateTime.Now;
+            }
+
+            await _collection.InsertManyAsync(entities);
+
+            return entities;
         }
 
         public async Task<bool> RemoveAsync(string id)

@@ -2,17 +2,21 @@ import React from "react";
 import { BEM } from "../../tools";
 import { css } from "./css";
 
-interface ISliderNavigation  {
-    onClickHandler: (idx: number) => void;
-    activeIdx: number;
-    slides: any[];
+interface ISliderNavigation {
+  onClickHandler: (idx: number) => void;
+  activeIdx: number;
+  slides: any[];
 }
 
-export const SliderNavigation = ({onClickHandler, activeIdx, slides} : ISliderNavigation) => {
-    
-    return(
-        <div className={BEM(css.slider, css.navigation)}>
-        {slides.map((_, idx) => {
+export const SliderNavigation = ({
+  onClickHandler,
+  activeIdx,
+  slides,
+}: ISliderNavigation) => {
+  return (
+    <div className={BEM(css.slider, css.navigation)}>
+      {slides &&
+        slides.map((_, idx) => {
           return (
             <div
               key={idx}
@@ -25,6 +29,6 @@ export const SliderNavigation = ({onClickHandler, activeIdx, slides} : ISliderNa
             />
           );
         })}
-      </div>
-    )
-}
+    </div>
+  );
+};

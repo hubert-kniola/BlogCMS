@@ -1,4 +1,6 @@
-import React from "react";
+import { useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { GET_ACTIVE_CAROUSEL } from "../../apollo/apolloQueries";
 import {
   Acordeon,
   BestThree,
@@ -7,7 +9,7 @@ import {
   Pomodoro,
   Slider,
 } from "../../components";
-import { SlideType, TextPosition } from "../../types";
+import { Carousel, SlideType, TextPosition } from "../../types";
 
 const slides: SlideType[] = [
   // {photoUrl: 'https://csb100320023183c079.blob.core.windows.net/cmspicture/a3ab86fcd2d8942c27e40e8fc5601663.jpg', title:'PROMOCJA!!!', content: "Test 1 2 3", textPosition: TextPosition.LeftTop },
@@ -58,7 +60,7 @@ const slides: SlideType[] = [
 export const MainPage = () => {
   return (
     <>
-      <Slider slides={slides} />
+      <Slider />
       <BestThree />
       <Pomodoro premiere={new Date(2022, 10, 27, 20, 5, 0)} />
       <List />

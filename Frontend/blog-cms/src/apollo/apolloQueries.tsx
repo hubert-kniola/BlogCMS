@@ -17,9 +17,27 @@ export const GET_FAQ = gql`
 `;
 
 export const GET_CAROUSEL = gql`
-  query GetCarousel {
-    carousel {
+  query GetCarousels {
+    carousels {
       id
+      title
+      content
+      publicationDate
+      imgName
+      active
+    }
+  }
+`;
+
+export const GET_ACTIVE_CAROUSEL = gql`
+  query GetActiveCarousels {
+    activeCarousels {
+      id
+      title
+      content
+      publicationDate
+      imgName
+      active
     }
   }
 `;
