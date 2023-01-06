@@ -23,7 +23,7 @@ namespace GraphQL.Infrastructure.Repositories
                 if (oldEntity != null) {
                     oldEntity.Title = GetValue(oldEntity.Title, entity.Title);
                     oldEntity.Text = GetValue(oldEntity.Text, entity.Text);
-                    oldEntity.Img = GetValue(oldEntity.Img, entity.Img);
+                    oldEntity.ImgName = GetValue(oldEntity.ImgName, entity.ImgName);
                     oldEntity.ModifiedOn = DateTime.Now;
 
                     var filter = Builders<About>.Filter.Eq(x => x.Id, entity.Id);

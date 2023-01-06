@@ -54,7 +54,7 @@ export const GET_ABOUT = gql`
       id
       title
       text
-      img
+      imgName
     }
   }
 `;

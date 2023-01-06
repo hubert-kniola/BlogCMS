@@ -16,7 +16,7 @@ const css = {
 
 export const AboutMePage = () => {
   const { loading, error, data } = useQuery(GET_ABOUT);
-  const [aboutData, setAboutData] = useState(undefined);
+  const [aboutData, setAboutData] = useState(undefined as AboutPageType);
 
   const getAboutData = (data: any): AboutPageType => {
     return data?.about[0];
@@ -35,7 +35,7 @@ export const AboutMePage = () => {
       ) : (
         <div className={BEM(css.aboutMe)}>
           <BackgroundDiv
-            url={aboutData && `${BlobStarageURL}${aboutData.img}`}
+            url={aboutData && `${BlobStarageURL}${aboutData.imgName}`}
             className={BEM(css.aboutMe, css.photo)}
           />
           <div className={BEM(css.aboutMe, css.content)}>

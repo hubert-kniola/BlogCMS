@@ -10,7 +10,7 @@ namespace GraphQL.API.Types
             descriptor.Field(_ => _.Id);
             descriptor.Field(_ => _.Title);
             descriptor.Field(_ => _.Text);
-            descriptor.Field(_ => _.Img);
+            descriptor.Field(_ => _.ImgName);
             descriptor.Field(_ => _.ModifiedOn);
             descriptor.Field(_ => _.CreatedOn);
 
