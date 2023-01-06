@@ -8,7 +8,7 @@ import {
 import { Input } from "../../components";
 import Spinner from "../../components/Spinner/Spinner";
 import { BEM } from "../../tools";
-import { ContactInfoType } from "../../types";
+import { ContactForm, ContactInfoType } from "../../types";
 import "./style.css";
 
 const css = {
@@ -53,10 +53,10 @@ export const ContactPage = () => {
     e.preventDefault();
     createContactForm({
       variables: {
-        name: "Patryk Kołacz",
-        email: "ciekawe@czy.dziala",
-        content: "Tutaj prośba o to, żeby zadziałało",
-      },
+        name: "Kolega Darka",
+        email: "zna@darka.pl",
+        content: "interesuje się jego żoną",
+      } as ContactForm,
     });
   };
 
