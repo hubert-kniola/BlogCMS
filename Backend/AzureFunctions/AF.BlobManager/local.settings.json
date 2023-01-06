@@ -1,7 +1,7 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "Azure:AzureWebJobsStorage": "",
+    "Azure:AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=cmsblogimagestorage;AccountKey=Log5ZzY6trFeZDPyNfc2tWCUDsqYYV/T7Y8gmNP8mVlsaDPpislXKwR975mD2uINjfzyOOQ74c8U+AStdV0yZQ==;EndpointSuffix=core.windows.net",
     "Azure:ContainerName": "cms-blog-images",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet"
   },

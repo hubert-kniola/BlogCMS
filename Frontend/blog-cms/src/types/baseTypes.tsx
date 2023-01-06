@@ -50,3 +50,10 @@ export type Faq = {
   question: string;
   answer: string;
 };
+
+export type AboutPageType = {
+  id: string;
+  title: string;
+  text: string;
+  img: string;
+};
