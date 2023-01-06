@@ -1,0 +1,20 @@
+.customButton{
+    width: 80%;
+    margin: auto;
+    margin-top: 0.5rem;
+    padding: 0.2rem;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    @apply
+    border border-secondary-600 rounded-lg
+  }
+  
+  .customButton:hover{
+    @apply bg-primary-500 text-secondary-500
+  }
+  

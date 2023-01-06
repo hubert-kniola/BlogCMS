@@ -1,0 +1,47 @@
+
+.categoryPage_container{
+    width: 70%;
+    min-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    @apply text-primary
+}
+
+.categoryPage_left{
+    width:28%;
+}
+
+.categoryPage_header{
+    width: 100%;
+    padding:  0 1rem;
+    text-align: center;
+    @apply text-2xl font-bold
+}
+
+.categoryPage_filter{
+    width: 100%;
+    padding: 2rem 1rem 1rem 1rem;
+    @apply
+    shadow-xl
+
+}
+
+.categoryPage_posts{
+        width: 70%;
+}
+
+.categoryPage_posts--sort{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.categoryPage_amount{
+    margin: 0.5rem 0;
+    width: 100%;
+    @apply text-sm text-primary-300
+}
+

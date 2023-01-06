@@ -1,0 +1,31 @@
+.customCheckbox{
+    width: 100%;
+    padding: 0.2rem;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.customCheckbox:hover{
+    @apply
+    shadow-sm
+}
+
+.customCheckbox > div{
+    margin-left: 0.5rem;
+}
+
+.customCheckbox_checkbox{
+    height:0.9rem;
+    width:0.9rem;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    
+    @apply 
+    appearance-none checked:bg-primary-500 
+    border-2 border-primary-500
+    shadow-xl
+
+  }

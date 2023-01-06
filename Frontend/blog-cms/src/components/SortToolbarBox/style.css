@@ -1,0 +1,24 @@
+.sortToolbarBox_toolbar{
+    width:auto;
+    display: flex;
+    margin: 0 0.25rem;
+    @apply text-primary-300
+}
+
+.sortToolbarBox_toolbar--active{
+    @apply text-primary-500
+}
+
+.sortToolbarBox_box{
+    display: flex;
+}
+
+.sortToolbarBox_box--up{
+    transition: 0.3s ease-in-out;
+    transform: rotate(180deg);
+}
+
+.sortToolbarBox_box--down{
+    transition: 0.3s ease-in-out;
+    transform: rotate(0);
+}

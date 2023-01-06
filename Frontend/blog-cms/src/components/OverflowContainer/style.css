@@ -1,0 +1,29 @@
+.overflowContainer_header{
+    padding: 0.5rem;
+    padding-bottom: 0;
+    @apply
+    font-bold 
+}
+
+.overflowContainer{
+    overflow: auto;
+    padding: 0 0.5rem;
+}
+
+.overflowContainer::-webkit-scrollbar{
+    width: 2px;
+}
+/* Track */
+.overflowContainer::-webkit-scrollbar-track {
+    @apply bg-secondary-600
+  }
+   
+  /* Handle */
+  .overflowContainer::-webkit-scrollbar-thumb {
+    @apply bg-primary-400
+  }
+  
+  /* Handle on hover */
+  .overflowContainer::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-500
+  }
