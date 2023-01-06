@@ -1,12 +1,12 @@
 import React from "react";
 import { BEM } from "../../tools";
-import { Faq } from "../../types";
+import { FaqType } from "../../types";
 import "./style.css";
 
 interface IFaqItem {
   setActiveFaq: () => void;
   isActive: boolean;
-  faq: Faq;
+  faq: FaqType;
 }
 
 const css = {

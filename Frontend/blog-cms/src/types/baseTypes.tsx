@@ -25,7 +25,7 @@ export type Carousel = {
 export type FAQ = {
   question: string;
   answer: string;
-  date: string;
+  modifiedOn: string;
 };
 
 export type PostItemType = {
@@ -40,7 +40,7 @@ export type MenuItemType = {
   subMenu?: MenuItemType[];
 };
 
-export type Faq = {
+export type FaqType = {
   question: string;
   answer: string;
 };

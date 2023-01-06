@@ -14,7 +14,7 @@ namespace GraphQL.Infrastructure.Data
             var client = new MongoClient(mongoDbConfiguration.Value.ConnectionString);
             _database = client.GetDatabase(mongoDbConfiguration.Value.Database);
 
-            CatalogContextSeed.SeedData(_database);
+            //CatalogContextSeed.SeedData(_database);
         }
 
         public IMongoCollection<T> GetCollection<T>(string name)

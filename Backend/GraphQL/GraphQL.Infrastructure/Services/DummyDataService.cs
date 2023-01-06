@@ -12,6 +12,7 @@ namespace GraphQL.Infrastructure.Services
         private IContactInfoRepository _contactInfoRepository;
         private IContactFormRepository _contactFormRepository;
         private ICarouselRepository _carouselRepository;
+        private IFaqReposiotry _faqReposiotry;
 
 
 
@@ -21,7 +22,8 @@ namespace GraphQL.Infrastructure.Services
             IAboutRepository aboutRepository,
             IContactInfoRepository contactInfoRepository,
             IContactFormRepository contactFormRepository,
-            ICarouselRepository carouselRepository
+            ICarouselRepository carouselRepository,
+            IFaqReposiotry faqReposiotry
             )
         {
             _categoryRepository = categoryRepository;
@@ -30,6 +32,7 @@ namespace GraphQL.Infrastructure.Services
             _contactInfoRepository = contactInfoRepository;
             _contactFormRepository = contactFormRepository;
             _carouselRepository = carouselRepository;
+            _faqReposiotry = faqReposiotry;
         }
 
         public async Task<bool> Execute()
@@ -38,7 +41,8 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyAbout();
             //success = await SetDummyContactInfo();
             //success = await SetDummyContactForm();
-            success = await SetDummyCarousels();
+            //success = await SetDummyCarousels();
+            success = await SetDummyFaq();
 
             return success;
         }
@@ -210,6 +214,45 @@ namespace GraphQL.Infrastructure.Services
                 IEnumerable<Carousel> carousels = await _carouselRepository.InsertManyAsync(data);
 
                 success = data.Count == carousels.Count();
+            }
+            return success;
+        }
+
+        private async Task<bool> SetDummyFaq()
+        {
+            bool success = await _faqReposiotry.RemoveAllAsync();
+
+            if (success)
+            {
+                List<Faq> data = new()
+                {
+                   new()
+                   {
+                       Question = "Czy mogę założyć konto",
+                       Answer = "Niestety nie. Tylko ja mogę publikować treści."
+                   },
+                   new()
+                   {
+                       Question = "Czy to ma sens",
+                       Answer = "Prawdopodobnie nie"
+                   },
+                   new()
+                   {
+                       Question = "Podasz fragment lorum?",
+                       Answer = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
+                       "industry. Lorem Ipsum has been the industry's standard dummy text ever since " +
+                       "the 1500s, when an unknown printer took a galley of type and scrambled it to " +
+                       "make a type specimen book. It has survived not only five centuries, but also the " +
+                       "leap into electronic typesetting, remaining essentially unchanged. It was popularised " +
+                       "in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
+                       "and more recently with desktop publishing software like Aldus PageMaker including " +
+                       "versions of Lorem Ipsum."
+                   }
+                };
+
+                IEnumerable<Faq> faqs = await _faqReposiotry.InsertManyAsync(data);
+
+                success = data.Count == faqs.Count();
             }
             return success;
         }

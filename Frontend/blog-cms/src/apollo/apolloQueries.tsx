@@ -9,9 +9,11 @@ export const GET_TOP3 = gql`
 `;
 
 export const GET_FAQ = gql`
-  query GetFaq {
-    faq {
+  query GetAllFaq {
+    allFaq {
       id
+      question
+      answer
     }
   }
 `;

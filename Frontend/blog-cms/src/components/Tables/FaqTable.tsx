@@ -76,7 +76,7 @@ const FaqTable = () => {
                 <Row
                   key={i}
                   cells={[element.question, element.answer]}
-                  date={element.date}
+                  date={element.modifiedOn}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
