@@ -1,32 +1,13 @@
+import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { AdminHeader, AdminFooter, AdminContent } from "../../components";
 import { useAppDispatch } from "../../../store/hooks";
-import "./style.css";
-import { updateUser, initialState } from "../../../store/slices/userSlice";
-import Spinner from "../../components/Spinner/Spinner";
-import { loader } from "../../apollo/apolloLoader";
-import { useStateManager } from "react-select";
 import { updateAbout } from "../../../store/slices/aboutSlice";
-import { addCarousel } from "../../../store/slices/configureSlice";
-import { updateContact } from "../../../store/slices/contactSlice";
-import { addFaq } from "../../../store/slices/configureSlice";
-import { updateFooter } from "../../../store/slices/configureSlice";
-import { addPost } from "../../../store/slices/postSlice";
-import { updateTop3 } from "../../../store/slices/configureSlice";
-import { addCategory } from "../../../store/slices/categorySlice";
-import gql from "graphql-tag";
-import { NetworkStatus, useQuery } from "@apollo/client";
-import {
-  GET_ABOUT,
-  GET_CONTACT,
-  GET_CAROUSEL,
-  GET_CATEGORY,
-  GET_TOP3,
-  GET_FAQ,
-  GET_FOOTER,
-  GET_POSTS,
-} from "../../apollo/apolloQueries";
+import { initialState, updateUser } from "../../../store/slices/userSlice";
+import { GET_ABOUT } from "../../apollo/apolloQueries";
+import { AdminContent, AdminFooter, AdminHeader } from "../../components";
+import Spinner from "../../components/Spinner/Spinner";
 import { GetImageFromAzure } from "../../tools";
+import "./style.css";
 
 export const AdminPanel = () => {
   const dispatch = useAppDispatch();
@@ -43,13 +24,11 @@ export const AdminPanel = () => {
     panel: "panel",
   };
 
-  if(aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
+  if (aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
     let aboutValue = Object.values(aboutData)[0];
     dispatch(updateAbout(Object.values(aboutValue)[0]));
-    if(Object.values(aboutValue)[0].imgName)
-    {
+    if (Object.values(aboutValue)[0].imgName) {
       const fileURL = GetImageFromAzure(Object.values(aboutValue)[0].imgName);
-      
     }
     setLoading(false);
     setAboutLoaded(true);

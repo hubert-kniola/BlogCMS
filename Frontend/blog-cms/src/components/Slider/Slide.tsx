@@ -1,6 +1,6 @@
 import React from "react";
 import { BackgroundDiv } from "..";
-import { BlobStarageURL } from "../../settings";
+import { BlobStorageURL } from "../../settings";
 import { BEM } from "../../tools";
 import { Carousel } from "../../types";
 import { css } from "./css";
@@ -29,7 +29,7 @@ export const Slide = ({
       className={BEM(css.slider, css.slide)}
       key={idx}>
       <BackgroundDiv
-        url={slide && `${BlobStarageURL}${slide.imgName}`}
+        url={slide && `${BlobStorageURL}${slide.imgName}`}
         className={
           active
             ? BEM(css.slide, css.box, css.modifiers.active)
