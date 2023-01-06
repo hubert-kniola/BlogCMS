@@ -8,7 +8,7 @@ namespace GraphQL.API.Resolver
     [Authorize]
     public class CategoryResolver
     {
-        public Task<Category> GetCategoryAsync([Parent] Post post,[Service] ICategoryRepository categoryRepository ) 
-            => categoryRepository.GetByIdAsync( post.CategoryId );
+        public async Task<Category> GetCategoryAsync([Parent] Post post,[Service] ICategoryRepository categoryRepository ) 
+            => await categoryRepository.GetByIdAsync( post.CategoryId );
     }
 }

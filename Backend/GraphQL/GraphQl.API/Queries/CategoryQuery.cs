@@ -8,10 +8,7 @@ namespace GraphQL.API.Queries
     [Authorize]
     public class CategoryQuery
     {
-        #region CATEGORY
-        public Task<IEnumerable<Category>> GetCategory([Service] ICategoryRepository categoryRepository) => categoryRepository.GetAllAsync();
-        public Task<Category> GetCategoryById(string id, [Service] ICategoryRepository categoryRepository) => categoryRepository.GetByIdAsync(id);
-        #endregion
+        public async Task<ContactInfo?> GetCategory([Service] IContactInfoRepository contactInfoRepository) => (await contactInfoRepository.GetAllAsync()).FirstOrDefault();
 
     }
 }

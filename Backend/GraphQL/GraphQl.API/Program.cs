@@ -3,9 +3,11 @@ using GraphQL.API.Queries;
 using GraphQL.API.Resolver;
 using GraphQL.API.Types;
 using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 using GraphQL.Infrastructure.Configuration;
 using GraphQL.Infrastructure.Data;
 using GraphQL.Infrastructure.Repositories;
+using GraphQL.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -25,6 +27,10 @@ builder.Services.AddScoped<ICatalogContext, CatalogContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
+
+//Services
+builder.Services.AddScoped<IDummyDataService, DummyDataService>();
 
 builder.Services.AddCors(options =>
 {
@@ -41,18 +47,22 @@ builder.Services
     .AddGraphQLServer()
     .AddAuthorization()
     .AddQueryType(d => d.Name("Query"))
+        .AddTypeExtension<DummyDataQuery>()
         .AddTypeExtension<PostQuery>()
         .AddTypeExtension<CategoryQuery>()
         .AddTypeExtension<AboutQuery>()
+        .AddTypeExtension<ContactInfoQuery>()
     .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<PostMutation>()
         .AddTypeExtension<CategoryMutation>()
         .AddTypeExtension<AboutMutation>()
+        .AddTypeExtension<ContactInfoMutation>()
     .AddType<PostType>()
     .AddType<CategoryType>()
     .AddType<CategoryResolver>()
     .AddType<PostResolver>()
-    .AddType<AboutType>();
+    .AddType<AboutType>()
+    .AddType<ContactInfoType>();
 
 
 builder.Services

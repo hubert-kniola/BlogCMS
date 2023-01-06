@@ -57,3 +57,15 @@ export type AboutPageType = {
   text: string;
   imgName: string;
 };
+
+export type ContactInfoType = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type TextBoxes = {
+  fieldName: string;
+  content: string;
+};

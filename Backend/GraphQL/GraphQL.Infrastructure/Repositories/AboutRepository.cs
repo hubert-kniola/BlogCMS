@@ -1,5 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
+using GraphQL.Infrastructure.Common;
 using GraphQL.Infrastructure.Data;
 using MongoDB.Driver;
 using SharpCompress.Common;
@@ -21,9 +22,9 @@ namespace GraphQL.Infrastructure.Repositories
                 About oldEntity = await GetByIdAsync(entity.Id);
 
                 if (oldEntity != null) {
-                    oldEntity.Title = GetValue(oldEntity.Title, entity.Title);
-                    oldEntity.Text = GetValue(oldEntity.Text, entity.Text);
-                    oldEntity.ImgName = GetValue(oldEntity.ImgName, entity.ImgName);
+                    oldEntity.Title = Helpers.GetValue(oldEntity.Title, entity.Title);
+                    oldEntity.Text = Helpers.GetValue(oldEntity.Text, entity.Text);
+                    oldEntity.ImgName = Helpers.GetValue(oldEntity.ImgName, entity.ImgName);
                     oldEntity.ModifiedOn = DateTime.Now;
 
                     var filter = Builders<About>.Filter.Eq(x => x.Id, entity.Id);
@@ -36,9 +37,6 @@ namespace GraphQL.Infrastructure.Repositories
             return null;
         }
 
-        private static T GetValue<T>(T oldValue, T newValue)
-        {
-            return newValue != null ? newValue : oldValue;
-        }
+
     }
 }

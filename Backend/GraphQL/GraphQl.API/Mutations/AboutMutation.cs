@@ -8,13 +8,10 @@ namespace GraphQL.API.Mutations
     [Authorize]
     public class AboutMutation
     {
-        public Task<About> CreateAboutAsync(About about, [Service] IAboutRepository aboutRepository) =>
-            aboutRepository.InsertAsync(about);
+        public async Task<About> CreateAboutAsync(About about, [Service] IAboutRepository aboutRepository) =>
+            await aboutRepository.InsertAsync(about);
 
-        public Task<About?> UpdateAboutAsync(About about, [Service] IAboutRepository aboutRepository) =>
-            aboutRepository.UpdateAsync(about);
-
-        public Task<bool> RemoveAboutAsync(string id, [Service] IAboutRepository aboutRepository) =>
-            aboutRepository.RemoveAsync(id);
+        public async Task<About?> UpdateAboutAsync(About about, [Service] IAboutRepository aboutRepository) =>
+            await aboutRepository.UpdateAsync(about);
     }
 }

@@ -8,10 +8,10 @@ namespace GraphQL.API.Mutations
     [Authorize]
     public class CategoryMutation
     {
-        public Task<Category> CreateCategoryAsync(Category category, [Service] ICategoryRepository categoryRepository) =>
-            categoryRepository.InsertAsync(category);
+        public async Task<Category> CreateCategoryAsync(Category category, [Service] ICategoryRepository categoryRepository) =>
+            await categoryRepository.InsertAsync(category);
 
-        public Task<bool> RemoveCategoryAsync(string id, [Service] ICategoryRepository categoryRepository) =>
-            categoryRepository.RemoveAsync(id);
+        public async Task<bool> RemoveCategoryAsync(string id, [Service] ICategoryRepository categoryRepository) => 
+            await categoryRepository.RemoveAsync(id);
     }
 }

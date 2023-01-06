@@ -8,5 +8,6 @@ namespace GraphQL.Core.Repository
         Task<T> GetByIdAsync(string id);
         Task<T> InsertAsync(T entity);
         Task<bool> RemoveAsync(string id);
+        Task<bool> RemoveAllAsync();
     }
 }

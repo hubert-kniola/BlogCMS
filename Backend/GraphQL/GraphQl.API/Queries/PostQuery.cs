@@ -8,7 +8,7 @@ namespace GraphQL.API.Queries
     [Authorize]
     public class PostQuery
     {
-        public Task<IEnumerable<Post>> GetPostsAsync([Service] IPostRepository postRepository) => postRepository.GetAllAsync();
-        public Task<Post> GetPostById(string id, [Service] IPostRepository postRepository) => postRepository.GetByIdAsync(id);
+        public async Task<IEnumerable<Post>> GetPostsAsync([Service] IPostRepository postRepository) => await postRepository.GetAllAsync();
+        public async Task<Post> GetPostById(string id, [Service] IPostRepository postRepository) => await postRepository.GetByIdAsync(id);
     }
 }

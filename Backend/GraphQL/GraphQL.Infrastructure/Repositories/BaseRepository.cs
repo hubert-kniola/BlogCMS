@@ -44,5 +44,13 @@ namespace GraphQL.Infrastructure.Repositories
 
             return result.DeletedCount > 0;
         }
+
+        public async Task<bool> RemoveAllAsync()
+        {
+            var count = (await GetAllAsync()).Count();
+            var result = await _collection.DeleteManyAsync(x => true);
+
+            return count == result.DeletedCount;
+        }
     }
 }

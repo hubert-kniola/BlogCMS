@@ -59,17 +59,29 @@ export const GET_ABOUT = gql`
   }
 `;
 
+export const GET_CONTACT_INFO = gql`
+  query GetContactInfo {
+    contactInfo {
+      id
+      title
+      content
+      textBoxes {
+        fieldName
+        content
+      }
+    }
+  }
+`;
 export const GET_CONTACT = gql`
   query GetContact {
-    contact {
+    posts {
       id
     }
   }
 `;
-
 export const GET_CATEGORY = gql`
   query GetCategory {
-    category {
+    posts {
       id
     }
   }

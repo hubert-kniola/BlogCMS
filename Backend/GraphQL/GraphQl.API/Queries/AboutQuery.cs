@@ -8,7 +8,6 @@ namespace GraphQL.API.Queries
     [Authorize]
     public class AboutQuery
     {
-        public Task<IEnumerable<About>> GetAbout([Service] IAboutRepository aboutRepository) => aboutRepository.GetAllAsync();
-        public Task<About> GetAboutById(string id, [Service] IAboutRepository aboutRepository) => aboutRepository.GetByIdAsync(id);
+        public async Task<IEnumerable<About>> GetAbout([Service] IAboutRepository aboutRepository) => await aboutRepository.GetAllAsync();
     }
 }

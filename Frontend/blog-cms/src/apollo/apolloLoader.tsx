@@ -1,24 +1,19 @@
+import { useQuery } from "@apollo/client";
+import { useAppDispatch } from "../../store/hooks";
 import { updateAbout } from "../../store/slices/aboutSlice";
-import { addCarousel } from "../../store/slices/configureSlice";
-import { updateContact } from "../../store/slices/contactSlice";
-import { addFaq } from "../../store/slices/configureSlice";
-import { updateFooter } from "../../store/slices/configureSlice";
-import { addPost } from "../../store/slices/postSlice";
-import { updateTop3 } from "../../store/slices/configureSlice";
 import { addCategory } from "../../store/slices/categorySlice";
-import gql from "graphql-tag";
-import { NetworkStatus, useQuery } from "@apollo/client";
+import { addCarousel, addFaq } from "../../store/slices/configureSlice";
+import { updateContact } from "../../store/slices/contactSlice";
 import {
   GET_ABOUT,
-  GET_CONTACT,
   GET_CAROUSEL,
   GET_CATEGORY,
-  GET_TOP3,
+  GET_CONTACT,
   GET_FAQ,
   GET_FOOTER,
   GET_POSTS,
+  GET_TOP3,
 } from "./apolloQueries";
-import { useAppDispatch } from "../../store/hooks";
 
 export const loader = (): boolean => {
   const dispatch = useAppDispatch();
@@ -108,5 +103,4 @@ export const loader = (): boolean => {
     dispatch(updateContact());
     return false;
   }
-
 };
