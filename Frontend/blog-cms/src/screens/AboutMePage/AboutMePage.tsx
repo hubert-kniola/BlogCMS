@@ -8,8 +8,6 @@ import { BEM } from "../../tools";
 import { AboutPageType } from "../../types";
 import "./style.css";
 
-const img =
-  "https://www.bentbusinessmarketing.com/wp-content/uploads/2013/02/35844588650_3ebd4096b1_b-1024x683.jpg";
 const css = {
   aboutMe: "aboutMe",
   photo: "photo",
