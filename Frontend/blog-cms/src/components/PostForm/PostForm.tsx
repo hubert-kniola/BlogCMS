@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { useAppSelector } from "../../../store/hooks";
 import { CategoryState } from "../../../store/slices/categorySlice";
+import { updateTop3 } from "../../../store/slices/configureSlice";
 import { addPost, updatePost } from "../../../store/slices/postSlice";
 import { RootState } from "../../../store/store";
 import { BEM, ConvertFromHtmlToEditorState, GetGTMDate } from "../../tools";
@@ -61,6 +62,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
+  const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const posts = useAppSelector((state: RootState) => state.post.posts);
   const [mainCategory, setMainCategory] = useState({
     title: null,
@@ -73,7 +75,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     subMenu: [],
   });
   const [tagCategory, setTagCategory] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState({});
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const [mainSelectedFile, setMainSelectedFile] = useState<File>(null);
   const [sideSelectedFiles, setSideSelectedFiles] = useState<File[]>(null);
@@ -94,7 +96,10 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           setMainSelectedFile(editedPost.mainImage);
           setSideSelectedFiles(editedPost.sideImages);
           setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
-          setSelectedCategories(mapCategoriesToOptions(editedPost.category));
+          let elements = mapCategoriesToOptions(editedPost.category);
+          elements.pop();
+          elements[2] = mapCategoriesToOptions(editedPost.category[2]);
+          setSelectedCategories(elements);
           setSnippet(editedPost.snippet);
           setTimeToRead(editedPost.timeToRead);
           setPlaceInPopular(editedPost.placeInPopular);
@@ -103,7 +108,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           if (editedPost.category[0]) setMainCategory(editedPost.category[0]);
           if (editedPost.category[1]) setSubCategory(editedPost.category[1]);
           if (editedPost.category.length > 2)
-            setTagCategory(editedPost.category.splice(0, 2));
+            setTagCategory(editedPost.category[2]);
         }
       }
     };
@@ -161,35 +166,24 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     });
     setTagCategory([]);
     let items = selectedCategories;
-    if (items[index]) {
-      items[index] = event;
-      setSelectedCategories(items);
-    } else {
-      setSelectedCategories([...selectedCategories, event]);
-    }
+    Object.assign(items, { [index]: event });
+    setSelectedCategories(items);
   };
 
   const handleSubCategory = (event: any, index: number) => {
     setSubCategory(event.value);
     setTagCategory([]);
     let items = selectedCategories;
-    if (items[index]) {
-      items[index] = event;
-      setSelectedCategories(items);
-    } else {
-      setSelectedCategories([...selectedCategories, event]);
-    }
+    Object.assign(items, { [index]: event });
+    setSelectedCategories(items);
   };
 
   const handleTagCategory = (event: any, index: number) => {
-    setTagCategory(event.value);
+    let newTagCategory = event.map((e: any) => e.value);
+    setTagCategory(newTagCategory);
     let items = selectedCategories;
-    if (items[index]) {
-      items[index] = event;
-      setSelectedCategories(items);
-    } else {
-      setSelectedCategories([...selectedCategories, event]);
-    }
+    Object.assign(items, { [index]: event });
+    setSelectedCategories(items);
   };
 
   const handleTitle = (e: any) => {
@@ -230,7 +224,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     if (mainCategory) {
       category.push(mainCategory);
       subCategory.title !== null && category.push(subCategory);
-      tagCategory && category.concat(tagCategory);
+      tagCategory && category.push(tagCategory);
     }
     const payload: any = {
       title: title,
@@ -249,6 +243,12 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
       dispatch(addPost(payload));
     } else {
       dispatch(updatePost({ post: payload, index: index }));
+      if (top3 && top3.filter((e) => e.title === title)) {
+        let newTop3 = top3.slice();
+        const ix = top3.findIndex((r) => r.title === posts[index].title);
+        newTop3[ix] = payload;
+        dispatch(updateTop3(newTop3));
+      }
     }
     handleClose();
   };
@@ -351,7 +351,10 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                   },
                 })}
                 defaultValue={"Brak"}
-                value={selectedCategories.length >= 1 && selectedCategories[0]}
+                value={
+                  Object.values(selectedCategories).length >= 1 &&
+                  (Object.values(selectedCategories)[0] as any)
+                }
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"
@@ -378,8 +381,10 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                   },
                 })}
                 defaultValue={"Brak"}
-                escapeClearsValue={!subCategory.title}
-                value={selectedCategories.length >= 1 && selectedCategories[1]}
+                value={
+                  Object.values(selectedCategories).length >= 1 &&
+                  (Object.values(selectedCategories)[1] as any)
+                }
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"
@@ -407,11 +412,10 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                 })}
                 defaultValue={"Brak"}
                 value={
-                  selectedCategories.length >= 3 &&
-                  selectedCategories.splice(0, 2)
+                  Object.values(selectedCategories).length >= 3 &&
+                  Object.values(selectedCategories)[2]
                 }
                 isMulti
-                escapeClearsValue={!subCategory.title}
                 placeholder={"Nie wybrano"}
                 noOptionsMessage={() => "Brak"}
                 name="color"

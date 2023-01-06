@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deletePost } from "../../../store/slices/postSlice";
+import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
 import { Post } from "../../types";
@@ -22,6 +23,7 @@ import "./style.css";
 const PostsTable = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state: RootState) => state.post.posts);
+  const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
@@ -83,9 +85,14 @@ const PostsTable = () => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) =>
-                    dispatch(deletePost({ index }))
-                  }
+                  actionOnDelete={(index: number) => {
+                    dispatch(deletePost({ index }));
+                    if(top3)
+                    {
+                      const newTop3 = top3.filter((element) => element.title !== posts[index].title);
+                      dispatch(updateTop3(newTop3));
+                    }
+                  }}
                 />
               );
             })}

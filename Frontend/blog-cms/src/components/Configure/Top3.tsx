@@ -26,8 +26,9 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   const posts = useAppSelector((state: RootState) => state.post.posts);
   const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const [avaiblePosts, setAvaiblePosts] = useState(posts);
-  const [selectedPosts, setSelectedPosts] = useState([]);
+  const [selectedPosts, setSelectedPosts] = useState({});
   const { register, setValue, handleSubmit } = useForm();
+  const [disabled, setDisabled] = useState([false, true, true]);
 
   const cssClasses = {
     configure: "configure",
@@ -44,6 +45,9 @@ const Top3 = ({ onSubmit }: Top3Props) => {
       if (top3 && posts) {
         avaiblePosts = posts.filter((element) => !top3.includes(element));
         setAvaiblePosts(avaiblePosts);
+        setDisabled([false, false, false]);
+      } else if (posts.length === 0) {
+        setDisabled([true, true, true]);
       }
     };
 
@@ -51,32 +55,80 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   }, []);
 
   const onSubmitTop3: SubmitHandler<any> = async (data) => {
-    dispatch(updateTop3(selectedPosts.map((element: any) => element.value)));
+    let postsFromSelects = Object.values(selectedPosts).map((element: any) => {
+      if(element.value)
+      {
+        return element.value;
+      }
+    });
+    dispatch(updateTop3(postsFromSelects));
     onSubmit();
   };
 
   const mapPostsToOptions = (posts: Post[]): any => {
-    const options = posts.map((element) => {
-      return {
-        value: element,
-        label: `${element.title}-${element.date}`,
-      };
-    });
-    return options;
+    if (!posts.includes(undefined)) {
+      const options = posts.map((element) => {
+        return {
+          value: element,
+          label: `${element.title}-${element.date}`,
+        };
+      });
+      return options;
+    } else {
+      return [];
+    }
   };
 
   const handlePostSelection = (e: any, index: number) => {
+    if (e) {
+      const restPosts = avaiblePosts.filter(
+        (elem) => elem.title !== e.label.split("-")[0]
+      );
+      if (Object.values(selectedPosts)[index] !== undefined) {
+        restPosts.push(Object.values(selectedPosts)[index]);
+      }
+      setAvaiblePosts(restPosts);
+    } else {
+      const clearedPost: any = Object.values(selectedPosts)[index];
+      if (avaiblePosts && avaiblePosts.indexOf(clearedPost.value) === -1) {
+        setAvaiblePosts([...avaiblePosts, clearedPost.value]);
+      }
+    }
+
+    let items = selectedPosts;
+    if (e) {
+      Object.assign(items, { [index]: e });
+      setSelectedPosts(items);
+      handleDisabled(index, e);
+    } else {
+      Object.assign(items, { [index]: undefined });
+      setSelectedPosts(items);
+      if (
+        Object.values(items).every(
+          (x) => x === null || x === "" || x === undefined
+        )
+      ) {
+        setDisabled([false, true, true]);
+      }
+    }
+  };
+
+  const handleDisabled = (index: number, e: any) => {
+    let disable = [...disabled];
     const restPosts = avaiblePosts.filter(
       (elem) => elem.title !== e.label.split("-")[0]
     );
-    setAvaiblePosts(restPosts);
-    let items = [...selectedPosts];
-    if (items[index]) {
-      items[index] = e;
-      setSelectedPosts([selectedPosts]);
-    } else {
-      setSelectedPosts([...selectedPosts, e]);
+    if (disable[index] && disable[index] === true) {
+      disable[index] = false;
     }
+    if (
+      disable[index + 1] &&
+      disable[index + 1] === true &&
+      restPosts.length > 0
+    ) {
+      disable[index + 1] = false;
+    }
+    setDisabled(disable);
   };
 
   return (
@@ -120,10 +172,15 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               },
             })}
             defaultValue={"Brak"}
-            value={selectedPosts.length >= 1 && (selectedPosts[0] as any)}
+            value={
+              Object.values(selectedPosts).length >= 1 &&
+              (Object.values(selectedPosts)[0] as any)
+            }
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
+            isClearable={true}
+            isDisabled={disabled[0]}
             options={mapPostsToOptions(avaiblePosts)}
             onChange={(e) => handlePostSelection(e, 0)}
           />
@@ -146,10 +203,15 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               },
             })}
             defaultValue={"Brak"}
-            value={selectedPosts.length >= 1 && (selectedPosts[1] as any)}
+            value={
+              Object.values(selectedPosts).length >= 1 &&
+              (Object.values(selectedPosts)[1] as any)
+            }
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
+            isClearable={true}
+            isDisabled={disabled[1]}
             options={mapPostsToOptions(avaiblePosts)}
             onChange={(e) => handlePostSelection(e, 1)}
           />
@@ -172,10 +234,15 @@ const Top3 = ({ onSubmit }: Top3Props) => {
               },
             })}
             defaultValue={"Brak"}
-            value={selectedPosts.length >= 1 && (selectedPosts[2] as any)}
+            value={
+              Object.values(selectedPosts).length >= 1 &&
+              (Object.values(selectedPosts)[2] as any)
+            }
             placeholder={"Nie wybrano"}
             noOptionsMessage={() => "Brak"}
             name="color"
+            isClearable={true}
+            isDisabled={disabled[2]}
             options={mapPostsToOptions(avaiblePosts)}
             onChange={(e) => handlePostSelection(e, 2)}
           />
