@@ -9,7 +9,7 @@ import FileUploader from "../FileUploader/FileUploader";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { RootState } from "../../../store/store";
-import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
+import { BEM, ConvertFromHtmlToEditorState, AddImageToAzure} from "../../tools";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
@@ -19,6 +19,7 @@ interface IFormInput {
   title: string;
   text: string;
   file: any;
+  imgName?: string;
 }
 
 export const About = () => {
@@ -37,8 +38,10 @@ export const About = () => {
   const [selectedFile, setSelectedFile] = useState<File>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    data["file"] = selectedFile;
+    //data["img"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
+    const fileName = AddImageToAzure([selectedFile]);
+    data["imgName"] = fileName;
     dispatch(updateAbout(data));
     notify();
   };

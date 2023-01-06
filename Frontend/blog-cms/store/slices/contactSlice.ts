@@ -4,13 +4,17 @@ import type { RootState } from "../store";
 export interface ContactState {
   title: string;
   text: string;
-  file?: any;
+  mail: string;
+  phone: string;
+  insta: string;
 }
 
 export const initialState: ContactState = {
   title: null,
   text: null,
-  file: null,
+  mail: null,
+  phone: null,
+  insta: null,
 };
 
 export const contactSlice = createSlice({
@@ -20,7 +24,9 @@ export const contactSlice = createSlice({
     updateContact: (state: any, action: PayloadAction<ContactState>) => {
       state.title = action.payload.title;
       state.text = action.payload.text;
-      state.file = action.payload.file;
+      state.mail = action.payload.mail;
+      state.phone = action.payload.phone;
+      state.insta = action.payload.insta;
     },
   },
 });

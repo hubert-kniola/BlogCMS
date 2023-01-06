@@ -1,6 +1,8 @@
 import { ContentState, EditorState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 import { month, TextPosition, weekday } from "./types";
+import axios from 'axios'
+import { BlobStorageURL } from "./settings";
 
 export const BEM = (
   block: string,
@@ -51,4 +53,24 @@ export const GetGTMDate = () => {
   return `${weekday[current.getDay()]}, ${current.getDate()} ${
     month[current.getMonth()]
   } ${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()} GMT`;
+};
+
+export const AddImageToAzure = (images: File[]): any => {
+  const formData = new FormData();
+
+  for (let i = 0; i < images.length; i++) {
+    formData.append("images", images[i]);
+  }
+
+  axios
+    .post("http://localhost:7011/api/FileUpload", formData)
+    .then((res) => {return res.data})
+    .catch((err) => console.error(err));
+};
+
+export const GetImageFromAzure = (fileName: string): any => {
+  axios
+    .get(`${BlobStorageURL}${fileName}`)
+    .then((res) => {console.log(res.data); return res.data})
+    .catch((err) => console.error(err));
 };

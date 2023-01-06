@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 
 export interface AboutState {
   title: string;
-  text: any;
+  text: string;
   file?: any;
 }
 
@@ -17,7 +17,7 @@ export const aboutSlice = createSlice({
   name: "about",
   initialState,
   reducers: {
-    updateAbout: (state: any, action: PayloadAction<AboutState>) => {
+    updateAbout: (state: any, action: PayloadAction<any>) => {
         state.title = action.payload.title;
         state.text = action.payload.text;
         state.file = action.payload.file;

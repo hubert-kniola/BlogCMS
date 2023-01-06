@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GET_ABOUT } from "../../apollo/apolloQueries";
 import { BackgroundDiv } from "../../components";
 import Spinner from "../../components/Spinner/Spinner";
-import { BlobStarageURL } from "../../settings";
+import { BlobStorageURL } from "../../settings";
 import { BEM } from "../../tools";
 import { AboutPageType } from "../../types";
 import "./style.css";
@@ -35,7 +35,7 @@ export const AboutMePage = () => {
       ) : (
         <div className={BEM(css.aboutMe)}>
           <BackgroundDiv
-            url={aboutData && `${BlobStarageURL}${aboutData.imgName}`}
+            url={aboutData && `${BlobStorageURL}${aboutData.imgName}`}
             className={BEM(css.aboutMe, css.photo)}
           />
           <div className={BEM(css.aboutMe, css.content)}>

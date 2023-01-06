@@ -18,13 +18,9 @@ import { UploadType } from "../../types";
 interface IFormInput {
   title: string;
   text: string;
-  file: any;
-}
-
-interface IFormInput {
-  title: string;
-  text: string;
-  file: any;
+  mail: string;
+  phone: string;
+  insta: string;
 }
 
 export const Contact = () => {
@@ -41,10 +37,9 @@ export const Contact = () => {
   const contact = useAppSelector((state: RootState) => state.contact);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    data["file"] = selectedFile;
+    //data["file"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
     dispatch(updateContact(data));
     notify();
@@ -54,7 +49,10 @@ export const Contact = () => {
     const fetchData = () => {
       //TODO - implement load from redux after login fetch
       setValue("title", contact.title);
-      contact.file && setSelectedFile(contact.file);
+      setValue("mail", contact.mail);
+      setValue("phone", contact.phone);
+      setValue("insta", contact.insta);
+      //contact.file && setSelectedFile(contact.file);
       contact.text && setRichValue(ConvertFromHtmlToEditorState(contact.text));
     };
 
@@ -66,7 +64,7 @@ export const Contact = () => {
   };
 
   const handleSelectedFile = (e: File) => {
-    setSelectedFile(e);
+    //setSelectedFile(e);
   };
 
   const notify = () => {
@@ -116,12 +114,24 @@ export const Contact = () => {
           >
             Modyfikuj
           </Button>
-          <p>Zdjęcie:</p>
-          <FileUploader
-            type={UploadType.Single}
-            inputFile={selectedFile}
-            changeInputFile={handleSelectedFile}
-          />
+          <p>E-mail:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("mail", { required: true })}
+          ></input>
+          <p>Telefon:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("phone", { required: true })}
+          ></input>
+          <p>Instagram:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("insta", { required: true })}
+          ></input>
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>
