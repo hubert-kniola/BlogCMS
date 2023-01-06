@@ -2,16 +2,12 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect, useRef, useState } from "react";
 import { GET_ACTIVE_CAROUSEL } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
-import { Carousel, SlideType } from "../../types";
+import { Carousel } from "../../types";
 import Spinner from "../Spinner/Spinner";
 import { css } from "./css";
 import { Slide } from "./Slide";
 import { SliderNavigation } from "./SliderNavigation";
 import "./style.css";
-
-interface ISlider {
-  slides: SlideType[];
-}
 
 export const Slider = () => {
   const [index, setIndex] = useState(0);

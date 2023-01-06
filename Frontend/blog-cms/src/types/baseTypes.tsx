@@ -19,7 +19,7 @@ export type Carousel = {
   imgName: string;
   file: File;
   active: boolean;
-  postId: string;
+  url: string;
 };
 
 export type FAQ = {
@@ -38,14 +38,6 @@ export type MenuItemType = {
   path: string;
   routeObjectType?: RouteObjectType;
   subMenu?: MenuItemType[];
-};
-
-export type SlideType = {
-  photoUrl: string;
-  title?: string;
-  content?: string;
-  textPosition?: TextPosition;
-  urlToPost?: string;
 };
 
 export type Faq = {

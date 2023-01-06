@@ -7,5 +7,6 @@
         public DateTime PublicationDate { get; set; }
         public string ImgName { get; set; }
         public bool Active { get; set; }
+        public string Url{ get; set; }
     }
 }

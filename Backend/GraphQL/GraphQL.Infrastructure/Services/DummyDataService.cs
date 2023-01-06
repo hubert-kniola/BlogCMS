@@ -1,8 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
 using GraphQL.Core.Services;
-using System;
-using System.Diagnostics.Contracts;
 
 namespace GraphQL.Infrastructure.Services
 {
@@ -133,6 +131,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -141,6 +140,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "1cc8655b-0aca-44da-af78-7d712d92cece.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -149,6 +149,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -157,6 +158,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -165,6 +167,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "a62860cd-5115-4ae2-982c-7f365cea160a.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -173,6 +176,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "f8c99c62-b222-4555-bc8f-9cc154b6919d.jpg",
                         Active = true,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -181,6 +185,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
                         Active = false,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -189,6 +194,7 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
                         Active = false,
+                        Url = "http://localhost:8080/",
                     },
                     new Carousel()
                     {
@@ -197,10 +203,11 @@ namespace GraphQL.Infrastructure.Services
                         PublicationDate = DateTime.Now,
                         ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
                         Active = false,
+                        Url = "http://localhost:8080/",
                     }
                 };
 
-               IEnumerable<Carousel> carousels = await _carouselRepository.InsertManyAsync(data);
+                IEnumerable<Carousel> carousels = await _carouselRepository.InsertManyAsync(data);
 
                 success = data.Count == carousels.Count();
             }

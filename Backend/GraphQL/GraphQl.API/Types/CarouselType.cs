@@ -12,6 +12,7 @@ namespace GraphQL.API.Types
             descriptor.Field(_ => _.PublicationDate);
             descriptor.Field(_ => _.ImgName);
             descriptor.Field(_ => _.Active);
+            descriptor.Field(_ => _.Url);
             descriptor.Field(_ => _.ModifiedOn);
             descriptor.Field(_ => _.CreatedOn);
         }

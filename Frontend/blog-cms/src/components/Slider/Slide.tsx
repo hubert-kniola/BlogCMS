@@ -1,25 +1,25 @@
-import React, { FC } from "react";
+import React from "react";
 import { BackgroundDiv } from "..";
 import { BlobStarageURL } from "../../settings";
 import { BEM } from "../../tools";
 import { Carousel } from "../../types";
 import { css } from "./css";
 
-type ISlide = {
+interface ISlide {
   slidesLenght: number;
   active: boolean;
   idx: number;
   slide: Carousel;
   onClickHandler: () => void;
-};
+}
 
-export const Slide: FC<ISlide> = ({
+export const Slide = ({
   slidesLenght,
   active,
   idx,
   slide,
   onClickHandler,
-}) => {
+}: ISlide) => {
   return (
     <div
       onClick={!active ? () => onClickHandler() : () => void 0}
