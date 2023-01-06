@@ -1,6 +1,7 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
 using GraphQL.Core.Services;
+using System.Diagnostics.Contracts;
 
 namespace GraphQL.Infrastructure.Services
 {
@@ -10,26 +11,30 @@ namespace GraphQL.Infrastructure.Services
         private IPostRepository _postRepository;
         private IAboutRepository _aboutRepository;
         private IContactInfoRepository _contactInfoRepository;
+        private IContactFormRepository _contactFormRepository;
+
 
         public DummyDataService(
             ICategoryRepository categoryRepository,
             IPostRepository postRepository,
             IAboutRepository aboutRepository,
-            IContactInfoRepository contactInfoRepository
-)
+            IContactInfoRepository contactInfoRepository,
+            IContactFormRepository contactFormRepository
+            )
         {
             _categoryRepository = categoryRepository;
             _postRepository = postRepository;
             _aboutRepository = aboutRepository;
             _contactInfoRepository = contactInfoRepository;
-
+            _contactFormRepository = contactFormRepository;
         }
 
         public async Task<bool> Execute()
         {
             bool success;
             //success = await SetDummyAbout();
-            success = await SetDummyContactInfo();
+            //success = await SetDummyContactInfo();
+            success = await SetDummyContactForm();
 
             return success;
         }
@@ -75,6 +80,35 @@ namespace GraphQL.Infrastructure.Services
                 });
 
                 success = contact != null;
+            }
+            return success;
+        }
+
+        private async Task<bool> SetDummyContactForm()
+        {
+            bool success = await _contactFormRepository.RemoveAllAsync();
+            if (success)
+            {
+                ContactForm contact1 = await _contactFormRepository.InsertAsync(new ContactForm()
+                {
+                    Name = "Adam Kowalski",
+                    Email = "jakis@email.com",
+                    Content = "Cześć jestem Adam Kowalski"
+                });
+                ContactForm contact2 = await _contactFormRepository.InsertAsync(new ContactForm()
+                {
+                    Name = "Andrzej Nowak",
+                    Email = "adam@nowak.com",
+                    Content = "Cześć jestem Andrzej Nowak"
+                });
+                ContactForm contact3 = await _contactFormRepository.InsertAsync(new ContactForm()
+                {
+                    Name = "Przemek Gość",
+                    Email = "przemekgosc@email.com",
+                    Content = "Cześć jestem Przemek Gość"
+                });
+
+                success = contact1 != null && contact2 != null && contact3 != null;
             }
             return success;
         }

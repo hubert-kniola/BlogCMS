@@ -6,8 +6,8 @@ namespace GraphQL.API.Queries
 {
     [ExtendObjectType(name: "Query")]
     [Authorize]
-    public class CategoryQuery
+    public class ContactFormQuery
     {
-        public async Task<IEnumerable<Category>> GetCategory([Service] ICategoryRepository categoryRepository) => await categoryRepository.GetAllAsync();
+        public async Task<IEnumerable<ContactForm>> GetContactForms([Service] IContactFormRepository contactFormRepository) => await contactFormRepository.GetAllAsync();
     }
 }

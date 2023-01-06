@@ -72,6 +72,18 @@ export const GET_CONTACT_INFO = gql`
     }
   }
 `;
+
+export const GET_CONTACT_FORMS = gql`
+  query GetContactForms {
+    contactForms {
+      id
+      name
+      email
+      content
+    }
+  }
+`;
+
 export const GET_CONTACT = gql`
   query GetContact {
     posts {
@@ -83,6 +95,25 @@ export const GET_CATEGORY = gql`
   query GetCategory {
     posts {
       id
+    }
+  }
+`;
+
+/* MUTATION */
+
+export const POST_CONTACT_FORM = gql`
+  mutation CreateContactForm(
+    $name: String!
+    $email: String!
+    $content: String!
+  ) {
+    createContactForm(
+      contactForm: { name: $name, email: $email, content: $content }
+    ) {
+      id
+      name
+      email
+      content
     }
   }
 `;

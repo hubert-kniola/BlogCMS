@@ -1,6 +1,10 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { emitWarning } from "process";
 import React, { useEffect, useState } from "react";
-import { GET_CONTACT_INFO } from "../../apollo/apolloQueries";
+import {
+  GET_CONTACT_INFO,
+  POST_CONTACT_FORM,
+} from "../../apollo/apolloQueries";
 import { Input } from "../../components";
 import Spinner from "../../components/Spinner/Spinner";
 import { BEM } from "../../tools";
@@ -27,7 +31,14 @@ interface Contact1 {
 }
 
 export const ContactPage = () => {
-  const { loading, error, data } = useQuery(GET_CONTACT_INFO);
+  const {
+    loading: loadingData,
+    error: errorData,
+    data: contactInfoData,
+  } = useQuery(GET_CONTACT_INFO);
+  const [createContactForm, { data, loading, error }] =
+    useMutation(POST_CONTACT_FORM);
+
   const [contactInfo, setContactInfo] = useState(undefined as ContactInfoType);
 
   const getContactInfoData = (data: any): ContactInfoType => {
@@ -35,15 +46,36 @@ export const ContactPage = () => {
     return data?.contactInfo;
   };
 
+  //TODO Obsłużyć formularz
+  const onClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    createContactForm({
+      variables: {
+        name: "Patryk Kołacz",
+        email: "ciekawe@czy.dziala",
+        content: "Tutaj prośba o to, żeby zadziałało",
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (!loadingData) {
+      //TODO if success wyślij wiadomość, że się dodało :)
+      setContactInfo(getContactInfoData(contactInfoData));
+    }
+  }, [loadingData]);
+
   useEffect(() => {
     if (!loading) {
-      setContactInfo(getContactInfoData(data));
+      console.log(data);
     }
   }, [loading]);
 
   return (
     <>
-      {loading ? (
+      {loadingData ? (
         <Spinner />
       ) : (
         <div className={BEM(css.contact, css.view)}>
@@ -70,7 +102,9 @@ export const ContactPage = () => {
               <Input placeholder="E-mail" />
               <h1>Co tam?</h1>
               <textarea required placeholder="Co tam? " />
-              <button type="submit">Wyślij!</button>
+              <button type="submit" onClick={(e) => onClickHandler(e)}>
+                Wyślij!
+              </button>
             </div>
           </div>
         </div>

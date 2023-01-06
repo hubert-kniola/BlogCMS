@@ -69,3 +69,10 @@ export type TextBoxes = {
   fieldName: string;
   content: string;
 };
+
+export type ContactForm = {
+  id: string;
+  name: string;
+  email: string;
+  content: string;
+};

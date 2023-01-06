@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IAboutRepository, AboutRepository>();
 builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
+builder.Services.AddScoped<IContactFormRepository, ContactFormRepository>();
 
 //Services
 builder.Services.AddScoped<IDummyDataService, DummyDataService>();
@@ -52,17 +53,20 @@ builder.Services
         .AddTypeExtension<CategoryQuery>()
         .AddTypeExtension<AboutQuery>()
         .AddTypeExtension<ContactInfoQuery>()
+        .AddTypeExtension<ContactFormQuery>()
     .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<PostMutation>()
         .AddTypeExtension<CategoryMutation>()
         .AddTypeExtension<AboutMutation>()
         .AddTypeExtension<ContactInfoMutation>()
+        .AddTypeExtension<ContactFormMutation>()
     .AddType<PostType>()
     .AddType<CategoryType>()
     .AddType<CategoryResolver>()
     .AddType<PostResolver>()
     .AddType<AboutType>()
-    .AddType<ContactInfoType>();
+    .AddType<ContactInfoType>()
+    .AddType<ContactFormType>();
 
 
 builder.Services

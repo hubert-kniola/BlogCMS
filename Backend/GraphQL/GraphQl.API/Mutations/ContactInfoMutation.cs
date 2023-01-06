@@ -8,10 +8,10 @@ namespace GraphQL.API.Mutations
     [Authorize]
     public class ContactInfoMutation
     {
-        public async Task<ContactInfo> CreateContactInfoAsync(ContactInfo ContactInfo, [Service] IContactInfoRepository contactInfoRepository) => 
-            await contactInfoRepository.InsertAsync(ContactInfo);
+        public async Task<ContactInfo> CreateContactInfoAsync(ContactInfo contactInfo, [Service] IContactInfoRepository contactInfoRepository) => 
+            await contactInfoRepository.InsertAsync(contactInfo);
 
-        public async Task<ContactInfo?> UpdateContactInfoAsync(ContactInfo ContactInfo, [Service] IContactInfoRepository contactInfoRepositor) =>
-            await contactInfoRepositor.UpdateAsync(ContactInfo);
+        public async Task<ContactInfo?> UpdateContactInfoAsync(ContactInfo contactInfo, [Service] IContactInfoRepository contactInfoRepositor) =>
+            await contactInfoRepositor.UpdateAsync(contactInfo);
     }
 }
