@@ -27,11 +27,9 @@ namespace GraphQL.Infrastructure.Services
             ICarouselRepository carouselRepository,
             IFaqReposiotry faqReposiotry,
             ICategoryService categoryService
+            IMenuItemReposiotry menuItemReposiotry,
+            IMenuItemService menuItemService
             )
-        {
-            _categoryRepository = categoryRepository;
-            _postRepository = postRepository;
-            _aboutRepository = aboutRepository;
             _contactInfoRepository = contactInfoRepository;
             _contactFormRepository = contactFormRepository;
             _carouselRepository = carouselRepository;

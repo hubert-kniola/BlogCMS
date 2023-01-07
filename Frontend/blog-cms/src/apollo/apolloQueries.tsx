@@ -40,6 +40,32 @@ export const GET_ROUTE = gql`
   }
 `;
 
+export const GET_MENU = gql`
+  query GetMenu {
+    menuItem {
+      id
+      title
+      path
+      objectType
+      subMenu {
+        title
+        path
+        objectType
+        subMenu {
+          title
+          path
+          objectType
+          subMenu {
+            title
+            path
+            objectType
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_TOP3 = gql`
   query GeTop3 {
     top3 {
