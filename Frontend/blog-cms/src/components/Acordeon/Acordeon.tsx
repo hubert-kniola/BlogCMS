@@ -24,7 +24,6 @@ export const Acordeon = () => {
   };
 
   const getFaqData = (data: any): FaqType[] => {
-    console.log(data.allFaq);
     return data?.allFaq;
   };
 
@@ -32,7 +31,7 @@ export const Acordeon = () => {
     if (!loading) {
       setFaq(getFaqData(data));
     }
-  }, [loading]);
+  }, [loading, faq]);
 
   return (
     <>
