@@ -1,7 +1,7 @@
 import { ContentState, EditorState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 import { month, TextPosition, weekday } from "./types";
-import axios from 'axios'
+import axios from "axios";
 import { BlobStorageURL } from "./settings";
 
 export const BEM = (
@@ -64,13 +64,22 @@ export const AddImageToAzure = (images: File[]): any => {
 
   axios
     .post("http://localhost:7011/api/FileUpload", formData)
-    .then((res) => {return res.data})
+    .then((res) => {
+      return res.data;
+    })
     .catch((err) => console.error(err));
 };
 
 export const GetImageFromAzure = (fileName: string): any => {
   axios
-    .get(`${BlobStorageURL}${fileName}`)
-    .then((res) => {console.log(res.data); return res.data})
+    .get(`${BlobStorageURL}${fileName}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
     .catch((err) => console.error(err));
 };

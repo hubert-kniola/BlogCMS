@@ -2,8 +2,6 @@ import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
 import "./style.css";
-import { updateUser, initialState } from "../../../store/slices/userSlice";
-import Spinner from "../../components/Spinner/Spinner";
 import { useStateManager } from "react-select";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { initialState, updateUser } from "../../../store/slices/userSlice";
@@ -28,6 +26,7 @@ export const AdminPanel = () => {
     panel: "panel",
   };
 
+  /**================== ABOUT LOADING SECTION ==================*/
   if (aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
     let aboutValue = Object.values(aboutData)[0];
     dispatch(updateAbout(Object.values(aboutValue)[0]));
