@@ -7,7 +7,8 @@ const apolloClient = new ApolloClient({
 
   headers: {
     credentials: "same-origin",
-    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHJpbmciLCJqdGkiOiIzZWYxN2E2NS04OTEwLTQ5NTYtYjFhZS00ZTdiNTE3MWRiODEiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1laWQiOiI2MzUwNDg1ZWI5MDI4OWQzYjAzYWFlMmUiLCJuYmYiOjE2NzMwOTIzNjUsImV4cCI6MTY3MzEzNTYxMCwiaWF0IjoxNjczMDkyMzY1fQ.18l9tzOPyFtiGXyans3P5Z2uaqDO0EIsVOYWC0D0rvY`,
+    //temporary solution
+    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmcm9udGVuZFVzZXIiLCJqdGkiOiJiNWE0ZWNjYS00MGVkLTRkNGYtYjJiYy1lYjY2MmRkYmEwNjMiLCJlbWFpbCI6InVzZXJAZnJvbnRlbmQuY29tIiwibmFtZWlkIjoiNjNiOTZhMTc0YTdhNDIxZDY2MjE4NzUyIiwibmJmIjoxNjczMDk2MDA2LCJleHAiOjE2NzMxMzkyNTEsImlhdCI6MTY3MzA5NjAwNn0.fyqfAnEgPjrLERTD3Mg8hOITD98N3kurKzqcs4k1SZg`,
   },
 });
 
