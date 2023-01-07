@@ -3,8 +3,6 @@ import { RouteObject } from "react-router-dom";
 import { CategoryPage, ErrorPage, PostPage } from "./screens";
 import { MenuItemType } from "./types";
 
-let oneLevelRoute = [] as RouteObject[];
-
 const getCleanPath = (path: string): string => {
   if (path.endsWith("/")) {
     path = path.slice(-1);

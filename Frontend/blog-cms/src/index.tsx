@@ -24,6 +24,7 @@ import { SendFiles } from "./screens/SendFiles/SendFiles";
 import { MenuItemType, RouteObjectType } from "./types";
 import { GET_MENU } from "./apollo/apolloQueries";
 import { generateOneLevelRoute } from "./routeManager";
+import { basicMenu } from "./settings";
 
 const menu: MenuItemType[] = [
   {
@@ -128,11 +129,6 @@ const basicRouter = [
     element: <ContactPage />,
   },
 ] as RouteObject[];
-
-const basicMenu: MenuItemType[] = [
-  { title: "About", path: "/aboutme" },
-  { title: "Contact", path: "/contact" },
-];
 
 const MainRouteProvider = () => {
   const {
