@@ -1,16 +1,12 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { GET_MENU } from "../../../apollo/apolloQueries";
+import { basicMenu } from "../../../settings";
 import { BEM } from "../../../tools";
-import { ContactInfoType, MenuItemType } from "../../../types";
+import { MenuItemType } from "../../../types";
 import { css } from "./cssBem";
 import { MenuItems } from "./MenuItems";
 import "./style.css";
-
-const basicMenu: MenuItemType[] = [
-  { title: "About", path: "/aboutme" },
-  { title: "Contact", path: "/contact" },
-];
 
 export const Navbar = () => {
   const {
