@@ -13,6 +13,9 @@ namespace GraphQL.Infrastructure.Services
         private IContactFormRepository _contactFormRepository;
         private ICarouselRepository _carouselRepository;
         private IFaqReposiotry _faqReposiotry;
+        private IMenuItemReposiotry _menuItemReposiotry;
+        private IMenuItemService _menuItemService;
+
 
 
 
@@ -23,7 +26,9 @@ namespace GraphQL.Infrastructure.Services
             IContactInfoRepository contactInfoRepository,
             IContactFormRepository contactFormRepository,
             ICarouselRepository carouselRepository,
-            IFaqReposiotry faqReposiotry
+            IFaqReposiotry faqReposiotry,
+            IMenuItemReposiotry menuItemReposiotry,
+            IMenuItemService menuItemService
             )
         {
             _categoryRepository = categoryRepository;
@@ -33,6 +38,8 @@ namespace GraphQL.Infrastructure.Services
             _contactFormRepository = contactFormRepository;
             _carouselRepository = carouselRepository;
             _faqReposiotry = faqReposiotry;
+            _menuItemReposiotry = menuItemReposiotry;
+            _menuItemService = menuItemService;
         }
 
         public async Task<bool> Execute()
@@ -42,91 +49,76 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyContactInfo();
             //success = await SetDummyContactForm();
             //success = await SetDummyCarousels();
-            success = await SetDummyFaq();
+            //success = await SetDummyFaq();
+            success = await SetDummyMenuItem();
+
 
             return success;
         }
 
         private async Task<bool> SetDummyAbout()
         {
-            bool success = await _aboutRepository.RemoveAllAsync();
-            if (success)
+            About about = new()
             {
-                About? about = await _aboutRepository.InsertAsync(new About()
-                {
-                    Title = "Poznajmy się!",
-                    Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor eleifend elit vel fermentum. " +
-                    "In at lorem commodo sem aliquam ultricies. Curabitur hendrerit aliquet ligula vitae dignissim. Aliquam lobortis " +
-                    "molestie metus, nec sagittis elit iaculis sed. Aenean arcu odio, mattis vitae tincidunt eget, placerat sed massa. " +
-                    "Nullam luctus nulla sit amet leo bibendum, vitae auctor elit pellentesque. Vestibulum luctus, ipsum congue semper " +
-                    "consectetur, velit tellus luctus enim, maximus molestie mauris diam vel odio. Morbi sodales, mi sed eleifend venenatis, " +
-                    "lacus felis pharetra ipsum, ac lobortis libero libero in lectus.",
-                    ImgName = "07e8f032-22ad-4db2-952b-1bd9b4780bbb.jpg"
-                });
-
-                success = about != null;
-            }
-            return success;
+                Title = "Poznajmy się!",
+                Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor eleifend elit vel fermentum. " +
+                       "In at lorem commodo sem aliquam ultricies. Curabitur hendrerit aliquet ligula vitae dignissim. Aliquam lobortis " +
+                       "molestie metus, nec sagittis elit iaculis sed. Aenean arcu odio, mattis vitae tincidunt eget, placerat sed massa. " +
+                       "Nullam luctus nulla sit amet leo bibendum, vitae auctor elit pellentesque. Vestibulum luctus, ipsum congue semper " +
+                       "consectetur, velit tellus luctus enim, maximus molestie mauris diam vel odio. Morbi sodales, mi sed eleifend venenatis, " +
+                       "lacus felis pharetra ipsum, ac lobortis libero libero in lectus.",
+                ImgName = "07e8f032-22ad-4db2-952b-1bd9b4780bbb.jpg"
+            };
+            
+            return await SetDummyItem(_aboutRepository, about);
         }
 
         private async Task<bool> SetDummyContactInfo()
         {
-            bool success = await _contactInfoRepository.RemoveAllAsync();
-
-            if (success)
+            ContactInfo contact = new()
             {
-                ContactInfo contact = await _contactInfoRepository.InsertAsync(new ContactInfo()
-                {
-                    Title = "Chcesz się skontaktować?",
-                    Content = "Podziel się Twoimi doświadczeniami! Powiedz co Cię inspiruje. A może chcesz uzyskać wiecej informacji odnośnie jakiegoś postu?",
-                    TextBoxes = new List<TextBox>()
+                Title = "Chcesz się skontaktować?",
+                Content = "Podziel się Twoimi doświadczeniami! Powiedz co Cię inspiruje. A może chcesz uzyskać wiecej informacji odnośnie jakiegoś postu?",
+                TextBoxes = new List<TextBox>()
                     {
                         new TextBox(){FieldName = "Email", Content= "mail@mail.pl" },
                         new TextBox(){FieldName = "Telefon", Content= "+48 123 456 789" },
                         new TextBox(){FieldName = "Instagram", Content= "www.instagram.com/instagram" },
                     }
-                });
-
-                success = contact != null;
-            }
-            return success;
+            };
+            return await SetDummyItem(_contactInfoRepository, contact);
         }
 
         private async Task<bool> SetDummyContactForm()
         {
-            bool success = await _contactFormRepository.RemoveAllAsync();
-            if (success)
+            List<ContactForm> data = new()
             {
-                ContactForm contact1 = await _contactFormRepository.InsertAsync(new ContactForm()
+                new ContactForm()
                 {
                     Name = "Adam Kowalski",
                     Email = "jakis@email.com",
                     Content = "Cześć jestem Adam Kowalski"
-                });
-                ContactForm contact2 = await _contactFormRepository.InsertAsync(new ContactForm()
+                },
+                new ContactForm()
                 {
                     Name = "Andrzej Nowak",
                     Email = "adam@nowak.com",
                     Content = "Cześć jestem Andrzej Nowak"
-                });
-                ContactForm contact3 = await _contactFormRepository.InsertAsync(new ContactForm()
+                },
+                new ContactForm()
                 {
                     Name = "Przemek Gość",
                     Email = "przemekgosc@email.com",
                     Content = "Cześć jestem Przemek Gość"
-                });
-
-                success = contact1 != null && contact2 != null && contact3 != null;
-            }
-            return success;
+                }
+            };
+            
+            return await SetManyDummyItems(_contactFormRepository, data);
         }
 
         private async Task<bool> SetDummyCarousels()
         {
-            bool success = await _carouselRepository.RemoveAllAsync();
-            if (success)
-            {
-                List<Carousel> data = new()
+            List<Carousel> data = new()
                 {
                     new Carousel()
                     {
@@ -211,20 +203,12 @@ namespace GraphQL.Infrastructure.Services
                     }
                 };
 
-                IEnumerable<Carousel> carousels = await _carouselRepository.InsertManyAsync(data);
-
-                success = data.Count == carousels.Count();
-            }
-            return success;
+            return await SetManyDummyItems(_carouselRepository, data);
         }
 
         private async Task<bool> SetDummyFaq()
         {
-            bool success = await _faqReposiotry.RemoveAllAsync();
-
-            if (success)
-            {
-                List<Faq> data = new()
+            List<Faq> data = new()
                 {
                    new()
                    {
@@ -250,11 +234,105 @@ namespace GraphQL.Infrastructure.Services
                    }
                 };
 
-                IEnumerable<Faq> faqs = await _faqReposiotry.InsertManyAsync(data);
+            return await SetManyDummyItems(_faqReposiotry, data);
+        }
 
-                success = data.Count == faqs.Count();
+        private async Task<bool> SetDummyMenuItem()
+        {
+            MenuItem data = new()
+            {
+                Title = "Posty",
+                Path = "/posts",
+                SubMenu = new List<MenuItem>() {
+                        new MenuItem()
+                        {
+                            Title = "Web design",
+                            Path = "/web-design",
+                        },
+                        new MenuItem()
+                        {
+                            Title = "Web development",
+                            Path= "/web-dev",
+                            SubMenu = new List<MenuItem>()
+                            {
+                                new MenuItem()
+                                {
+                                    Title = "Backend",
+                                    Path = "/b-end",
+                                    SubMenu= new List<MenuItem>()
+                                    {
+                                        new MenuItem()
+                                        {
+                                            Title = ".NET",
+                                            Path = "/dotnet"
+                                        },
+                                        new MenuItem()
+                                        {
+                                            Title = "Java",
+                                            Path = "/java"
+                                        },
+                                        new MenuItem()
+                                        {
+                                            Title = "Python",
+                                            Path = "/python"
+                                        }
+                                    }
+                                },
+                                new MenuItem()
+                                {
+                                    Title = "Frontend",
+                                    Path = "/f-end"
+                                }
+                            }
+                        },
+                        new MenuItem()
+                        {
+                            Title = "SEO",
+                            Path = "/seo"
+                        }
+                    }
+            };
+
+            bool success = await _menuItemReposiotry.RemoveAllAsync();
+
+            if (success)
+            {
+                MenuItem newData = await _menuItemService.AddMenuItem(data);
+
+                success = newData != null;
+            }
+
+            return success;
+        }
+
+
+        #region GeneralFunctions
+        private async Task<bool> SetDummyItem<T>(IBaseRepository<T> repository, T entity) where T : BaseEntity
+        {
+            bool success = await repository.RemoveAllAsync();
+
+            if (success)
+            {
+                T? obj = await repository.InsertAsync(entity);
+
+                success = obj != null;
             }
             return success;
         }
+
+
+        private async Task<bool> SetManyDummyItems<T>(IBaseRepository<T> repository, IEnumerable<T> entities) where T : BaseEntity
+        {
+            bool success = await repository.RemoveAllAsync();
+
+            if (success)
+            {
+                IEnumerable<T> obj = await repository.InsertManyAsync(entities);
+
+                success = entities.Count() == obj.Count();
+            }
+            return success;
+        }
+        #endregion GeneralFunctions
     }
 }

@@ -1,51 +1,44 @@
 import React from "react";
 import { RouteObject } from "react-router-dom";
-import { CategoryPage, PostPage } from "./screens";
+import { CategoryPage, ErrorPage, PostPage } from "./screens";
 import { MenuItemType } from "./types";
 
 let oneLevelRoute = [] as RouteObject[];
 
 const getCleanPath = (path: string): string => {
-  if (path.startsWith("/")) {
-    path = path.substring(1);
-  }
-
-  if (path.startsWith("\\")) {
+  if (path.endsWith("/")) {
     path = path.slice(-1);
   }
 
   return path;
 };
 
-const getPostRoute = (path: string): RouteObject => {
+const getCategoryRoute = (path: string): RouteObject => {
   return {
-    path: `${path}/:id`,
-    element: <PostPage />,
+    path: `${path}`,
+    element: <CategoryPage />,
+    errorElement: <ErrorPage />,
   };
 };
 
-export const generatePath = (
-  menu: MenuItemType[],
-  parentPath?: string
-): RouteObject[] => {
+const getPostRoute = (path: string): RouteObject => {
+  return {
+    path: `${getCleanPath(path)}/:id`,
+    element: <PostPage />,
+    errorElement: <ErrorPage />,
+  };
+};
+
+export const generateOneLevelRoute = (menu: MenuItemType[]): RouteObject[] => {
+  let routeObject = [] as RouteObject[];
+
   menu.forEach((item) => {
-    item.path = getCleanPath(item.path);
-    let path = `${parentPath ? parentPath : ""}/${item.path}`;
-    oneLevelRoute = [
-      ...oneLevelRoute,
-      {
-        path: path,
-        element: <CategoryPage />,
-      },
-      getPostRoute(path),
-    ];
+    routeObject.push(getCategoryRoute(item.path));
+    routeObject.push(getPostRoute(item.path));
 
     if (item.subMenu) {
-      generatePath(item.subMenu, path);
-    } else {
-      [...oneLevelRoute, getPostRoute(path)];
+      routeObject.push(...generateOneLevelRoute(item.subMenu));
     }
   });
-
-  return oneLevelRoute;
+  return routeObject;
 };

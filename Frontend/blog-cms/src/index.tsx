@@ -1,8 +1,13 @@
-import { ApolloProvider } from "@apollo/client";
-import React from "react";
+import { ApolloProvider, useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouteObject,
+  Router,
+  RouterProvider,
+} from "react-router-dom";
 import { store } from "../store/store";
 import apolloClient from "./apollo/apolloConfig";
 import { About, Category, Configure, Contact, Posts } from "./components";
@@ -17,7 +22,8 @@ import {
 } from "./screens";
 import { SendFiles } from "./screens/SendFiles/SendFiles";
 import { MenuItemType, RouteObjectType } from "./types";
-import { generatePath } from "./routeManager";
+import { GET_MENU } from "./apollo/apolloQueries";
+import { generateOneLevelRoute } from "./routeManager";
 
 const menu: MenuItemType[] = [
   {
@@ -63,7 +69,7 @@ const menu: MenuItemType[] = [
   },
 ];
 
-const router = createBrowserRouter([
+const basicRouter = [
   {
     path: "/",
     element: <GuestSwitchPanel />,
@@ -121,8 +127,48 @@ const router = createBrowserRouter([
     path: "contact",
     element: <ContactPage />,
   },
-  ...generatePath(menu),
-]);
+] as RouteObject[];
+
+const basicMenu: MenuItemType[] = [
+  { title: "About", path: "/aboutme" },
+  { title: "Contact", path: "/contact" },
+];
+
+const MainRouteProvider = () => {
+  const {
+    loading: loadingData,
+    error: errorData,
+    data: menuItemData,
+  } = useQuery(GET_MENU);
+  const [menu, setMenu] = useState<MenuItemType[]>();
+  const [oneLvlRouter, setOneLvlRouter] = useState<RouteObject[]>();
+
+  const getMenuItemData = (data: any): MenuItemType => {
+    return data?.menuItem;
+  };
+
+  useEffect(() => {
+    if (!loadingData) {
+      setMenu([getMenuItemData(menuItemData), ...basicMenu]);
+    }
+  }, [loadingData]);
+
+  useEffect(() => {
+    if (menu) {
+      setOneLvlRouter(generateOneLevelRoute(menu));
+    }
+  }, [menu]);
+
+  return (
+    <>
+      {menu && !loadingData && oneLvlRouter && (
+        <RouterProvider
+          router={createBrowserRouter([...basicRouter, ...oneLvlRouter])}
+        />
+      )}
+    </>
+  );
+};
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -130,7 +176,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <ApolloProvider client={apolloClient}>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <MainRouteProvider />
     </Provider>
   </ApolloProvider>
 );
