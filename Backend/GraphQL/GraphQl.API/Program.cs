@@ -15,7 +15,6 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 //Configuration
@@ -97,7 +96,6 @@ builder.Services
                     ClockSkew = TimeSpan.Zero,
                     ValidTypes = new[] { "JWT" }
                 };
-
             });
 
 var app = builder.Build();
