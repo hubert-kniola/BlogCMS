@@ -9,5 +9,8 @@
 }
 
 .mainPageFooter_item{
-    @apply m-auto
+    @apply 
+    m-auto
+    flex flex-col
+    justify-center items-center
 }

@@ -42,7 +42,6 @@ export const ContactPage = () => {
   const [contactInfo, setContactInfo] = useState(undefined as ContactInfoType);
 
   const getContactInfoData = (data: any): ContactInfoType => {
-    console.log(data?.contactInfo);
     return data?.contactInfo;
   };
 
@@ -66,12 +65,6 @@ export const ContactPage = () => {
       setContactInfo(getContactInfoData(contactInfoData));
     }
   }, [loadingData]);
-
-  useEffect(() => {
-    if (!loading) {
-      console.log(data);
-    }
-  }, [loading]);
 
   return (
     <>
