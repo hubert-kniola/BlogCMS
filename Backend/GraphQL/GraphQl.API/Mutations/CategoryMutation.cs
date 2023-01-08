@@ -1,5 +1,5 @@
 ﻿using GraphQL.Core.Entities;
-using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 using HotChocolate.AspNetCore.Authorization;
 
 namespace GraphQL.API.Mutations

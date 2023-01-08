@@ -13,8 +13,6 @@ namespace GraphQL.Infrastructure.Services
         private IContactFormRepository _contactFormRepository;
         private ICarouselRepository _carouselRepository;
         private IFaqReposiotry _faqReposiotry;
-        private IMenuItemReposiotry _menuItemReposiotry;
-        private IMenuItemService _menuItemService;
         private ICategoryService _categoryService;
 
 
@@ -28,8 +26,6 @@ namespace GraphQL.Infrastructure.Services
             IContactFormRepository contactFormRepository,
             ICarouselRepository carouselRepository,
             IFaqReposiotry faqReposiotry,
-            IMenuItemReposiotry menuItemReposiotry,
-            IMenuItemService menuItemService,
             ICategoryService categoryService
             )
         {
@@ -40,8 +36,6 @@ namespace GraphQL.Infrastructure.Services
             _contactFormRepository = contactFormRepository;
             _carouselRepository = carouselRepository;
             _faqReposiotry = faqReposiotry;
-            _menuItemReposiotry = menuItemReposiotry;
-            _menuItemService = menuItemService;
             _categoryService = categoryService;
         }
 
@@ -53,7 +47,6 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyContactForm();
             //success = await SetDummyCarousels();
             //success = await SetDummyFaq();
-            //success = await SetDummyMenuItem();
             success = await SetDummyCategory();
 
             return success;
@@ -238,74 +231,6 @@ namespace GraphQL.Infrastructure.Services
                 };
 
             return await SetManyDummyItems(_faqReposiotry, data);
-        }
-
-        private async Task<bool> SetDummyMenuItem()
-        {
-            MenuItem data = new()
-            {
-                Title = "Posty",
-                Path = "/posts",
-                SubMenu = new List<MenuItem>() {
-                        new MenuItem()
-                        {
-                            Title = "Web design",
-                            Path = "/web-design",
-                        },
-                        new MenuItem()
-                        {
-                            Title = "Web development",
-                            Path= "/web-dev",
-                            SubMenu = new List<MenuItem>()
-                            {
-                                new MenuItem()
-                                {
-                                    Title = "Backend",
-                                    Path = "/b-end",
-                                    SubMenu= new List<MenuItem>()
-                                    {
-                                        new MenuItem()
-                                        {
-                                            Title = ".NET",
-                                            Path = "/dotnet"
-                                        },
-                                        new MenuItem()
-                                        {
-                                            Title = "Java",
-                                            Path = "/java"
-                                        },
-                                        new MenuItem()
-                                        {
-                                            Title = "Python",
-                                            Path = "/python"
-                                        }
-                                    }
-                                },
-                                new MenuItem()
-                                {
-                                    Title = "Frontend",
-                                    Path = "/f-end"
-                                }
-                            }
-                        },
-                        new MenuItem()
-                        {
-                            Title = "SEO",
-                            Path = "/seo"
-                        }
-                    }
-            };
-
-            bool success = await _menuItemReposiotry.RemoveAllAsync();
-
-            if (success)
-            {
-                MenuItem newData = await _menuItemService.AddMenuItem(data);
-
-                success = newData != null;
-            }
-
-            return success;
         }
 
         private async Task<bool> SetDummyCategory()
