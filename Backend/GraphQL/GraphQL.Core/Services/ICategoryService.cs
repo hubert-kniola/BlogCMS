@@ -1,6 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 
-namespace GraphQL.Core.Repository
+namespace GraphQL.Core.Services
 {
     public interface ICategoryService
     {

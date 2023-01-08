@@ -1,5 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 
 namespace GraphQL.Infrastructure.Services
 {
