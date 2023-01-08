@@ -15,6 +15,7 @@ namespace GraphQL.Infrastructure.Services
         private IFaqReposiotry _faqReposiotry;
         private IMenuItemReposiotry _menuItemReposiotry;
         private IMenuItemService _menuItemService;
+        private ICategoryService _categoryService;
 
 
 
@@ -28,7 +29,8 @@ namespace GraphQL.Infrastructure.Services
             ICarouselRepository carouselRepository,
             IFaqReposiotry faqReposiotry,
             IMenuItemReposiotry menuItemReposiotry,
-            IMenuItemService menuItemService
+            IMenuItemService menuItemService,
+            ICategoryService categoryService
             )
         {
             _categoryRepository = categoryRepository;
@@ -40,6 +42,7 @@ namespace GraphQL.Infrastructure.Services
             _faqReposiotry = faqReposiotry;
             _menuItemReposiotry = menuItemReposiotry;
             _menuItemService = menuItemService;
+            _categoryService = categoryService;
         }
 
         public async Task<bool> Execute()
@@ -50,8 +53,8 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyContactForm();
             //success = await SetDummyCarousels();
             //success = await SetDummyFaq();
-            success = await SetDummyMenuItem();
-
+            //success = await SetDummyMenuItem();
+            success = await SetDummyCategory();
 
             return success;
         }
@@ -305,7 +308,98 @@ namespace GraphQL.Infrastructure.Services
             return success;
         }
 
+        private async Task<bool> SetDummyCategory()
+        {
+            if (await _categoryRepository.RemoveAllAsync())
+            {
+                Category main = await _categoryService.AddCategory(new()
+                {
+                    Title = "Posty",
+                    Path = "/posts",
+                });
 
+                #region Lvl1
+
+                    Category webDesign = await _categoryService.AddCategory(new()
+                    {
+                        Title = "Web development",
+                        Path = "/web-design",
+                        ParentId = main.Id,
+                    });
+
+                    Category webDevelopment = await _categoryService.AddCategory(new()
+                    {
+                        Title = "Web design",
+                        Path = "/web-design",
+                        ParentId = main.Id,
+                    });
+
+                        #region Lvl2
+
+                        Category backend = await _categoryService.AddCategory(new()
+                        {
+                            Title = "Backen",
+                            Path = "/b-end",
+                            ParentId = webDevelopment.Id,
+                        });
+
+                            #region Lvl3
+
+                            Category dotNet = await _categoryService.AddCategory(new()
+                            {
+                                Title = ".NET",
+                                Path = "dot-net",
+                                ParentId = backend.Id
+                            });
+                            Category java = await _categoryService.AddCategory(new()
+                            {
+                                Title = "Java",
+                                Path = "java",
+                                ParentId = backend.Id
+                            });
+                            Category python = await _categoryService.AddCategory(new()
+                            {
+                                Title = "python",
+                                Path = "python",
+                                ParentId = backend.Id
+                            });
+                            #endregion lvl3
+
+                        Category frontend = await _categoryService.AddCategory(new()
+                        {
+                            Title = "Frontend",
+                            Path = "/f-end",
+                            ParentId = webDevelopment.Id,
+                        });
+                        #endregion Lvl2
+
+                    Category seo = await _categoryService.AddCategory(new()
+                    {
+                            Title = "SEO",
+                            Path = "/seo",
+                            ParentId = main.Id,
+                    });
+                #endregion Lvl1
+
+                _ = await _categoryService.AddCategory(new()
+                {
+                    Title = "About",
+                    Path = "/aboutme",
+                    IsConst = true,
+                }) ;
+
+                _ = await _categoryService.AddCategory(new()
+                {
+                    Title = "Contact",
+                    Path = "/contact",
+                    IsConst = true,
+                });
+
+                return true;
+            }
+
+            return false;
+        }
         #region GeneralFunctions
         private async Task<bool> SetDummyItem<T>(IBaseRepository<T> repository, T entity) where T : BaseEntity
         {

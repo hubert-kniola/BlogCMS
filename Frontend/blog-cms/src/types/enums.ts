@@ -33,6 +33,6 @@ export enum UploadType {
 }
 
 export enum RouteObjectType {
-  Category,
-  Post,
+  Category = "CATEGORY",
+  Post = "POST",
 }

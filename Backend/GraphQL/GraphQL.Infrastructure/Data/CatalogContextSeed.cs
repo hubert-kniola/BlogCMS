@@ -8,31 +8,7 @@ namespace GraphQL.Infrastructure.Data
         public static void SeedData(
             IMongoDatabase database)
         {
-            InsertCategories(database.GetCollection<Category>(nameof(Category)));
-            InsertPosts(database.GetCollection<Post>(nameof(Post)));
-        }
 
-        private static void InsertCategories(IMongoCollection<Category> categoryCollection)
-        {
-            categoryCollection.DeleteMany(_ => true);
-            categoryCollection.InsertMany(
-                new List<Category>
-                {
-                    new Category
-                    {
-                        Id = "605fbfdda571444fd7ade05b",
-                        Description = "Category Description One",
-                        CreatedOn = DateTime.Now,
-                        ModifiedOn = DateTime.Now,
-                    },
-                    new Category
-                    {
-                        Id = "605fbfecdefb479679f08517",
-                        Description = "Category Description Two",
-                        CreatedOn = DateTime.Now,
-                        ModifiedOn = DateTime.Now,
-                    }
-                });
         }
 
         private static void InsertPosts(IMongoCollection<Post> productCollection)

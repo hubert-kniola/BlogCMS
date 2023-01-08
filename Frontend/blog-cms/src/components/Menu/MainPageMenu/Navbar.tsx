@@ -1,9 +1,8 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { GET_MENU } from "../../../apollo/apolloQueries";
-import { basicMenu } from "../../../settings";
+import { GET_CATEGORY_OBJECT } from "../../../apollo/apolloQueries";
 import { BEM } from "../../../tools";
-import { MenuItemType } from "../../../types";
+import { CategoryType } from "../../../types";
 import { css } from "./cssBem";
 import { MenuItems } from "./MenuItems";
 import "./style.css";
@@ -12,17 +11,17 @@ export const Navbar = () => {
   const {
     loading: loadingData,
     error: errorData,
-    data: menuItemData,
-  } = useQuery(GET_MENU);
-  const [menu, setMenu] = useState(undefined as MenuItemType[]);
+    data: categoryData,
+  } = useQuery(GET_CATEGORY_OBJECT);
+  const [menu, setMenu] = useState(undefined as CategoryType[]);
 
-  const getMenuItemData = (data: any): MenuItemType => {
-    return data?.menuItem;
+  const getMenuItemData = (data: any): CategoryType[] => {
+    return data?.category;
   };
 
   useEffect(() => {
     if (!loadingData) {
-      setMenu([getMenuItemData(menuItemData), ...basicMenu]);
+      setMenu([...getMenuItemData(categoryData)]);
     }
   }, [loadingData]);
 

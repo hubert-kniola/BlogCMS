@@ -8,11 +8,13 @@ namespace GraphQL.API.Types
         protected override void Configure(IObjectTypeDescriptor<Category> descriptor)
         {
             descriptor.Field(_ => _.Id);
-            descriptor.Field(_ => _.Description);
+            descriptor.Field(_ => _.Title);
+            descriptor.Field(_ => _.Path);
+            descriptor.Field(_ => _.ParentId);
             descriptor.Field(_ => _.ModifiedOn);
             descriptor.Field(_ => _.CreatedOn);
 
-            descriptor.Field<PostResolver>(_ => _.GetAllPosts(default, default));
+            descriptor.Field<CategoryResolver>(_ => _.GetSubCategoryAsync(default, default));
         }
     }
 }
