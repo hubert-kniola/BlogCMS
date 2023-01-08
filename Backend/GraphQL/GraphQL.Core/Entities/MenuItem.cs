@@ -7,9 +7,5 @@
         public RouteObjectType? ObjectType { get; set; } = RouteObjectType.Category;
         public IEnumerable<MenuItem?>? SubMenu { get; set; } = null;
     }
-    public enum RouteObjectType
-    {
-        Category,
-        Post,
-    }
+
 }

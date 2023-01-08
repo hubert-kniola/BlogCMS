@@ -33,11 +33,11 @@ export type PostItemType = {
   index: number;
 };
 
-export type MenuItemType = {
+export type CategoryType = {
   title: string;
   path: string;
-  routeObjectType?: RouteObjectType;
-  subMenu?: MenuItemType[];
+  objectType?: RouteObjectType;
+  subCategory?: CategoryType[];
 };
 
 export type FaqType = {

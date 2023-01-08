@@ -1,11 +1,11 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { BEM } from "../../../tools";
-import { MenuItemType } from "../../../types";
+import { CategoryType } from "../../../types";
 import { css } from "./cssBem";
 import { Dropdown } from "./Dropdown";
 
 interface IMenuItem {
-  item: MenuItemType;
+  item: CategoryType;
   depthLvl: number;
 }
 
@@ -39,27 +39,29 @@ export const MenuItems = ({ item, depthLvl }: IMenuItem) => {
     };
   }, [dropdown]);
 
+  const hasSubMenu = item?.subCategory?.length > 0;
+
   return (
     <li
       className={BEM(css.nav, css.item)}
       ref={ref}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
-      {item.subMenu ? (
+      {item?.subCategory ? (
         <>
           <a href={item.path} onClick={() => setDropdown((state) => !state)}>
-            {item.title}{" "}
-            {depthLvl > 0 ? (
-              <span>&raquo;</span>
-            ) : (
-              <span className={BEM(css.nav, css.arrow)} />
-            )}
+            {item.title}
+            {depthLvl > 0
+              ? hasSubMenu && <span>&raquo;</span>
+              : hasSubMenu && <span className={BEM(css.nav, css.arrow)} />}
           </a>
-          <Dropdown
-            items={item.subMenu}
-            dropdown={dropdown}
-            depthLvl={depthLvl}
-          />
+          {hasSubMenu && (
+            <Dropdown
+              items={item?.subCategory}
+              dropdown={dropdown}
+              depthLvl={depthLvl}
+            />
+          )}
         </>
       ) : (
         <a href={item.path}>{item.title}</a>

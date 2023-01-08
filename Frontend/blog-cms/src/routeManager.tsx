@@ -1,15 +1,7 @@
 import React from "react";
 import { RouteObject } from "react-router-dom";
 import { CategoryPage, ErrorPage, PostPage } from "./screens";
-import { MenuItemType } from "./types";
-
-const getCleanPath = (path: string): string => {
-  if (path.endsWith("/")) {
-    path = path.slice(-1);
-  }
-
-  return path;
-};
+import { CategoryType, RouteObjectType } from "./types";
 
 const getCategoryRoute = (path: string): RouteObject => {
   return {
@@ -21,22 +13,22 @@ const getCategoryRoute = (path: string): RouteObject => {
 
 const getPostRoute = (path: string): RouteObject => {
   return {
-    path: `${getCleanPath(path)}/:id`,
+    path: path,
     element: <PostPage />,
     errorElement: <ErrorPage />,
   };
 };
 
-export const generateOneLevelRoute = (menu: MenuItemType[]): RouteObject[] => {
+export const generateRoute = (menu: CategoryType[]): RouteObject[] => {
   let routeObject = [] as RouteObject[];
 
   menu.forEach((item) => {
-    routeObject.push(getCategoryRoute(item.path));
-    routeObject.push(getPostRoute(item.path));
-
-    if (item.subMenu) {
-      routeObject.push(...generateOneLevelRoute(item.subMenu));
+    if (item.objectType === RouteObjectType.Category) {
+      routeObject.push(getCategoryRoute(item.path));
+    } else if (item.objectType === RouteObjectType.Post) {
+      routeObject.push(getPostRoute(item.path));
     }
   });
+
   return routeObject;
 };

@@ -5,13 +5,14 @@ import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   RouteObject,
-  Router,
   RouterProvider,
 } from "react-router-dom";
 import { store } from "../store/store";
 import apolloClient from "./apollo/apolloConfig";
+import { GET_ROUTE } from "./apollo/apolloQueries";
 import { About, Category, Configure, Contact, Posts } from "./components";
 import "./index.css";
+import { generateRoute } from "./routeManager";
 import {
   AboutMePage,
   ContactPage,
@@ -21,51 +22,48 @@ import {
   SwitchPanel,
 } from "./screens";
 import { SendFiles } from "./screens/SendFiles/SendFiles";
-import { MenuItemType, RouteObjectType } from "./types";
-import { GET_MENU } from "./apollo/apolloQueries";
-import { generateOneLevelRoute } from "./routeManager";
-import { basicMenu } from "./settings";
+import { CategoryType, RouteObjectType } from "./types";
 
-const menu: MenuItemType[] = [
+const menu: CategoryType[] = [
   {
     title: "services",
     path: "services",
-    subMenu: [
+    subCategory: [
       {
         title: "web design",
         path: "web-design",
-        routeObjectType: RouteObjectType.Category,
+        objectType: RouteObjectType.Category,
       },
       {
         title: "web development",
         path: "web-dev",
-        routeObjectType: RouteObjectType.Category,
-        subMenu: [
+        objectType: RouteObjectType.Category,
+        subCategory: [
           {
             title: "Backend",
             path: "b-end",
-            routeObjectType: RouteObjectType.Category,
-            subMenu: [
+            objectType: RouteObjectType.Category,
+            subCategory: [
               {
                 title: ".NET",
                 path: "dotnet",
-                routeObjectType: RouteObjectType.Category,
+                objectType: RouteObjectType.Category,
               },
               {
                 title: "Python",
                 path: "python",
-                routeObjectType: RouteObjectType.Category,
+                objectType: RouteObjectType.Category,
               },
             ],
           },
           {
             title: "Frontend",
             path: "f-end",
-            routeObjectType: RouteObjectType.Category,
+            objectType: RouteObjectType.Category,
           },
         ],
       },
-      { title: "SEO", path: "seo", routeObjectType: RouteObjectType.Category },
+      { title: "SEO", path: "seo", objectType: RouteObjectType.Category },
     ],
   },
 ];
@@ -135,23 +133,23 @@ const MainRouteProvider = () => {
     loading: loadingData,
     error: errorData,
     data: menuItemData,
-  } = useQuery(GET_MENU);
-  const [menu, setMenu] = useState<MenuItemType[]>();
+  } = useQuery(GET_ROUTE);
+  const [menu, setMenu] = useState<CategoryType[]>();
   const [oneLvlRouter, setOneLvlRouter] = useState<RouteObject[]>();
 
-  const getMenuItemData = (data: any): MenuItemType => {
-    return data?.menuItem;
+  const getCategoryData = (data: any): CategoryType[] => {
+    return data?.category;
   };
 
   useEffect(() => {
     if (!loadingData) {
-      setMenu([getMenuItemData(menuItemData), ...basicMenu]);
+      setMenu(getCategoryData(menuItemData));
     }
   }, [loadingData]);
 
   useEffect(() => {
     if (menu) {
-      setOneLvlRouter(generateOneLevelRoute(menu));
+      setOneLvlRouter(generateRoute(menu));
     }
   }, [menu]);
 

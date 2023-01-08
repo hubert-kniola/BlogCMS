@@ -35,6 +35,7 @@ builder.Services.AddScoped<IMenuItemReposiotry, MenuItemRepository>();
 //Services
 builder.Services.AddScoped<IDummyDataService, DummyDataService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddCors(options =>
 {
@@ -78,7 +79,9 @@ builder.Services
     .AddType<ContactFormType>()
     .AddType<CarouselType>()
     .AddType<FaqType>()
-    .AddType<MenuItemType>();
+    .AddType<MenuItemType>()
+    .AddFiltering();
+    
 
 
 builder.Services

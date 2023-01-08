@@ -15,7 +15,7 @@ namespace GraphQL.API.Mutations
         public async Task<MenuItem?> UpdateMenuItemAsync(MenuItem menuItem, [Service] IMenuItemService menuItemService) =>
             await menuItemService.UpdateMenuItem(menuItem);
 
-        public async Task<bool> DeleteAllMenuItemAsync([Service] IMenuItemReposiotry menuItemRepository) =>
+        public async Task<bool> RemoveAllMenuItemAsync([Service] IMenuItemReposiotry menuItemRepository) =>
             await menuItemRepository.RemoveAllAsync();
 
     }

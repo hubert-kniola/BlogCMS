@@ -1,27 +1,41 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 
-export const GET_MENU = gql`
+export const GET_CATEGORY_OBJECT = gql`
   query GetMenu {
-    menuItem {
+    category(where: { and: [{ parentId: { eq: null } }] }) {
       id
       title
       path
       objectType
-      subMenu {
+      subCategory(where: { objectType: { eq: CATEGORY } }) {
+        id
         title
         path
         objectType
-        subMenu {
+        subCategory(where: { objectType: { eq: CATEGORY } }) {
+          id
           title
           path
           objectType
-          subMenu {
+          subCategory(where: { objectType: { eq: CATEGORY } }) {
+            id
             title
             path
             objectType
           }
         }
       }
+    }
+  }
+`;
+
+export const GET_ROUTE = gql`
+  query GetRoute {
+    category {
+      id
+      title
+      path
+      objectType
     }
   }
 `;
@@ -137,13 +151,6 @@ export const GET_CONTACT = gql`
     }
   }
 `;
-export const GET_CATEGORY = gql`
-  query GetCategory {
-    posts {
-      id
-    }
-  }
-`;
 
 /* MUTATION */
 
@@ -161,5 +168,30 @@ export const POST_CONTACT_FORM = gql`
       email
       content
     }
+  }
+`;
+
+export const ADD_CATEGORY = gql`
+  mutation AddCategory($title: String!, $path: String!, $parentId: String!) {
+    createCategory(
+      category: { title: $title, path: $path, parentId: $parentId }
+    ) {
+      id
+      title
+      path
+      objectType
+      subCategory {
+        id
+        title
+        path
+        objectType
+      }
+    }
+  }
+`;
+
+export const REMOVE_CATEGORY_WITH_SUBCATEGORY = gql`
+  mutation RemoveCategory($id: String!) {
+    removeCategory(id: $id)
   }
 `;

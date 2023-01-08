@@ -17,10 +17,10 @@ namespace GraphQL.API.Mutations
         public async Task<Carousel?> UpdateCarouselAsync(Carousel carousel, [Service] ICarouselRepository carouselRepository) =>
             await carouselRepository.UpdateAsync(carousel);
 
-        public async Task<bool> DeleteCaruselAsync(string id, [Service] ICarouselRepository carouselRepository) =>
+        public async Task<bool> RemoveCaruselAsync(string id, [Service] ICarouselRepository carouselRepository) =>
             await carouselRepository.RemoveAsync(id);
 
-        public async Task<bool> DeleteAllCaruselsAsync( [Service] ICarouselRepository carouselRepository) =>
+        public async Task<bool> RemoveAllCaruselsAsync( [Service] ICarouselRepository carouselRepository) =>
              await carouselRepository.RemoveAllAsync();
     }
 }
