@@ -261,3 +261,73 @@ export const REMOVE_CAROUSEL_ELEMENT = gql`
     removeCarusel(id: $id)
   }
 `;
+
+export const UPDATE_ABOUT = gql`
+  mutation UpdateAbout(
+    $id: String!
+    $title: String!
+    $text: String!
+    $imgName: String!
+  ) {
+    updateAbout(
+      about: { id: $id, title: $title, text: $text, imgName: $imgName }
+    ) {
+      id
+      title
+      text
+      imgName
+    }
+  }
+`;
+
+export const ADD_FAQ_ELEMENT = gql`
+  mutation AddFaq($question: String!, $answer: String!) {
+    createFaq(faq: { question: $question, answer: $answer }) {
+      id
+      question
+      answer
+    }
+  }
+`;
+
+export const UPDATE_FAQ_ELEMENT = gql`
+  mutation UpdateFaq($id: String!, $question: String!, $answer: String!) {
+    updateFaq(faq: { id: $id, question: $question, answer: $answer }) {
+      id
+      question
+      answer
+    }
+  }
+`;
+
+export const REMOVE_FAQ_ELEMENT = gql`
+  mutation removeFaq($id: String!) {
+    removeFaq(id: $id)
+  }
+`;
+
+export const UPDATE_CONTACT = gql`
+  mutation UpdateContactInfo(
+    $id: String!
+    $title: String!
+    $content: String!
+    $textBoxes: [TextBoxInput!]!
+  ) {
+    updateContactInfo(
+      contactInfo: {
+        id: $id
+        title: $title
+        content: $content
+        textBoxes: $textBoxes
+      }
+    ) {
+      id
+      title
+      content
+      textBoxes {
+        fieldName
+        content
+      }
+    }
+  }
+`;

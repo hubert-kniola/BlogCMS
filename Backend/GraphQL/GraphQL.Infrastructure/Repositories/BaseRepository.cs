@@ -30,6 +30,7 @@ namespace GraphQL.Infrastructure.Repositories
 
         public async Task<T> InsertAsync(T entity)
         {
+            entity.Id = null;
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = DateTime.Now;
 
@@ -53,6 +54,8 @@ namespace GraphQL.Infrastructure.Repositories
 
         public async Task<bool> RemoveAsync(string id)
         {
+            if((await GetByIdAsync(id)) == null) return false;
+
             var result = await _collection.DeleteOneAsync(Builders<T>.Filter.Eq(_ => _.Id, id));
 
             return result.DeletedCount > 0;
