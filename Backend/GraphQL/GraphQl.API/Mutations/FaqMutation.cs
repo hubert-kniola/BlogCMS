@@ -13,7 +13,8 @@ namespace GraphQL.API.Mutations
 
         public async Task<IEnumerable<Faq>> CreateManyFaqAsync(IEnumerable<Faq> faqs, [Service] IFaqReposiotry faqReposiotry) =>
              await faqReposiotry.InsertManyAsync(faqs);
-        public async Task<Faq?> RemoveFaqAsync(Faq faq, [Service] IFaqReposiotry faqReposiotry) =>
+       
+        public async Task<Faq?> UpdateFaqAsync(Faq faq, [Service] IFaqReposiotry faqReposiotry) =>
            await faqReposiotry.UpdateAsync(faq);
 
         public async Task<bool> RemoveFaqAsync(string id, [Service] IFaqReposiotry faqReposiotry) =>
