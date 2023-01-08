@@ -1,5 +1,4 @@
-﻿using GraphQL.Core.Entities;
-using GraphQL.Infrastructure.Configuration;
+﻿using GraphQL.Infrastructure.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

@@ -195,3 +195,69 @@ export const REMOVE_CATEGORY_WITH_SUBCATEGORY = gql`
     removeCategory(id: $id)
   }
 `;
+
+export const ADD_CAROUSEL_ELEMENT = gql`
+  mutation AddCarousel(
+    $title: String!
+    $content: String!
+    $publicationDate: DateTime!
+    $imgName: String!
+    $active: Boolean!
+    $url: String!
+  ) {
+    addCarouselElement(
+      carousel: {
+        title: $title
+        content: $content
+        publicationDate: $publicationDate
+        imgName: $imgName
+        active: $active
+        url: $url
+      }
+    ) {
+      id
+      title
+      content
+      publicationDate
+      imgName
+      active
+    }
+  }
+`;
+
+export const UPDATE_CAROUSEL_ELEMENT = gql`
+  mutation UpdateCarousel(
+    $id: String!
+    $title: String!
+    $content: String!
+    $publicationDate: DateTime!
+    $imgName: String!
+    $active: Boolean!
+    $url: String!
+  ) {
+    updateCarousel(
+      carousel: {
+        id: $id
+        title: $title
+        content: $content
+        publicationDate: $publicationDate
+        imgName: $imgName
+        active: $active
+        url: $url
+      }
+    ) {
+      title
+      content
+      publicationDate
+      imgName
+      active
+      url
+    }
+  }
+`;
+
+export const REMOVE_CAROUSEL_ELEMENT = gql`
+  mutation RemoveCarousel($id: String!) {
+    removeCarusel(id: $id)
+  }
+`;
