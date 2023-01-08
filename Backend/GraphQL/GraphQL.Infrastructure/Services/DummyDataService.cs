@@ -28,7 +28,8 @@ namespace GraphQL.Infrastructure.Services
             IFaqReposiotry faqReposiotry,
             ICategoryService categoryService
             IMenuItemReposiotry menuItemReposiotry,
-            IMenuItemService menuItemService
+            IMenuItemService menuItemService,
+            ICategoryService categoryService
             )
             _contactInfoRepository = contactInfoRepository;
             _contactFormRepository = contactFormRepository;
