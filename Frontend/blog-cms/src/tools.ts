@@ -3,6 +3,7 @@ import htmlToDraft from "html-to-draftjs";
 import { month, TextPosition, weekday } from "./types";
 import axios from "axios";
 import { BlobStorageURL } from "./settings";
+import axiosConfig from "./axiosConfig";
 
 export const BEM = (
   block: string,
@@ -71,8 +72,12 @@ export const AddImageToAzure = (images: File[]): any => {
 };
 
 export const GetImageFromAzure = (fileName: string): any => {
-  axios
-    .get(`${BlobStorageURL}${fileName}`)
+  let headers = {
+    "Access-Control-Allow-Origin": "*",
+  };
+
+  axiosConfig
+    .get(`${BlobStorageURL}${fileName}`, { headers })
     .then((res) => {
       console.log(res.data);
       return res.data;
