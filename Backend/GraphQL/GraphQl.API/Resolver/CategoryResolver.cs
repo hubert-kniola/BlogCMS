@@ -11,7 +11,7 @@ namespace GraphQL.API.Resolver
     public class CategoryResolver
     {
         public async Task<Category> GetCategoryAsync([Parent] Post post,[Service] ICategoryRepository categoryRepository ) 
-            => await categoryRepository.GetByIdAsync( post.CategoryId );
+            => await categoryRepository.GetByIdAsync( post.Category.First().Title );
 
         [UseFiltering]
         public async Task<IEnumerable<Category>> GetSubCategoryAsync([Parent] Category category, [Service] ICategoryRepository categoryRepository)

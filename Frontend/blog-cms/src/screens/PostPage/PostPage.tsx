@@ -5,7 +5,6 @@ import {
   Gallery,
   MainPageMenu,
 } from "../../components";
-import { BestOne } from "../../components/BestThree/BestOne";
 import { ClockIco } from "../../components/Ico";
 import { BEM } from "../../tools";
 import { Post } from "../../types";
@@ -24,54 +23,54 @@ export const url2 =
 const posts: Post[] = [
   {
     title: "Post 2",
-    date: "25/10/2022",
+    publicationDate: "25/10/2022",
     content: lorem,
-    imgUrl: url1,
+    primaryImgName: url1,
     snippet:
       "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika.",
   },
   {
     title: "Post 1",
-    date: "26/10/2022",
+    publicationDate: "26/10/2022",
     content: lorem,
-    imgUrl: url2,
+    primaryImgName: url2,
     snippet:
       "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika.",
   },
   {
     title: "Post 3",
-    date: "27/10/2022",
+    publicationDate: "27/10/2022",
     content: lorem,
-    imgUrl: url1,
+    primaryImgName: url1,
     snippet:
       "To jest tekst o określonej długości, krótki, mówiący co jest 5. Generalnie zawiera krótki opis tekstu, który ma zachęcić czytelnika.",
   },
   {
     title: "Post 4",
-    date: "28/10/2022",
+    publicationDate: "28/10/2022",
     content: lorem,
-    imgUrl: url2,
+    primaryImgName: url2,
     snippet: "",
   },
   {
     title: "Post 5",
-    date: "29/10/2022",
+    publicationDate: "29/10/2022",
     content: lorem,
-    imgUrl: url1,
+    primaryImgName: url1,
     snippet: "",
   },
   {
     title: "Post 6",
-    date: "29/10/2022",
+    publicationDate: "29/10/2022",
     content: lorem,
-    imgUrl: url1,
+    primaryImgName: url1,
     snippet: "",
   },
   {
     title: "Post 7",
-    date: "29/10/2022",
+    publicationDate: "29/10/2022",
     content: lorem,
-    imgUrl: url1,
+    primaryImgName: url1,
     snippet: "",
   },
 ];

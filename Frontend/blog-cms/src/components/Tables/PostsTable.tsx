@@ -79,7 +79,7 @@ const PostsTable = () => {
                 <Row
                   key={i}
                   cells={[element.title, removeTags(element.content)]}
-                  date={element.date}
+                  date={element.publicationDate.toString()}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
@@ -87,9 +87,10 @@ const PostsTable = () => {
                   }}
                   actionOnDelete={(index: number) => {
                     dispatch(deletePost({ index }));
-                    if(top3)
-                    {
-                      const newTop3 = top3.filter((element) => element.title !== posts[index].title);
+                    if (top3) {
+                      const newTop3 = top3.filter(
+                        (element) => element.title !== posts[index].title
+                      );
                       dispatch(updateTop3(newTop3));
                     }
                   }}

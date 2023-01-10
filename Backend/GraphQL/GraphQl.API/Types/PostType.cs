@@ -8,9 +8,9 @@ namespace GraphQL.API.Types
         protected override void Configure(IObjectTypeDescriptor<Post> descriptor)
         {
             descriptor.Field(_ => _.Id);
-            descriptor.Field(_ => _.Name); 
+            descriptor.Field(_ => _.Title); 
             descriptor.Field(_ => _.Content);
-            descriptor.Field(_ => _.CategoryId);
+            descriptor.Field(_ => _.Category);
             descriptor.Field(_ => _.ModifiedOn);
             descriptor.Field(_ => _.CreatedOn);
 
