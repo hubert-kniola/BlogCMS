@@ -8,10 +8,10 @@ namespace GraphQL.API.Mutations
     [Authorize]
     public class PostMutation
     {
-        public async Task<Post> CreateProductAsync(Post product, [Service] IPostRepository productRepository) =>
-            await productRepository.InsertAsync(product);
+        public async Task<Post> CreatePostAsync(Post post, [Service] IPostRepository productRepository) =>
+            await productRepository.InsertAsync(post);
 
-        public async Task<bool> RemoveProductAsync(string id, [Service] IPostRepository productRepository) =>
+        public async Task<bool> RemovePosttAsync(string id, [Service] IPostRepository productRepository) =>
             await productRepository.RemoveAsync(id);
     }
 }

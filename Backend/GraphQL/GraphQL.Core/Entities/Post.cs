@@ -9,6 +9,6 @@
         public string PrimaryImgName { get; set; }
         public IEnumerable<string> ContentImgName { get; set; }
         public DateTime PublicationDate { get; set; }
-        public IEnumerable<Category> Category { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
     }
 }
