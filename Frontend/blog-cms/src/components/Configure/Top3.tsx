@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { BEM } from "../../tools";
-import "./style.css";
-import Select, { GroupBase } from "react-select";
-import FileUploader from "../FileUploader/FileUploader";
-import { Post } from "../../types";
-import { lorem, url1, url2 } from "../BestThree/BestThree";
-import SaveButton from "../SaveButton/SaveButton";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
-import {
-  updateCarousel,
-  updateTop3,
-  updateFooter,
-  ConfigureState,
-} from "../../../store/slices/configureSlice";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { BEM } from "../../tools";
+import { Post } from "../../types";
 import { mainColor } from "../../types/consts";
+import "./style.css";
 
 interface Top3Props {
   onSubmit: () => void;
@@ -56,8 +48,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
 
   const onSubmitTop3: SubmitHandler<any> = async (data) => {
     let postsFromSelects = Object.values(selectedPosts).map((element: any) => {
-      if(element.value)
-      {
+      if (element.value) {
         return element.value;
       }
     });
@@ -70,7 +61,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
       const options = posts.map((element) => {
         return {
           value: element,
-          label: `${element.title}-${element.date}`,
+          label: `${element.title}-${element.publicationDate}`,
         };
       });
       return options;
@@ -139,8 +130,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             cssClasses.configure,
             cssClasses.container,
             cssClasses.title
-          )}
-        >
+          )}>
           Trzy najpopularniejsze posty
         </h3>
         <p
@@ -148,8 +138,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             cssClasses.configure,
             cssClasses.container,
             cssClasses.description
-          )}
-        >
+          )}>
           Sekcja wyświetlająca 3 wybrane posty
         </p>
         <div className={BEM(cssClasses.title, cssClasses.container)}>

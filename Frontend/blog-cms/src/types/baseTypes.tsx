@@ -2,13 +2,15 @@ import { CategoryState } from "../../store/slices/categorySlice";
 import { RouteObjectType, TextPosition } from "./enums";
 
 export type Post = {
+  id?: string; //TODO: Zmienić na 'id' (BEZ ?)
   title: string;
-  date: string;
+  publicationDate: Date | string; //TODO: tylko DATE
   content: any;
   snippet: string;
-  imgUrl: string;
+  primaryImgName: string;
+  contentImgName?: string[];
   category?: CategoryState[];
-  timeToRead?: string;
+  timeToReadInMs?: string;
 };
 
 export type Carousel = {

@@ -13,7 +13,7 @@ namespace GraphQL.Infrastructure.Repositories
 
         public async Task<IEnumerable<Post>> GetAllByCategoryId(string categoryId)
         {
-            var filter = Builders<Post>.Filter.Eq(_ => _.CategoryId, categoryId);
+            var filter = Builders<Post>.Filter.Eq(_ => _.Category.First().Id, categoryId);
 
             return await _collection.Find(filter).ToListAsync();
         }
