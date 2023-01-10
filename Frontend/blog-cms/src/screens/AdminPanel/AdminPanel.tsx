@@ -31,6 +31,7 @@ export const AdminPanel = () => {
     let aboutValue = Object.values(aboutData)[0];
     dispatch(updateAbout(Object.values(aboutValue)[0]));
     if (Object.values(aboutValue)[0].imgName) {
+      console.log(Object.values(aboutValue)[0].imgName);
       const fileURL = GetImageFromAzure(Object.values(aboutValue)[0].imgName);
     }
     setLoading(false);

@@ -3,6 +3,7 @@ import htmlToDraft from "html-to-draftjs";
 import { month, TextPosition, weekday } from "./types";
 import axios from "axios";
 import { BlobStorageURL } from "./settings";
+import axiosConfig from "./axiosConfig";
 
 export const BEM = (
   block: string,
