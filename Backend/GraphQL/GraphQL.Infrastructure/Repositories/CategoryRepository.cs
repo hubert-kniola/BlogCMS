@@ -15,6 +15,5 @@ namespace GraphQL.Infrastructure.Repositories
         {
             return (await _collection.FindAsync(x => x.ParentId.Equals(parentId))).ToEnumerable();
         }
-
     }
 }

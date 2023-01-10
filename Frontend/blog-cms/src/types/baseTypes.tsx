@@ -9,7 +9,7 @@ export type Post = {
   snippet: string;
   primaryImgName: string;
   contentImgName?: string[];
-  category?: CategoryState[];
+  categories?: CategoryType[];
   timeToReadInMs?: string;
 };
 

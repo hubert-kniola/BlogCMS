@@ -1,5 +1,4 @@
 ﻿using GraphQL.Core.Entities;
-using System.Collections.Generic;
 
 namespace GraphQL.Core.Repository
 {
