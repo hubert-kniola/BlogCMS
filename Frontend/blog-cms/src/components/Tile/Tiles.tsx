@@ -12,7 +12,10 @@ import {
 } from "../../../store/slices/categorySlice";
 import { BEM } from "../../tools";
 import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import CheckIcon from "@mui/icons-material/Check";
+import { mainColor } from "../../types/consts";
 
 interface TileProps {
   category: CategoryState;
@@ -96,18 +99,15 @@ export const Tiles = ({ category, style }: TileProps) => {
     <div className={BEM(cssClasses.tile, cssClasses.container)}>
       <div className={cssClasses.tile}>
         <p>{category.title}</p>
-        <input
-          className={BEM(cssClasses.tile, cssClasses.input)}
-          type="button"
-          value="+"
-          onClick={() => setShowInputSub(true)}
-        />
-        <input
-          className={BEM(cssClasses.tile, cssClasses.input)}
-          type="button"
-          value="-"
-          onClick={() => dispatch(deleteCategory(category))}
-        />
+        <IconButton onClick={() => setShowInputSub(true)}>
+          <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
+        </IconButton>
+        <IconButton onClick={() => dispatch(deleteCategory(category))}>
+          <IndeterminateCheckBoxIcon
+            fontSize="small"
+            sx={{ color: mainColor }}
+          />
+        </IconButton>
       </div>
       <div>
         {showInputSub && (
@@ -117,12 +117,9 @@ export const Tiles = ({ category, style }: TileProps) => {
               type="text"
               onChange={saveSubCategory}
             />
-            <input
-              className={BEM(cssClasses.tile, cssClasses.input)}
-              type="button"
-              value={"+"}
-              onClick={addReduxSubCategory}
-            />
+            <IconButton onClick={addReduxSubCategory}>
+              <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
+            </IconButton>
             {/* <IconButton
               sx={{
                 borderRadius: "3px",
@@ -135,12 +132,12 @@ export const Tiles = ({ category, style }: TileProps) => {
             >
               <CheckIcon />
             </IconButton> */}
-            <input
-              className={BEM(cssClasses.tile, cssClasses.input)}
-              type="button"
-              value="-"
-              onClick={() => setShowInputSub(false)}
-            />
+            <IconButton onClick={() => setShowInputSub(false)}>
+              <IndeterminateCheckBoxIcon
+                fontSize="small"
+                sx={{ color: mainColor }}
+              />
+            </IconButton>
           </div>
         )}
         {subCategoriesRedux.map((element: CategoryState, i: number) => {
@@ -148,16 +145,12 @@ export const Tiles = ({ category, style }: TileProps) => {
             <div>
               <div className={BEM(cssClasses.tile, cssClasses.sub)}>
                 <p>{element.title}</p>
-                <input
-                  className={BEM(cssClasses.tile, cssClasses.input)}
-                  type="button"
-                  value="+"
+                <IconButton
                   onClick={() => setShowInputTag({ show: true, index: i })}
-                />
-                <input
-                  className={BEM(cssClasses.tile, cssClasses.input)}
-                  type="button"
-                  value="-"
+                >
+                  <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
+                </IconButton>
+                <IconButton
                   onClick={() =>
                     dispatch(
                       deleteSubCategory({
@@ -166,7 +159,12 @@ export const Tiles = ({ category, style }: TileProps) => {
                       })
                     )
                   }
-                />
+                >
+                  <IndeterminateCheckBoxIcon
+                    fontSize="small"
+                    sx={{ color: mainColor }}
+                  />
+                </IconButton>
               </div>
               {showInputTag.show && showInputTag.index === i && (
                 <div className={BEM(cssClasses.tile, cssClasses.tag)}>
@@ -175,18 +173,15 @@ export const Tiles = ({ category, style }: TileProps) => {
                     type="text"
                     onChange={saveTag}
                   />
-                  <input
-                    className={BEM(cssClasses.tile, cssClasses.input)}
-                    type="button"
-                    value="+"
-                    onClick={() => addReduxTag(i)}
-                  />
-                  <input
-                    className={BEM(cssClasses.tile, cssClasses.input)}
-                    type="button"
-                    value="-"
-                    onClick={() => setShowInputTag(false)}
-                  />
+                  <IconButton onClick={() => addReduxTag(i)}>
+                    <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
+                  </IconButton>
+                  <IconButton onClick={() => setShowInputTag(false)}>
+                    <IndeterminateCheckBoxIcon
+                      fontSize="small"
+                      sx={{ color: mainColor }}
+                    />
+                  </IconButton>
                 </div>
               )}
               {subCategoriesRedux[i].subMenu.map(
@@ -195,10 +190,7 @@ export const Tiles = ({ category, style }: TileProps) => {
                     <div>
                       <div className={BEM(cssClasses.tile, cssClasses.tag)}>
                         <p>{element.title}</p>
-                        <input
-                          className={BEM(cssClasses.tile, cssClasses.input)}
-                          type="button"
-                          value="-"
+                        <IconButton
                           onClick={() =>
                             dispatch(
                               deleteTag({
@@ -208,7 +200,12 @@ export const Tiles = ({ category, style }: TileProps) => {
                               })
                             )
                           }
-                        />
+                        >
+                          <IndeterminateCheckBoxIcon
+                            fontSize="small"
+                            sx={{ color: mainColor }}
+                          />
+                        </IconButton>
                       </div>
                     </div>
                   );

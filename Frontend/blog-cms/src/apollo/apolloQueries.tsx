@@ -40,45 +40,6 @@ export const GET_ROUTE = gql`
   }
 `;
 
-export const GET_CATEGORY_OBJECT = gql`
-  query GetMenu {
-    category(where: { and: [{ parentId: { eq: null } }] }) {
-      id
-      title
-      path
-      objectType
-      subCategory(where: { objectType: { eq: CATEGORY } }) {
-        id
-        title
-        path
-        objectType
-        subCategory(where: { objectType: { eq: CATEGORY } }) {
-          id
-          title
-          path
-          objectType
-          subCategory(where: { objectType: { eq: CATEGORY } }) {
-            id
-            title
-            path
-            objectType
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_ROUTE = gql`
-  query GetRoute {
-    category {
-      id
-      title
-      path
-      objectType
-    }
-  }
-`;
 
 export const GET_TOP3 = gql`
   query GeTop3 {

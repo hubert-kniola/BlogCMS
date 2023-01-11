@@ -3,11 +3,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Tiles } from "..";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { addCategory, CategoryState } from "../../../store/slices/categorySlice";
+import {
+  addCategory,
+  CategoryState,
+} from "../../../store/slices/categorySlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
 import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IconButton from "@mui/material/IconButton";
 import "./style.css";
 
 export const Category = () => {
@@ -104,16 +109,9 @@ export const Category = () => {
               value={enteredCategory.title}
               onChange={saveCategory}
             ></input>
-            <input
-              type="button"
-              value="+"
-              className={BEM(
-                cssClasses.category,
-                cssClasses.title,
-                cssClasses.add
-              )}
-              onClick={addReduxCategory}
-            ></input>
+            <IconButton onClick={addReduxCategory}>
+              <AddBoxIcon fontSize="large" sx={{ color: mainColor }} />
+            </IconButton>
           </div>
           <div
             className={BEM(
@@ -129,7 +127,7 @@ export const Category = () => {
         </div>
       </div>
       <SaveButton handleSave={saveMenu} />
-      <ToastContainer toastStyle={{ backgroundColor: mainColor }}/>
+      <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
     </div>
   );
 };
