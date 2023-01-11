@@ -28,15 +28,4 @@ namespace GraphQL.API.Queries
                 .UseFiltering();
         }
     }
-
-    public class CategoryQueryType : ObjectType<CategoryQuery>
-    {
-        protected override void Configure(IObjectTypeDescriptor<CategoryQuery> descriptor)
-        {
-            descriptor
-                .Field(f => f.GetCategory(default))
-                .Type<ListType<NonNullType<CategoryType>>>()
-                .UseFiltering();
-        }
-    }
 }
