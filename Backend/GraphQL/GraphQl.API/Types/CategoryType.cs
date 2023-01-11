@@ -15,6 +15,7 @@ namespace GraphQL.API.Types
             descriptor.Field(_ => _.CreatedOn);
 
             descriptor.Field<CategoryResolver>(_ => _.GetSubCategoryAsync(default, default));
+            descriptor.Field<PostResolver>(_ => _.GetAllPosts(default, default));
         }
     }
 }

@@ -7,10 +7,36 @@ namespace GraphQL.Infrastructure.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IPostService _postService;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(
+            ICategoryRepository categoryRepository,
+            IPostService postService
+            )
         {
             _categoryRepository = categoryRepository;
+            _postService = postService;
+        }
+
+        public async Task<IEnumerable<Category>?> GetAllSubCategories(string categoryId)
+        {
+            List<Category> categories = new();
+            if (!string.IsNullOrEmpty(categoryId))
+            {
+                Category? category = await _categoryRepository.GetByIdAsync(categoryId);
+                if (category != null)
+                {
+                    categories.Add(category);
+
+                    List<Category> subCategories = new(await GetSubCategories(category.Id));
+
+                    categories.AddRange(subCategories);
+
+                    return categories;
+                }
+            }
+
+            return null;
         }
 
         public async Task<Category> AddCategory(Category category)
@@ -50,30 +76,38 @@ namespace GraphQL.Infrastructure.Services
             return category;
         }
 
-
         public async Task<bool> RemoveCategoryWithSubCategory(string id)
         {
-            if (!string.IsNullOrEmpty(id) && (await _categoryRepository.GetByIdAsync(id) != null))
+
+            if (!string.IsNullOrEmpty(id))
             {
-                List<Category> categories = new(await GetAllSubCategories(id));
-
-                if (categories.Count > 0)
+                Category? deletedCategory = await _categoryRepository.GetByIdAsync(id);
+                if (deletedCategory != null)
                 {
-                    bool succcess = false;
-                    foreach (var c in categories)
-                    {
-                        succcess = await _categoryRepository.RemoveAsync(c.Id);
+                    List<Category> categories = new(await GetAllSubCategories(id));
 
-                        if (!succcess)
-                            break;
+                    bool succcess = false;
+                    if (categories.Count > 0)
+                    {
+                        foreach (var c in categories)
+                        {
+                            //succcess = await _postService.UpdateDeletedCategory(c.Id, deletedCategory.ParentId);
+
+                            //if (!succcess)
+                            //    break;
+
+                            succcess = await _categoryRepository.RemoveAsync(c.Id);
+
+                            if (!succcess)
+                                break;
+                        }
                     }
                     return succcess;
                 }
+
             }
             return false;
         }
-
-
 
         private static string CombinePath(string parentPath, string itemPath)
         {
@@ -99,22 +133,6 @@ namespace GraphQL.Infrastructure.Services
             category.Path = CombinePostPath(category.Path);
             category.ObjectType = RouteObjectType.Post;
             return await _categoryRepository.InsertAsync(category);
-        }
-
-        private async Task<IEnumerable<Category>> GetAllSubCategories(string categoryId)
-        {
-            List<Category> categories = new();
-
-            Category category = await _categoryRepository.GetByIdAsync(categoryId);
-
-            categories.Add(category);
-
-            List<Category> subCategories = new(await GetSubCategories(category.Id));
-
-            categories.AddRange(subCategories);
-
-            return categories;
-
         }
 
         private async Task<IEnumerable<Category>> GetSubCategories(string categoryId)

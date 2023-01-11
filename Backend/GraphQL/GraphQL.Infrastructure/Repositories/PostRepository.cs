@@ -1,30 +1,33 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 using GraphQL.Infrastructure.Common;
 using GraphQL.Infrastructure.Data;
 using MongoDB.Driver;
 using SharpCompress.Common;
+using System.Collections.Generic;
 
 namespace GraphQL.Infrastructure.Repositories
 {
     public class PostRepository : BaseRepository<Post>, IPostRepository
     {
-        public PostRepository(ICatalogContext catalogContext) : base(catalogContext)
+        public PostRepository(
+            ICatalogContext catalogContext,
+            ICategoryRepository categoryRepository
+            ) : base(catalogContext)
         {
         }
 
-        public async Task<IEnumerable<Post>> GetAllByCategoryId(string categoryId)
+        public async Task<IEnumerable<Post>?> GetAllByCategoryId(string categoryId)
         {
-            var filter = Builders<Post>.Filter.Eq(_ => _.Categories.First().Id, categoryId);
-
-            return await _collection.Find(filter).ToListAsync();
+            return await _collection.Find(x => x.Categories.Contains(categoryId)).ToListAsync();
         }
 
         public async Task<Post?> UpdateAsync(Post entity)
         {
             if (entity.Id != null)
             {
-                Post oldEntity = await GetByIdAsync(entity.Id);
+                Post? oldEntity = await GetByIdAsync(entity.Id);
 
                 if (oldEntity != null)
                 {
@@ -48,5 +51,7 @@ namespace GraphQL.Infrastructure.Repositories
             return null;
 
         }
+
+
     }
 }

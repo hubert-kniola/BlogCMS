@@ -21,11 +21,26 @@ namespace GraphQL.Infrastructure.Repositories
             return await _collection.Find(_ => true).ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(string id)
+        public async Task<T?> GetByIdAsync(string id)
         {
             var filter = Builders<T>.Filter.Eq(_ => _.Id, id);
 
             return await _collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetManyByIdsAsync(IEnumerable<string> ids)
+        {
+            List<T> itemList = new();
+            foreach(var id in ids)
+            {
+                var item = await _collection.Find(x => x.Id == id).ToListAsync();
+                if(item != null && item.Any())
+                {
+                    itemList.AddRange(item);
+                }
+            }
+
+            return itemList;
         }
 
         public async Task<T> InsertAsync(T entity)
