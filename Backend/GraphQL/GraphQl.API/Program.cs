@@ -22,9 +22,9 @@ builder.Services
             .Configure<MongoDbConfiguration>(builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
 
 //Repository
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ICatalogContext, CatalogContext>(); 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IAboutRepository, AboutRepository>();
 builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
 builder.Services.AddScoped<IContactFormRepository, ContactFormRepository>();
@@ -34,6 +34,7 @@ builder.Services.AddScoped<IFaqReposiotry, FaqRepository>();
 //Services
 builder.Services.AddScoped<IDummyDataService, DummyDataService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 builder.Services.AddCors(options =>
 {

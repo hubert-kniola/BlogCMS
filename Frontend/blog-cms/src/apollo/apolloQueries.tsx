@@ -40,7 +40,6 @@ export const GET_ROUTE = gql`
   }
 `;
 
-
 export const GET_TOP3 = gql`
   query GeTop3 {
     top3 {
@@ -102,9 +101,41 @@ export const GET_FOOTER = gql`
 `;
 
 export const GET_POSTS = gql`
-  query GetPosts {
+  query GetAllPosts {
     posts {
       id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
+export const GET_POSTS_BY_ID = gql`
+  query GetPostById($id: String!) {
+    postById(id: $id) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+      }
     }
   }
 `;
@@ -330,5 +361,93 @@ export const UPDATE_CONTACT = gql`
         content
       }
     }
+  }
+`;
+
+export const INSERT_POST = gql`
+  mutation InsertPost(
+    $title: String!
+    $content: String!
+    $snippet: String!
+    $timeToReadInMs: String!
+    $primaryImgName: String!
+    $contentImgName: [String!]!
+    $publicationDate: DateTime
+    $categories: [String!]!
+  ) {
+    createPost(
+      post: {
+        title: $title
+        content: $content
+        snippet: $snippet
+        timeToReadInMs: $timeToReadInMs
+        primaryImgName: $primaryImgName
+        contentImgName: $contentImgName
+        publicationDate: $publicationDate
+        categories: $categories
+      }
+    ) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
+export const UPDATE_POST = gql`
+  mutation UpdatePost(
+    $id: String!
+    $title: String!
+    $content: String!
+    $snippet: String!
+    $timeToReadInMs: String!
+    $primaryImgName: String!
+    $contentImgName: [String!]!
+    $publicationDate: DateTime
+    $categories: [String!]!
+  ) {
+    updatePost(
+      post: {
+        id: $id
+        title: $title
+        content: $content
+        snippet: $snippet
+        timeToReadInMs: $timeToReadInMs
+        primaryImgName: $primaryImgName
+        contentImgName: $contentImgName
+        publicationDate: $publicationDate
+        categories: $categories
+      }
+    ) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
+export const REMOVE_POST = gql`
+  mutation RemovePost($id: String!) {
+    removePost(id: $id)
   }
 `;

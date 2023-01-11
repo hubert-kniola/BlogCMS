@@ -8,7 +8,7 @@ namespace GraphQL.API.Resolver
     [Authorize]
     public class PostResolver
     {
-        public async Task<IEnumerable<Post>> GetAllPosts([Parent] Category category, [Service] IPostRepository postRepository)
+        public async Task<IEnumerable<Post>?> GetAllPosts([Parent] Category category, [Service] IPostRepository postRepository)
             => await postRepository.GetAllByCategoryId(category.Id);
     }
 }

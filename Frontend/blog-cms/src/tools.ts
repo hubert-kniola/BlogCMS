@@ -72,12 +72,12 @@ export const AddImageToAzure = (images: File[]): any => {
 };
 
 export const GetImageFromAzure = (fileName: string): any => {
-  axios
-    .get(`${BlobStorageURL}${fileName}`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
+  let headers = {
+    "Access-Control-Allow-Origin": "*",
+  };
+
+  axiosConfig
+    .get(`${BlobStorageURL}${fileName}`, { headers })
     .then((res) => {
       console.log(res.data);
       return res.data;

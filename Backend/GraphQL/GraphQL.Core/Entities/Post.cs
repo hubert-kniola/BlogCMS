@@ -8,7 +8,7 @@
         public string TimeToReadInMs { get; set; }
         public string PrimaryImgName { get; set; }
         public IEnumerable<string> ContentImgName { get; set; }
-        public DateTime PublicationDate { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public DateTime? PublicationDate { get; set; }
+        public IEnumerable<string> Categories { get; set; }
     }
 }

@@ -271,8 +271,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               cssClasses.post,
               cssClasses.container,
               cssClasses.text
-            )}
-          >
+            )}>
             {type === "add" ? "Utwórz post" : "Edytuj post"}
           </h3>
         </div>
@@ -283,8 +282,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               className={BEM(cssClasses.post, cssClasses.title)}
               type="text"
               value={title}
-              onChange={handleTitle}
-            ></input>
+              onChange={handleTitle}></input>
             <p>Krótki opis (snippet):</p>
             <textarea
               className={BEM(cssClasses.post, cssClasses.textarea)}
@@ -296,8 +294,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               className={BEM(cssClasses.post, cssClasses.title)}
               type="number"
               value={timeToRead}
-              onChange={handleTimeToRead}
-            ></input>
+              onChange={handleTimeToRead}></input>
             <p>Treść:</p>
             <Button
               sx={{
@@ -314,8 +311,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               }}
               variant="outlined"
               component="label"
-              onClick={() => setOpenEditor(true)}
-            >
+              onClick={() => setOpenEditor(true)}>
               Modyfikuj
             </Button>
             <p>Zdjęcie główne:</p>
