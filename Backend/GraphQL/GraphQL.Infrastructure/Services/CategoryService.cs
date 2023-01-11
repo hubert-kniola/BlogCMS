@@ -87,7 +87,7 @@ namespace GraphQL.Infrastructure.Services
 
         private static string CombinePostPath(string path)
         {
-            string id = ":id";
+            const string id = ":id";
             if (!string.IsNullOrEmpty(path) && !path.EndsWith(id))
             {
                 path = $"{path.TrimEnd('/')}/{id}";

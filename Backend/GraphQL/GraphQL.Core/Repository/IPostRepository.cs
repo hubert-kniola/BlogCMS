@@ -5,5 +5,6 @@ namespace GraphQL.Core.Repository
     public interface IPostRepository : IBaseRepository<Post>
     {
         Task<IEnumerable<Post>> GetAllByCategoryId(string categoryId);
+        Task<Post?> UpdateAsync(Post post);
     }
 }
