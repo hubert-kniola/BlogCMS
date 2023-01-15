@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { CategoryState } from "../../../store/slices/categorySlice";
 import "./style.css";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -44,6 +44,7 @@ export const Tiles = ({ category, style }: TileProps) => {
     index: 0,
   });
   const [subCategory, setSubCategory] = useState<CategoryState>(null);
+  const [indexOfSubCategory, setIndexOfSubcategory] = useState<number>(null);
   const [tag, setTag] = useState<CategoryState>(null);
   const [addCategoryMutation, { data, loading, error }] =
     useMutation(ADD_CATEGORY);
@@ -61,6 +62,32 @@ export const Tiles = ({ category, style }: TileProps) => {
     container: "container",
   };
 
+  useEffect(() => {
+    const fetchData = () => {
+      if (data && (indexOfSubCategory !== undefined && indexOfSubCategory !== null)) {
+        setTag({ id: data.createCategory.id, ...tag });
+        dispatch(
+          addTag({
+            categoryTitle: category.title,
+            subCategoryTitle: subCategory.title,
+            indexOfSubCategory: indexOfSubCategory,
+            tag: { id: data.createCategory.id, ...tag },
+          })
+        );
+        setIndexOfSubcategory(null);
+      } else if (data && (indexOfSubCategory === undefined || indexOfSubCategory === null)) {
+        dispatch(
+          addSubCategory({
+            categoryTitle: category.title,
+            subCategory: { id: data.createCategory.id, ...subCategory },
+          })
+        );
+      }
+    };
+
+    fetchData();
+  }, [data]);
+
   const saveSubCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setSubCategory({
       title: e.currentTarget.value,
@@ -74,12 +101,6 @@ export const Tiles = ({ category, style }: TileProps) => {
       (element: CategoryState) => element.title === subCategory.title
     );
     if (subCategory && existedSubCategories === -1) {
-      dispatch(
-        addSubCategory({
-          categoryTitle: category.title,
-          subCategory: subCategory,
-        })
-      );
       setShowInputSub(false);
       addCategoryMutation({
         variables: {
@@ -88,6 +109,7 @@ export const Tiles = ({ category, style }: TileProps) => {
           parentId: category.id,
         } as AdminAddCategoryForm,
       });
+      setIndexOfSubcategory(null);
     }
   };
 
@@ -99,24 +121,18 @@ export const Tiles = ({ category, style }: TileProps) => {
     });
   };
 
-  const addReduxTag = (index: number) => {
+  const addReduxTag = (index: number, subCat: CategoryState) => {
     if (tag) {
-      dispatch(
-        addTag({
-          categoryTitle: category.title,
-          subCategoryTitle: subCategory.title,
-          indexOfSubCategory: index,
-          tag: tag,
-        })
-      );
-      setShowInputTag(false);
+      setSubCategory(subCat);
       addCategoryMutation({
         variables: {
           title: tag.title,
           path: ConvertTitleToPath(tag.title),
-          parentId: subCategory.id,
+          parentId: subCat.id,
         } as AdminAddCategoryForm,
       });
+      setIndexOfSubcategory(index);
+      setShowInputTag(false);
     }
   };
 
@@ -154,18 +170,6 @@ export const Tiles = ({ category, style }: TileProps) => {
             <IconButton onClick={addReduxSubCategory}>
               <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
             </IconButton>
-            {/* <IconButton
-              sx={{
-                borderRadius: "3px",
-                paddingLeft: "0.2rem",
-                paddingRight: "0.2rem",
-                backgroundColor: "rgb(156, 156, 156)",
-                color: "white",
-                height: "1.8rem"
-              }}
-            >
-              <CheckIcon />
-            </IconButton> */}
             <IconButton onClick={() => setShowInputSub(false)}>
               <IndeterminateCheckBoxIcon
                 fontSize="small"
@@ -212,7 +216,7 @@ export const Tiles = ({ category, style }: TileProps) => {
                     type="text"
                     onChange={saveTag}
                   />
-                  <IconButton onClick={() => addReduxTag(i)}>
+                  <IconButton onClick={() => addReduxTag(i, element)}>
                     <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
                   </IconButton>
                   <IconButton onClick={() => setShowInputTag(false)}>

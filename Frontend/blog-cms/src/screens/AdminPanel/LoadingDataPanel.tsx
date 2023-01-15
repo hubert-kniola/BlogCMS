@@ -63,11 +63,11 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     loading: categoryLoading,
     error: categoryError,
   } = useQuery(GET_CATEGORY_OBJECT);
-  // const {
-  //   data: postData,
-  //   loading: postLoading,
-  //   error: postError,
-  // } = useQuery(GET_POSTS);
+  const {
+    data: postData,
+    loading: postLoading,
+    error: postError,
+  } = useQuery(GET_POSTS);
 
   /**================== ABOUT LOADING SECTION ==================*/
   if (aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
@@ -125,19 +125,19 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   }
 
   /**================== POST LOADING SECTION ==================*/
-  // if (postData && !postLoading && !postError && !postLoaded) {
-  //   let postValue: any = Object.values(postData)[0];
-  //   postValue.map((element: Post) => dispatch(addPost(element)));
-  //   setPostLoaded(true);
-  // }
+  if (postData && !postLoading && !postError && !postLoaded) {
+    let postValue: any = Object.values(postData)[0];
+    postValue.map((element: Post) => dispatch(addPost(element)));
+    setPostLoaded(true);
+  }
 
   if (
     aboutLoaded &&
     contactLoaded &&
     faqLoaded &&
     carouselLoaded &&
-    categoryLoaded
-    //postLoaded
+    categoryLoaded &&
+    postLoaded
   ) {
     handleLoading(false);
   }

@@ -40,9 +40,7 @@ export const Category = () => {
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
-  const postsId = useAppSelector(
-    (state: RootState) => state.category.postsId
-  );
+  const postsId = useAppSelector((state: RootState) => state.category.postsId);
   const [addCategoryMutation, { data, loading, error }] =
     useMutation(ADD_CATEGORY);
   const dispatch = useAppDispatch();
@@ -53,7 +51,6 @@ export const Category = () => {
       (element: CategoryState) => element.title === enteredCategory.title
     );
     if (enteredCategory && existedCategories === -1) {
-      dispatch(addCategory(enteredCategory));
       addCategoryMutation({
         variables: {
           title: enteredCategory.title,
@@ -62,21 +59,23 @@ export const Category = () => {
         } as AdminAddCategoryForm,
       });
     }
-    setEnteredCategory({
-      title: "",
-      path: "",
-      subCategory: [],
-    });
   };
 
   useEffect(() => {
     const fetchData = () => {
-      //TODO - implement load from redux after login fetch
-      //dispatch(updateMenu());
+      if (data && enteredCategory) {
+        dispatch(addCategory({ id: data.createCategory.id, ...enteredCategory }));
+        setEnteredCategory({
+          id: "",
+          title: "",
+          path: "",
+          subCategory: [],
+        });
+      }
     };
 
     fetchData();
-  });
+  }, [data]);
 
   const saveCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setEnteredCategory({

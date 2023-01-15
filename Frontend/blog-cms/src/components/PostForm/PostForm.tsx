@@ -165,7 +165,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
       }
     };
     handleInsertActionRedux();
-  }, []);
+  }, [data]);
 
   const cssClasses = {
     post: "postForm",
