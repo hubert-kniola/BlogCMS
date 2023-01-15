@@ -1,12 +1,12 @@
 import { useQuery } from "@apollo/client";
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import {
   addCategory,
   CategoryState,
-  updateId
+  updateId,
 } from "../../../store/slices/categorySlice";
 import { addCarousel, addFaq } from "../../../store/slices/configureSlice";
 import { updateContact } from "../../../store/slices/contactSlice";
@@ -17,9 +17,10 @@ import {
   GET_CATEGORY_OBJECT,
   GET_CONTACT_INFO,
   GET_FAQ,
-  GET_POSTS
+  GET_POSTS,
 } from "../../apollo/apolloQueries";
 import Spinner from "../../components/Spinner/Spinner";
+import { GetImageFromAzure } from "../../tools";
 import { Carousel, FAQ, Post } from "../../types";
 import "./style.css";
 
@@ -35,6 +36,7 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   const [carouselLoaded, setCarouselLoaded] = useState<boolean>(false);
   const [categoryLoaded, setCategoryLoaded] = useState<boolean>(false);
   const [postLoaded, setPostLoaded] = useState<boolean>(false);
+  const [about, setAbout] = useState<any>("");
   const [aboutFile, setAboutFile] = useState<File>(null);
   const {
     data: aboutData,
@@ -61,19 +63,20 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     loading: categoryLoading,
     error: categoryError,
   } = useQuery(GET_CATEGORY_OBJECT);
-  const {
-    data: postData,
-    loading: postLoading,
-    error: postError,
-  } = useQuery(GET_POSTS);
+  // const {
+  //   data: postData,
+  //   loading: postLoading,
+  //   error: postError,
+  // } = useQuery(GET_POSTS);
 
   /**================== ABOUT LOADING SECTION ==================*/
   if (aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
     let aboutArray = Object.values(aboutData)[0];
     let aboutValue = _.cloneDeep(Object.values(aboutArray)[0]);
-    //const file = await Promise.resolve(GetImageFromAzure(aboutValue.imgName));
-    //aboutValue.file = new File([file], aboutValue.imgName);
-    //setAboutFile(new File([res.data], aboutValue.imgName));
+    //if (aboutValue) {
+      //const file = await GetImageFromAzure(fileName);
+      //aboutValue.file = new File([file[0]], fileName);
+    //}
     setAboutLoaded(true);
     dispatch(updateAbout(aboutValue));
   }
@@ -117,29 +120,29 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     categoryValue[0].subCategory.map((element: CategoryState) =>
       dispatch(addCategory(element))
     );
-    dispatch(updateId({id: categoryValue[0].id}));
+    dispatch(updateId({ id: categoryValue[0].id }));
     setCategoryLoaded(true);
   }
 
   /**================== POST LOADING SECTION ==================*/
-  if (postData && !postLoading && !postError && !postLoaded) {
-    let postValue: any = Object.values(postData)[0];
-    postValue.map((element: Post) => dispatch(addPost(element)));
-    setPostLoaded(true);
-  }
+  // if (postData && !postLoading && !postError && !postLoaded) {
+  //   let postValue: any = Object.values(postData)[0];
+  //   postValue.map((element: Post) => dispatch(addPost(element)));
+  //   setPostLoaded(true);
+  // }
 
   if (
     aboutLoaded &&
     contactLoaded &&
     faqLoaded &&
     carouselLoaded &&
-    categoryLoaded &&
-    postLoaded
+    categoryLoaded
+    //postLoaded
   ) {
     handleLoading(false);
   }
 
-  return <Spinner/>;
+  return <Spinner />;
 };
 
 export default LoadingDataPanel;

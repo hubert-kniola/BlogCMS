@@ -10,14 +10,18 @@ import {
   deleteSubCategory,
   deleteTag,
 } from "../../../store/slices/categorySlice";
-import { BEM } from "../../tools";
+import { BEM, ConvertTitleToPath } from "../../tools";
 import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import CheckIcon from "@mui/icons-material/Check";
 import { mainColor } from "../../types/consts";
-import { ADD_CATEGORY, REMOVE_CATEGORY_WITH_SUBCATEGORY } from "../../apollo/apolloQueries";
+import {
+  ADD_CATEGORY,
+  REMOVE_CATEGORY_WITH_SUBCATEGORY,
+} from "../../apollo/apolloQueries";
 import { useMutation } from "@apollo/client";
+import { AdminAddCategoryForm, AdminRemoveCategoryForm } from "../../types";
 
 interface TileProps {
   category: CategoryState;
@@ -43,8 +47,9 @@ export const Tiles = ({ category, style }: TileProps) => {
   const [tag, setTag] = useState<CategoryState>(null);
   const [addCategoryMutation, { data, loading, error }] =
     useMutation(ADD_CATEGORY);
-  const [removeCategoryMutation] =
-    useMutation(REMOVE_CATEGORY_WITH_SUBCATEGORY);
+  const [removeCategoryMutation] = useMutation(
+    REMOVE_CATEGORY_WITH_SUBCATEGORY
+  );
 
   const cssClasses = {
     tile: "tile",
@@ -59,7 +64,7 @@ export const Tiles = ({ category, style }: TileProps) => {
   const saveSubCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setSubCategory({
       title: e.currentTarget.value,
-      path: `/${e.currentTarget.value}/`,
+      path: ConvertTitleToPath(e.currentTarget.value),
       subCategory: [],
     });
   };
@@ -76,13 +81,20 @@ export const Tiles = ({ category, style }: TileProps) => {
         })
       );
       setShowInputSub(false);
+      addCategoryMutation({
+        variables: {
+          title: subCategory.title,
+          path: ConvertTitleToPath(subCategory.title),
+          parentId: category.id,
+        } as AdminAddCategoryForm,
+      });
     }
   };
 
   const saveTag = (e: ChangeEvent<HTMLInputElement>) => {
     setTag({
       title: e.currentTarget.value,
-      path: `/${e.currentTarget.value}/`,
+      path: ConvertTitleToPath(e.currentTarget.value),
       subCategory: [],
     });
   };
@@ -98,6 +110,13 @@ export const Tiles = ({ category, style }: TileProps) => {
         })
       );
       setShowInputTag(false);
+      addCategoryMutation({
+        variables: {
+          title: tag.title,
+          path: ConvertTitleToPath(tag.title),
+          parentId: subCategory.id,
+        } as AdminAddCategoryForm,
+      });
     }
   };
 
@@ -108,7 +127,16 @@ export const Tiles = ({ category, style }: TileProps) => {
         <IconButton onClick={() => setShowInputSub(true)}>
           <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
         </IconButton>
-        <IconButton onClick={() => dispatch(deleteCategory(category))}>
+        <IconButton
+          onClick={() => {
+            dispatch(deleteCategory(category));
+            removeCategoryMutation({
+              variables: {
+                id: category.id,
+              } as AdminRemoveCategoryForm,
+            });
+          }}
+        >
           <IndeterminateCheckBoxIcon
             fontSize="small"
             sx={{ color: mainColor }}
@@ -157,14 +185,19 @@ export const Tiles = ({ category, style }: TileProps) => {
                   <AddBoxIcon fontSize="small" sx={{ color: mainColor }} />
                 </IconButton>
                 <IconButton
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       deleteSubCategory({
                         categoryTitle: category.title,
                         indexOfSubCategory: i,
                       })
-                    )
-                  }
+                    );
+                    removeCategoryMutation({
+                      variables: {
+                        id: element.id,
+                      } as AdminRemoveCategoryForm,
+                    });
+                  }}
                 >
                   <IndeterminateCheckBoxIcon
                     fontSize="small"
@@ -197,15 +230,20 @@ export const Tiles = ({ category, style }: TileProps) => {
                       <div className={BEM(cssClasses.tile, cssClasses.tag)}>
                         <p>{element.title}</p>
                         <IconButton
-                          onClick={() =>
+                          onClick={() => {
                             dispatch(
                               deleteTag({
                                 categoryTitle: category.title,
                                 indexOfSubCategory: i,
                                 indexOfTag: index,
                               })
-                            )
-                          }
+                            );
+                            removeCategoryMutation({
+                              variables: {
+                                id: element.id,
+                              } as AdminRemoveCategoryForm,
+                            });
+                          }}
                         >
                           <IndeterminateCheckBoxIcon
                             fontSize="small"
