@@ -154,6 +154,47 @@ export const GET_POSTS_BY_ID = gql`
   }
 `;
 
+export const GET_SIMILAR_POST = gql`
+  query GetSimilarPost($postId: String!) {
+    similarPost(postId: $postId) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
+export const GET_POST_BY_CATEGORY_ID = gql`
+  query GetPostByCategoryIdAsync($categoryId: String!) {
+    postByCategoryId(categoryId: $categoryId) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      isTopPost
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
 export const GET_ABOUT = gql`
   query getAbout {
     about {

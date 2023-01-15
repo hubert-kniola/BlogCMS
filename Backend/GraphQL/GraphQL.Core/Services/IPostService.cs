@@ -4,8 +4,10 @@ namespace GraphQL.Core.Services
 {
     public interface IPostService
     {
-        public Task<Post?> InsertAsync(Post post);
-        public Task<Post?> UpdateAsync(Post post);
+        Task<IEnumerable<Post>?> GetSimilarPostAsync(string postId);
+        Task<IEnumerable<Post>?> GetPostByCategoryIdAsync(string categoryId);
+        Task<Post?> InsertAsync(Post post);
+        Task<Post?> UpdateAsync(Post post);
         Task<bool> UpdateDeletedCategory(string categoryId, string? parentCategoryId = null);
     }
 }

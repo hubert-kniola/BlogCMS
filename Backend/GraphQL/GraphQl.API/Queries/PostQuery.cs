@@ -1,5 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 using HotChocolate.AspNetCore.Authorization;
 
 namespace GraphQL.API.Queries
@@ -16,5 +17,12 @@ namespace GraphQL.API.Queries
 
         public async Task<IEnumerable<Post>?> GetTopThreePostAsync([Service] IPostRepository postRepository)
             => await postRepository.GetTopPostAsync();
+
+        public async Task<IEnumerable<Post>?> GetPostByCategoryIdAsync(string categoryId, [Service] IPostService postService)
+            => await postService.GetPostByCategoryIdAsync(categoryId);
+
+        public async Task<IEnumerable<Post>?> GetSimilarPostAsync(string postId, [Service] IPostService postService)
+            => await postService.GetSimilarPostAsync(postId);
+
     }
 }

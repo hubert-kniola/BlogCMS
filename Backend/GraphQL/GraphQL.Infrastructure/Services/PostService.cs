@@ -8,10 +8,86 @@ namespace GraphQL.Infrastructure.Services
     {
         private IPostRepository _postRepository;
         private ICategoryRepository _categoryRepository;
-        public PostService(IPostRepository postRepository, ICategoryRepository categoryRepository)
+        private ICategoryService _categoryService;
+        public PostService(IPostRepository postRepository, ICategoryRepository categoryRepository, ICategoryService categoryService)
         {
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
+        }
+
+        public async Task<IEnumerable<Post>?> GetSimilarPostAsync(string postId)
+        {
+            if (!string.IsNullOrEmpty(postId))
+            {
+                List<Category> categoryList = new();
+                List<Post> similarPosts = new();
+                Post? post = await _postRepository.GetByIdAsync(postId);
+
+                if (post != null)
+                {
+                    foreach (var categoryId in post.Categories)
+                    {
+                        var categories = await _categoryService.GetAllSubCategories(categoryId);
+
+                        if (categories != null)
+                            categoryList.AddRange(categories);
+                    }
+
+                    foreach (var category in categoryList)
+                    {
+                        IEnumerable<Post>? postList = await _postRepository.GetAllByCategoryId(category.Id!);
+                        if (postList != null)
+                        {
+                            foreach (var p in postList)
+                            {
+                                if (p.Id != postId && !similarPosts.Contains(p))
+                                {
+                                    similarPosts.Add(p);
+
+                                    if (similarPosts.Count == 3)
+                                        break;
+                                }
+                            }
+                        }
+
+                        if (similarPosts.Count == 3)
+                            return similarPosts;
+                    }
+                }
+                return similarPosts;
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<Post>?> GetPostByCategoryIdAsync(string categoryId)
+        {
+            if (!string.IsNullOrEmpty(categoryId))
+            {
+                List<Post> postList = new();
+
+                var categoryList = await _categoryService.GetAllSubCategories(categoryId);
+
+                if (categoryList != null)
+                {
+                    foreach (var category in categoryList)
+                    {
+                        IEnumerable<Post>? posts = await _postRepository.GetAllByCategoryId(category.Id!);
+                        if (posts != null)
+                        {
+                            foreach (var post in posts)
+                            {
+                                if (!postList.Contains(post))
+                                {
+                                    postList.Add(post);
+                                }
+                            }
+                        }
+                    }
+                    return postList;
+                }
+            }
+            return null;
         }
 
         public async Task<Post?> InsertAsync(Post post)

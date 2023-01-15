@@ -8,11 +8,13 @@ namespace GraphQL.Infrastructure.Repositories
 {
     public class PostRepository : BaseRepository<Post>, IPostRepository
     {
+        private ICategoryRepository _categoryRepository;
         public PostRepository(
             ICatalogContext catalogContext,
             ICategoryRepository categoryRepository
             ) : base(catalogContext)
         {
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<IEnumerable<Post>?> GetAllByCategoryId(string categoryId)
@@ -41,7 +43,7 @@ namespace GraphQL.Infrastructure.Repositories
                     oldEntity.IsTopPost = Helpers.GetValue(oldEntity.IsTopPost, entity.IsTopPost);
                     oldEntity.ContentImgName = entity.ContentImgName;
                     oldEntity.PublicationDate = entity.PublicationDate;
-                    oldEntity.Categories = entity.Categories;
+                    oldEntity.Categories = entity.Categories.Any() ? entity.Categories : new List<string>() { await _categoryRepository.GetMainPostCategoryId() };
 
                     oldEntity.ModifiedOn = DateTime.Now;
 
@@ -70,7 +72,7 @@ namespace GraphQL.Infrastructure.Repositories
                         newTop.Add(tempPost);
                 }
 
-                if(newTop.Count == top.Count() || newTop.Count == 3)
+                if (newTop.Count == top.Count() || newTop.Count == 3)
                 {
                     await UpdateTopPost(newTop);
                     return await _collection.Find(x => x.IsTopPost == true).ToListAsync();

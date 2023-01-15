@@ -7,15 +7,12 @@ namespace GraphQL.Infrastructure.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IPostService _postService;
 
         public CategoryService(
-            ICategoryRepository categoryRepository,
-            IPostService postService
+            ICategoryRepository categoryRepository
             )
         {
             _categoryRepository = categoryRepository;
-            _postService = postService;
         }
 
         public async Task<IEnumerable<Category>?> GetAllSubCategories(string categoryId)
