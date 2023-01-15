@@ -6,6 +6,7 @@ namespace GraphQL.Core.Repository
     {
         Task<IEnumerable<Post>?> GetAllByCategoryId(string categoryId);
         Task<IEnumerable<Post>?> GetTopPostAsync();
+        Task<Post?> GetFirstPostPremier();
         Task<Post?> UpdateAsync(Post post);
         Task<IEnumerable<Post>>? UpdateTopAsync(IEnumerable<string> top);
     }

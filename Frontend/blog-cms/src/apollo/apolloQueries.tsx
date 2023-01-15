@@ -195,6 +195,27 @@ export const GET_POST_BY_CATEGORY_ID = gql`
   }
 `;
 
+export const GET_FIRST_POST_PREMIER = gql`
+  query GetFirstPostPremier {
+    firstPostPremier {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      isTopPost
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
 export const GET_ABOUT = gql`
   query getAbout {
     about {

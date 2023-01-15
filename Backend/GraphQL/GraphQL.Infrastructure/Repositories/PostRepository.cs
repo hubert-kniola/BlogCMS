@@ -27,6 +27,29 @@ namespace GraphQL.Infrastructure.Repositories
             return await _collection.Find(x => x.IsTopPost == true).ToListAsync();
         }
 
+        public async Task<Post?> GetFirstPostPremier()
+        {
+            List<Post> postList = new(await GetAllAsync());
+            DateTime? nextFeatureDate = null;
+            Post? premierePost = null;
+
+            foreach (var post in postList)
+            {
+                if (nextFeatureDate == null)
+                {
+                    nextFeatureDate = post.PublicationDate;
+                    premierePost = post;
+                }
+                else if (post.PublicationDate > DateTime.Now && post.PublicationDate < nextFeatureDate)
+                {
+                    nextFeatureDate = post.PublicationDate;
+                    premierePost = post;
+                }
+            }
+
+            return premierePost;
+        }
+
         public async Task<Post?> UpdateAsync(Post entity)
         {
             if (entity.Id != null)
