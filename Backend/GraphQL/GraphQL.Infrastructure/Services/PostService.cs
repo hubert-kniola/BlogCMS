@@ -18,11 +18,23 @@ namespace GraphQL.Infrastructure.Services
         {
             if (IsValidPost(post))
             {
-                foreach (var cat in post.Categories)
+                post = SetDefaultValue(post);
+
+                if (!post.Categories.Any())
                 {
-                    var category = await _categoryRepository.GetByIdAsync(cat);
-                    if (category == null)
+                    string? categoryId = await _categoryRepository.GetMainPostCategoryId();
+                    if (string.IsNullOrEmpty(categoryId))
                         return null;
+                    post.Categories = new List<string>() { categoryId };
+                }
+                else
+                {
+                    foreach (var cat in post.Categories)
+                    {
+                        var category = await _categoryRepository.GetByIdAsync(cat);
+                        if (category == null)
+                            return null;
+                    }
                 }
                 return await _postRepository.InsertAsync(post);
             }
@@ -92,12 +104,19 @@ namespace GraphQL.Infrastructure.Services
                || string.IsNullOrEmpty(post.Snippet)
                || string.IsNullOrEmpty(post.PrimaryImgName)
                || string.IsNullOrEmpty(post.TimeToReadInMs)
-               || post.Categories == null
                )
             {
                 return false;
             }
             return true;
+        }
+
+        private static Post SetDefaultValue(Post post)
+        {
+            post.IsTopPost ??= false;
+            post.PublicationDate ??= post.PublicationDate = DateTime.Now;
+
+            return post;
         }
     }
 }

@@ -13,5 +13,8 @@ namespace GraphQL.API.Queries
         
         public async Task<Post?> GetPostById(string id, [Service] IPostRepository postRepository)
             => await postRepository.GetByIdAsync(id);
+
+        public async Task<IEnumerable<Post>?> GetTopThreePostAsync([Service] IPostRepository postRepository)
+            => await postRepository.GetTopPostAsync();
     }
 }

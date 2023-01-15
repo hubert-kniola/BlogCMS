@@ -1,11 +1,8 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
-using GraphQL.Core.Services;
 using GraphQL.Infrastructure.Common;
 using GraphQL.Infrastructure.Data;
 using MongoDB.Driver;
-using SharpCompress.Common;
-using System.Collections.Generic;
 
 namespace GraphQL.Infrastructure.Repositories
 {
@@ -23,6 +20,11 @@ namespace GraphQL.Infrastructure.Repositories
             return await _collection.Find(x => x.Categories.Contains(categoryId)).ToListAsync();
         }
 
+        public async Task<IEnumerable<Post>?> GetTopPostAsync()
+        {
+            return await _collection.Find(x => x.IsTopPost == true).ToListAsync();
+        }
+
         public async Task<Post?> UpdateAsync(Post entity)
         {
             if (entity.Id != null)
@@ -36,6 +38,7 @@ namespace GraphQL.Infrastructure.Repositories
                     oldEntity.Snippet = Helpers.GetValue(oldEntity.Snippet, entity.Snippet);
                     oldEntity.TimeToReadInMs = Helpers.GetValue(oldEntity.TimeToReadInMs, entity.TimeToReadInMs);
                     oldEntity.PrimaryImgName = Helpers.GetValue(oldEntity.PrimaryImgName, entity.PrimaryImgName);
+                    oldEntity.IsTopPost = Helpers.GetValue(oldEntity.IsTopPost, entity.IsTopPost);
                     oldEntity.ContentImgName = entity.ContentImgName;
                     oldEntity.PublicationDate = entity.PublicationDate;
                     oldEntity.Categories = entity.Categories;
@@ -52,6 +55,37 @@ namespace GraphQL.Infrastructure.Repositories
 
         }
 
+        public async Task<IEnumerable<Post>>? UpdateTopAsync(IEnumerable<string> top)
+        {
+            if (top != null && top.Any())
+            {
+                IEnumerable<Post> currentTopPosts = _collection.Find(x => x.IsTopPost == true).ToList();
+                await UpdateTopPost(currentTopPosts, false);
 
+                List<Post> newTop = new();
+                foreach (var postId in top.Take(3))
+                {
+                    Post? tempPost = await _collection.Find(x => x.Id.Equals(postId)).FirstAsync();
+                    if (tempPost != null)
+                        newTop.Add(tempPost);
+                }
+
+                if(newTop.Count == top.Count() || newTop.Count == 3)
+                {
+                    await UpdateTopPost(newTop);
+                    return await _collection.Find(x => x.IsTopPost == true).ToListAsync();
+                }
+            }
+            return null;
+        }
+
+        private async Task UpdateTopPost(IEnumerable<Post> postList, bool isTop = true)
+        {
+            foreach (var post in postList)
+            {
+                post.IsTopPost = isTop;
+                await _collection.ReplaceOneAsync(x => x.Id.Equals(post.Id), post);
+            }
+        }
     }
 }

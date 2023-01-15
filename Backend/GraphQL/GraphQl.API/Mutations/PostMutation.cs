@@ -17,5 +17,8 @@ namespace GraphQL.API.Mutations
 
         public async Task<bool> RemovePostAsync(string id, [Service] IPostRepository postRepository) 
             => await postRepository.RemoveAsync(id);
+
+        public async Task<IEnumerable<Post>>? UpdateTopPostAsync(IEnumerable<string> top, [Service] IPostRepository postRepository)
+            => await postRepository.UpdateTopAsync(top);
     }
 }

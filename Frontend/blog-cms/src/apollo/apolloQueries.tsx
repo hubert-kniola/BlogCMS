@@ -41,9 +41,22 @@ export const GET_ROUTE = gql`
 `;
 
 export const GET_TOP3 = gql`
-  query GeTop3 {
-    top3 {
+  query GetTop3 {
+    topThreePost {
       id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      isTopPost
+      categories {
+        id
+        title
+        path
+      }
     }
   }
 `;
@@ -438,6 +451,39 @@ export const UPDATE_POST = gql`
       primaryImgName
       contentImgName
       publicationDate
+      categories {
+        id
+        title
+        path
+      }
+    }
+  }
+`;
+
+/*
+ {
+  "top": [
+    "63befdda5f1761530cc5c5e6",
+    "63befea55f1761530cc5c5e9",
+    "63befe4c5f1761530cc5c5e8"]
+}
+
+Funkcja przetworzy maksymalnie 3 posty. Przesyłając ich 10, weźmie pierwsze 3. 
+Musi być co najmniej jeden. Podajemy ID postów. Zawsze wysyłamy WSZYSTKIE!
+*/
+
+export const UPDATE_TOP_THREE_POST = gql`
+  mutation UpdateTop($top: [String!]!) {
+    updateTopPost(top: $top) {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      isTopPost
       categories {
         id
         title

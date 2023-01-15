@@ -15,5 +15,10 @@ namespace GraphQL.Infrastructure.Repositories
         {
             return (await _collection.FindAsync(x => x.ParentId.Equals(parentId))).ToEnumerable();
         }
+
+        public async Task<string?> GetMainPostCategoryId()
+        {
+            return  (await _collection.Find(x => x.ParentId == null && x.IsConst == false).FirstOrDefaultAsync())?.Id;
+        }
     }
 }
