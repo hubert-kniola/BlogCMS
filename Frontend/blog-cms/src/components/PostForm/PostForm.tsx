@@ -19,32 +19,44 @@ import { CategoryState } from "../../../store/slices/categorySlice";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { addPost, updatePost } from "../../../store/slices/postSlice";
 import { RootState } from "../../../store/store";
-import { BEM, ConvertFromHtmlToEditorState, GetGTMDate } from "../../tools";
-import { UploadType } from "../../types";
+import {
+  AddImageToAzure,
+  BEM,
+  ConvertFromHtmlToEditorState,
+  GetGTMDate,
+} from "../../tools";
+import {
+  AdminInsertPostForm,
+  AdminUpdatePostForm,
+  UploadType,
+} from "../../types";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import FileUploader from "../FileUploader/FileUploader";
 import SaveButton from "../SaveButton/SaveButton";
+import { ActionType } from "../../types";
 
 import "./style.css";
+import { INSERT_POST, UPDATE_POST } from "../../apollo/apolloQueries";
+import { useMutation } from "@apollo/client";
 
 const exampleCategories: CategoryState[] = [
   {
     title: "Title 1",
-    url: "xd",
-    subMenu: [],
+    path: "xd",
+    subCategory: [],
   },
   {
     title: "Title 2",
-    url: "xdd",
-    subMenu: [
-      { title: "SubTitle2.1", url: "", subMenu: [] },
+    path: "xdd",
+    subCategory: [
+      { title: "SubTitle2.1", path: "", subCategory: [] },
       {
         title: "SubTitle2.2",
-        url: "",
-        subMenu: [
-          { title: "TagTitle3.1", url: "", subMenu: [] },
-          { title: "TagTitle3.2", url: "", subMenu: [] },
+        path: "",
+        subCategory: [
+          { title: "TagTitle3.1", path: "", subCategory: [] },
+          { title: "TagTitle3.2", path: "", subCategory: [] },
         ],
       },
     ],
@@ -65,20 +77,24 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const posts = useAppSelector((state: RootState) => state.post.posts);
   const [mainCategory, setMainCategory] = useState({
+    id: null,
     title: null,
-    url: null,
-    subMenu: [],
+    path: null,
+    subCategory: [],
   });
   const [subCategory, setSubCategory] = useState({
+    id: null,
     title: null,
-    url: null,
-    subMenu: [],
+    path: null,
+    subCategory: [],
   });
   const [tagCategory, setTagCategory] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState({});
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const [mainSelectedFile, setMainSelectedFile] = useState<File>(null);
+  const [mainFileName, setMainFileName] = useState<string>("");
   const [sideSelectedFiles, setSideSelectedFiles] = useState<File[]>(null);
+  const [sideFileNames, setSideFileNames] = useState<string[]>([]);
   const [snippet, setSnippet] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [timeToRead, setTimeToRead] = useState<number>(null);
@@ -86,33 +102,69 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const [publicDate, setPublicDate] = useState<Dayjs | null>(null);
   const [publicOnDate, setPublicOnDate] = useState<boolean>(false);
   const [openEditor, setOpenEditor] = useState<boolean>(false);
+  const [disableOnClick, setDisableOnClick] = useState<boolean>(false);
+  const [insertPostMutation, { data, loading, error }] =
+    useMutation(INSERT_POST);
+  const [updatePostMutation] = useMutation(UPDATE_POST);
 
   useEffect(() => {
     const initEditedPost = () => {
-      if (type === "edit") {
+      if (type === ActionType.Edit) {
         if (posts[index]) {
           let editedPost = posts[index];
           setTitle(editedPost.title);
           setMainSelectedFile(editedPost.mainImage);
           setSideSelectedFiles(editedPost.sideImages);
           setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
-          let elements = mapCategoriesToOptions(editedPost.category);
-          elements.pop();
-          elements[2] = mapCategoriesToOptions(editedPost.category[2]);
-          setSelectedCategories(elements);
+          if (editedPost.categories.length > 0) {
+            let elements = mapCategoriesToOptions(editedPost.categories);
+            elements.pop();
+            elements[2] = mapCategoriesToOptions(editedPost.categories[2]);
+            setSelectedCategories(elements);
+          }
           setSnippet(editedPost.snippet);
-          setTimeToRead(editedPost.timeToRead);
+          setTimeToRead(editedPost.timeToReadInMs);
           setPlaceInPopular(editedPost.placeInPopular);
           setPublicOnDate(editedPost.publicOnDate);
-          setPublicDate(editedPost.publicDate);
-          if (editedPost.category[0]) setMainCategory(editedPost.category[0]);
-          if (editedPost.category[1]) setSubCategory(editedPost.category[1]);
-          if (editedPost.category.length > 2)
-            setTagCategory(editedPost.category[2]);
+          setPublicDate(editedPost.publicationDate);
+          if (editedPost.categories[0])
+            setMainCategory(editedPost.categories[0]);
+          if (editedPost.categories[1])
+            setSubCategory(editedPost.categories[1]);
+          if (editedPost.categories.length > 2)
+            setTagCategory(editedPost.categories[2]);
         }
       }
     };
     initEditedPost();
+    const handleInsertActionRedux = () => {
+      if (type === ActionType.Add && data) {
+        let category = [];
+        if (mainCategory.title) {
+          category.push(mainCategory);
+          subCategory.title !== null && category.push(subCategory);
+          tagCategory && category.push(tagCategory);
+        }
+        const reduxPayload: any = {
+          id: data.createPost.id,
+          title: title,
+          publicationDate:
+            publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
+          content: convertToHTML(richValue.getCurrentContent()),
+          snippet: snippet,
+          timeToReadInMs: timeToRead.toString(),
+          mainImage: mainSelectedFile,
+          sideImages: sideSelectedFiles,
+          categories: category,
+          publicOnDate: publicOnDate,
+          placeInPopular: placeInPopular,
+        };
+        dispatch(addPost(reduxPayload));
+        setDisableOnClick(true);
+        handleClose();
+      }
+    };
+    handleInsertActionRedux();
   }, []);
 
   const cssClasses = {
@@ -144,14 +196,14 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   };
 
   const mapSubCategoriesToOptions = (mainCategory: CategoryState): any => {
-    const options = mainCategory.subMenu.map((element) => {
+    const options = mainCategory.subCategory.map((element) => {
       return { value: element, label: element.title };
     });
     return options;
   };
 
   const mapTagCategoriesToOptions = (mainCategory: CategoryState): any => {
-    const options = mainCategory.subMenu.map((element) => {
+    const options = mainCategory.subCategory.map((element) => {
       return { value: element, label: element.title };
     });
     return options;
@@ -160,9 +212,10 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   const handleMainCategory = (event: any, index: number) => {
     setMainCategory(event.value);
     setSubCategory({
+      id: null,
       title: null,
-      url: null,
-      subMenu: [],
+      path: null,
+      subCategory: [],
     });
     setTagCategory([]);
     let items = selectedCategories;
@@ -219,38 +272,90 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setSideSelectedFiles(e);
   };
 
-  const savePost = () => {
+  const mapCategoriesToPostCategories = (categories: any[]) => {
+    let newCategories = categories.map((element) => {
+      return { id: element.id, title: element.title, path: element.path };
+    });
+    return newCategories;
+  };
+
+  const savePost = async () => {
+    if (
+      mainSelectedFile &&
+      (type === ActionType.Add ||
+        (type === ActionType.Edit &&
+          mainSelectedFile !== posts[index].mainImage))
+    ) {
+      const mainFileName: any = await AddImageToAzure([mainSelectedFile]);
+      setMainFileName(mainFileName[0].newName);
+    }
+    if (
+      sideSelectedFiles &&
+      (type === ActionType.Add ||
+        (type === ActionType.Edit &&
+          sideSelectedFiles !== posts[index].sideImages))
+    ) {
+      const sideFileNames: any = await AddImageToAzure(sideSelectedFiles);
+      let sideFiles = [];
+      sideFileNames.map((element: any) => sideFiles.push(element.newName));
+      setSideFileNames(sideFileNames);
+    }
+    //let categoryNames = [];
     let category = [];
-    if (mainCategory) {
+    if (mainCategory.title) {
       category.push(mainCategory);
-      subCategory.title !== null && category.push(subCategory);
-      tagCategory && category.push(tagCategory);
+      //categoryNames.push(mainCategory.id);
+      if (subCategory.title !== null) {
+        category.push(subCategory);
+        //categoryNames.push(subCategory.id);
+      }
+      if (tagCategory) {
+        category.push(tagCategory);
+        //tagCategory.map((element) => categoryNames.push(element.id));
+      }
     }
     const payload: any = {
       title: title,
-      date: publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
       content: convertToHTML(richValue.getCurrentContent()),
       snippet: snippet,
-      timeToRead: timeToRead,
-      imgUrl: "",
-      mainImage: mainSelectedFile,
-      sideImages: sideSelectedFiles,
-      category: category,
-      publicOnDate: publicOnDate,
-      placeInPopular: placeInPopular,
+      timeToReadInMs: timeToRead.toString(),
+      primaryImgName: mainFileName,
+      contentImgName: sideFileNames,
+      publicationDate:
+        publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
+      categories: mapCategoriesToPostCategories(category),
     };
-    if (type === "add") {
-      dispatch(addPost(payload));
+    if (type === ActionType.Add) {
+      insertPostMutation({ variables: payload as AdminInsertPostForm });
+      setDisableOnClick(true);
     } else {
-      dispatch(updatePost({ post: payload, index: index }));
+      const reduxPayload: any = {
+        id: posts[index].id,
+        title: title,
+        publicationDate:
+          publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
+        content: convertToHTML(richValue.getCurrentContent()),
+        snippet: snippet,
+        timeToReadInMs: timeToRead.toString(),
+        mainImage: mainSelectedFile,
+        sideImages: sideSelectedFiles,
+        categories: category,
+        publicOnDate: publicOnDate,
+        placeInPopular: placeInPopular,
+      };
+      dispatch(updatePost({ post: reduxPayload, index: index }));
+      updatePostMutation({
+        variables: { id: posts[index].id, ...payload } as AdminUpdatePostForm,
+      });
       if (top3 && top3.filter((e) => e.title === title)) {
         let newTop3 = top3.slice();
         const ix = top3.findIndex((r) => r.title === posts[index].title);
         newTop3[ix] = payload;
         dispatch(updateTop3(newTop3));
       }
+      setDisableOnClick(true);
+      handleClose();
     }
-    handleClose();
   };
 
   const closeIcon = (
@@ -271,8 +376,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               cssClasses.post,
               cssClasses.container,
               cssClasses.text
-            )}>
-            {type === "add" ? "Utwórz post" : "Edytuj post"}
+            )}
+          >
+            {type === ActionType.Add ? "Utwórz post" : "Edytuj post"}
           </h3>
         </div>
         <div className={BEM(cssClasses.post, cssClasses.content)}>
@@ -282,7 +388,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               className={BEM(cssClasses.post, cssClasses.title)}
               type="text"
               value={title}
-              onChange={handleTitle}></input>
+              onChange={handleTitle}
+            ></input>
             <p>Krótki opis (snippet):</p>
             <textarea
               className={BEM(cssClasses.post, cssClasses.textarea)}
@@ -294,7 +401,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               className={BEM(cssClasses.post, cssClasses.title)}
               type="number"
               value={timeToRead}
-              onChange={handleTimeToRead}></input>
+              onChange={handleTimeToRead}
+            ></input>
             <p>Treść:</p>
             <Button
               sx={{
@@ -311,7 +419,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
               }}
               variant="outlined"
               component="label"
-              onClick={() => setOpenEditor(true)}>
+              onClick={() => setOpenEditor(true)}
+            >
               Modyfikuj
             </Button>
             <p>Zdjęcie główne:</p>
@@ -484,7 +593,8 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         <div className={BEM(cssClasses.post, cssClasses.footer)}>
           <SaveButton
             handleSave={savePost}
-            text={type === "add" ? "Dodaj" : "Edytuj"}
+            text={type === ActionType.Add ? "Dodaj" : "Edytuj"}
+            disable={disableOnClick}
           />
         </div>
       </div>

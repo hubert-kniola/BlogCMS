@@ -4,7 +4,11 @@ import { BEM } from "../../tools";
 import "./style.css";
 import { mainColor } from "../../types/consts";
 
-const Spinner = () => {
+interface SpinnerProps {
+  color?: string;
+}
+
+const Spinner = ({color}: SpinnerProps) => {
   const cssClasses = {
     spinner: "spinner",
     container: "container",
@@ -40,7 +44,7 @@ const Spinner = () => {
           disableShrink
           size={60}
           sx={{
-            color: mainColor,
+            color: color ? color : mainColor,
           }}
         />
       </div>

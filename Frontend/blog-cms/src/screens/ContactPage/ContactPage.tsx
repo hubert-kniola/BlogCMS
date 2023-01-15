@@ -9,6 +9,7 @@ import { Input } from "../../components";
 import Spinner from "../../components/Spinner/Spinner";
 import { BEM } from "../../tools";
 import { ContactForm, ContactInfoType } from "../../types";
+import { pageColor } from "../../types/consts";
 import "./style.css";
 
 const css = {
@@ -69,7 +70,7 @@ export const ContactPage = () => {
   return (
     <>
       {loadingData ? (
-        <Spinner />
+        <Spinner color={pageColor} />
       ) : (
         <div className={BEM(css.contact, css.view)}>
           <div className={BEM(css.contact, css.box)}>

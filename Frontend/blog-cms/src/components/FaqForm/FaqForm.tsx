@@ -1,17 +1,22 @@
+import { useMutation } from "@apollo/client";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../store/hooks";
-import {
-  addFaq,
-  updateFaq
-} from "../../../store/slices/configureSlice";
+import { addFaq, updateFaq } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
+import {
+  ADD_FAQ_ELEMENT,
+  REMOVE_FAQ_ELEMENT,
+  UPDATE_FAQ_ELEMENT,
+} from "../../apollo/apolloQueries";
 import { BEM, GetGTMDate } from "../../tools";
+import { AdminAddFaqForm, AdminUpdateFaqForm } from "../../types";
 import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
+import { ActionType } from "../../types";
 
 interface FaqFormProps {
   type: string;
@@ -21,15 +26,17 @@ interface FaqFormProps {
 
 const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
   const dispatch = useDispatch();
-  const faqs = useAppSelector(
-    (state: RootState) => state.configure.faq
-  );
+  const faqs = useAppSelector((state: RootState) => state.configure.faq);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
+  const [addFaqMutation, { data, loading, error }] =
+    useMutation(ADD_FAQ_ELEMENT);
+  const [updateFaqMutation] = useMutation(UPDATE_FAQ_ELEMENT);
+  const [disableOnClick, setDisableOnClick] = useState<boolean>(false);
 
   useEffect(() => {
     const initEditedPost = () => {
-      if (type === "edit") {
+      if (type === ActionType.Edit) {
         if (faqs[index]) {
           let faq = faqs[index];
           setQuestion(faq.question);
@@ -38,7 +45,20 @@ const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
       }
     };
     initEditedPost();
-  }, []);
+    const handleAddActionRedux = () => {
+      if (type === ActionType.Add && data) {
+        const payload: any = {
+          id: data.createFaq.id,
+          question: question,
+          answer: answer,
+          modifiedOn: GetGTMDate(),
+        };
+        dispatch(addFaq(payload));
+        handleClose();
+      }
+    };
+    handleAddActionRedux();
+  }, [data]);
 
   const cssClasses = {
     post: "faqForm",
@@ -58,18 +78,33 @@ const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
     setAnswer(e.target.value);
   };
 
-  const savePost = () => {
-    const payload: any = {
-      question: question,
-      answer: answer,
-      date: GetGTMDate(),
-    };
-    if (type === "add") {
-      dispatch(addFaq(payload));
+  const savePost = async () => {
+    if (type === ActionType.Add) {
+      await addFaqMutation({
+        variables: {
+          question: question,
+          answer: answer,
+        } as AdminAddFaqForm,
+      });
+      setDisableOnClick(true);
     } else {
-      dispatch(updateFaq({ faq: payload, index: index }));
+      const payload: any = {
+        id: faqs[index].id,
+        question: question,
+        answer: answer,
+      };
+      await updateFaqMutation({
+        variables: payload as AdminUpdateFaqForm,
+      });
+      setDisableOnClick(true);
+      dispatch(
+        updateFaq({
+          faq: { ...payload, modifiedOn: GetGTMDate() },
+          index: index,
+        })
+      );
+      handleClose();
     }
-    handleClose();
   };
 
   const closeIcon = (
@@ -84,7 +119,7 @@ const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
       <h3
         className={BEM(cssClasses.post, cssClasses.container, cssClasses.text)}
       >
-        {type === "add" ? "Utwórz FAQ" : "Edytuj FAQ"}
+        {type === ActionType.Add ? "Utwórz FAQ" : "Edytuj FAQ"}
       </h3>
       <div className={BEM(cssClasses.post, cssClasses.elements)}>
         <p>Pytanie:</p>
@@ -102,7 +137,8 @@ const FaqForm = ({ type, handleClose, index }: FaqFormProps) => {
       </div>
       <SaveButton
         handleSave={savePost}
-        text={type === "add" ? "Dodaj" : "Edytuj"}
+        text={type === ActionType.Add ? "Dodaj" : "Edytuj"}
+        disable={disableOnClick}
       />
     </div>
   );

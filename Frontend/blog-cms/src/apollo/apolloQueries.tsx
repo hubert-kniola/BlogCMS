@@ -67,6 +67,7 @@ export const GET_CAROUSEL = gql`
       publicationDate
       imgName
       active
+      url
     }
   }
 `;

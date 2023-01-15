@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GET_FAQ } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
 import { FaqType } from "../../types";
+import { pageColor } from "../../types/consts";
 import Spinner from "../Spinner/Spinner";
 import { AcordeonItem } from "./AcoredeonItem";
 import "./style.css";
@@ -36,7 +37,7 @@ export const Acordeon = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <Spinner color={pageColor} />
       ) : (
         <div className={BEM(css.faq, css.container)}>
           <div className={BEM(css.faq, css.section)}>

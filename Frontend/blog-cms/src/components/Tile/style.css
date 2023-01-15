@@ -12,6 +12,18 @@
   flex-direction: row;
 }
 
+.tile > p {
+  padding-top: 4px;
+}
+
+.tile_sub > p {
+  padding-top: 4px;
+}
+
+.tile_tag > p {
+  padding-top: 4px;
+}
+
 .tile_sub {
   width: fit-content;
   margin-top: 1rem;

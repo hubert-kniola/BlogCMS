@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import {
   Table,
@@ -11,8 +12,9 @@ import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteFaq } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
+import { REMOVE_FAQ_ELEMENT } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
-import { FAQ } from "../../types";
+import { ActionType, AdminRemoveFaqForm, FAQ } from "../../types";
 import { mainColor } from "../../types/consts";
 import FaqModal from "../FaqModal/FaqModal";
 import Row from "./Rows/Row";
@@ -24,6 +26,7 @@ const FaqTable = () => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
+  const [removeFaqMutation] = useMutation(REMOVE_FAQ_ELEMENT);
 
   const cssClasses = {
     faqTable: "faqTable",
@@ -64,9 +67,6 @@ const FaqTable = () => {
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
                   Odpowiedź
                 </TableCell>
-                <TableCell align="left" style={{ fontWeight: "bold" }}>
-                  Data
-                </TableCell>
               </TableRow>
             </TableHead>
           )}
@@ -76,15 +76,20 @@ const FaqTable = () => {
                 <Row
                   key={i}
                   cells={[element.question, element.answer]}
-                  date={element.modifiedOn}
+                  date={null}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) =>
-                    dispatch(deleteFaq({ index }))
-                  }
+                  actionOnDelete={(index: number) => {
+                    dispatch(deleteFaq({ index }));
+                    removeFaqMutation({
+                      variables: {
+                        id: faqs[index].id,
+                      } as AdminRemoveFaqForm,
+                    });
+                  }}
                 />
               );
             })}
@@ -95,13 +100,13 @@ const FaqTable = () => {
         handleClose={handleCloseCreate}
         index={editedIndex}
         open={openCreate}
-        type="add"
+        type={ActionType.Add}
       />
       <FaqModal
         handleClose={handleCloseEdit}
         index={editedIndex}
         open={openEdit}
-        type="edit"
+        type={ActionType.Edit}
       />
     </>
   );

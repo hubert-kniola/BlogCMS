@@ -6,6 +6,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { BlobStorageURL } from "../../settings";
 import { BEM } from "../../tools";
 import { AboutPageType } from "../../types";
+import { pageColor } from "../../types/consts";
 import "./style.css";
 
 const css = {
@@ -31,7 +32,7 @@ export const AboutMePage = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <Spinner color={pageColor} />
       ) : (
         <div className={BEM(css.aboutMe)}>
           <BackgroundDiv

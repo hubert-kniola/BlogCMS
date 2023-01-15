@@ -9,11 +9,17 @@ import FileUploader from "../FileUploader/FileUploader";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateAbout } from "../../../store/slices/aboutSlice";
 import { RootState } from "../../../store/store";
-import { BEM, ConvertFromHtmlToEditorState, AddImageToAzure} from "../../tools";
+import {
+  BEM,
+  ConvertFromHtmlToEditorState,
+  AddImageToAzure,
+} from "../../tools";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
-import { UploadType } from "../../types";
+import { AdminAboutForm, UploadType } from "../../types";
+import { UPDATE_ABOUT } from "../../apollo/apolloQueries";
+import { useMutation } from "@apollo/client";
 
 interface IFormInput {
   title: string;
@@ -33,6 +39,8 @@ export const About = () => {
   };
   const dispatch = useAppDispatch();
   const about = useAppSelector((state: RootState) => state.about);
+  const [updateAboutMutation, { data, loading, error }] =
+    useMutation(UPDATE_ABOUT);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File>(null);
@@ -40,14 +48,24 @@ export const About = () => {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     //data["img"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
-    const fileName = AddImageToAzure([selectedFile]);
-    data["imgName"] = fileName;
+    data["file"] = selectedFile;
+    const fileName: any = await AddImageToAzure([selectedFile]);
+    data["imgName"] = fileName[0].newName;
     dispatch(updateAbout(data));
+    updateAboutMutation({
+      variables: {
+        id: about.id,
+        title: data.title,
+        text: data.text,
+        imgName: data.imgName,
+      } as AdminAboutForm,
+    });
     notify();
   };
 
   useEffect(() => {
-    const fetchData = () => {3
+    const fetchData = () => {
+      3;
       //TODO - implement load from redux after login fetch
       setValue("title", about.title);
       about.text && setRichValue(ConvertFromHtmlToEditorState(about.text));
@@ -59,11 +77,11 @@ export const About = () => {
 
   const handleCloseEditor = () => {
     setOpenEditor(false);
-  }
+  };
 
   const handleSelectedFile = (e: File) => {
     setSelectedFile(e);
-  }
+  };
 
   const notify = () => {
     toast.success(" Zapisano", {
@@ -112,7 +130,11 @@ export const About = () => {
             Modyfikuj
           </Button>
           <p>Zdjęcie:</p>
-          <FileUploader type={UploadType.Single} inputFile={selectedFile} changeInputFile={handleSelectedFile}/>
+          <FileUploader
+            type={UploadType.Single}
+            inputFile={selectedFile}
+            changeInputFile={handleSelectedFile}
+          />
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />
       </div>

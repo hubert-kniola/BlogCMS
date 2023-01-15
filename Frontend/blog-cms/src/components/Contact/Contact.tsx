@@ -13,14 +13,19 @@ import { BEM, ConvertFromHtmlToEditorState } from "../../tools";
 import { mainColor } from "../../types/consts";
 import EditorModal from "../EditorModal/EditorModal";
 import "./style.css";
-import { UploadType } from "../../types";
+import { AdminContactForm, ContactForm, UploadType } from "../../types";
+import { UPDATE_CONTACT } from "../../apollo/apolloQueries";
+import { useMutation } from "@apollo/client";
 
 interface IFormInput {
   title: string;
   text: string;
-  mail: string;
-  phone: string;
-  insta: string;
+  fieldNameOne: string;
+  contentOne: string;
+  fieldNameTwo: string;
+  contentTwo: string;
+  fieldNameThree: string;
+  contentThree: string;
 }
 
 export const Contact = () => {
@@ -35,13 +40,26 @@ export const Contact = () => {
 
   const dispatch = useAppDispatch();
   const contact = useAppSelector((state: RootState) => state.contact);
+  const [updateContactMutation, { data, loading, error }] =
+    useMutation(UPDATE_CONTACT);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    //data["file"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
     dispatch(updateContact(data));
+    updateContactMutation({
+      variables: {
+        id: contact.id,
+        title: data.title,
+        content: data.text,
+        textBoxes: [
+          { fieldName: data.fieldNameOne, content: data.contentOne },
+          { fieldName: data.fieldNameTwo, content: data.contentTwo },
+          { fieldName: data.fieldNameThree, content: data.contentThree },
+        ],
+      } as AdminContactForm,
+    });
     notify();
   };
 
@@ -49,9 +67,13 @@ export const Contact = () => {
     const fetchData = () => {
       //TODO - implement load from redux after login fetch
       setValue("title", contact.title);
-      setValue("mail", contact.mail);
-      setValue("phone", contact.phone);
-      setValue("insta", contact.insta);
+      setValue("text", contact.text);
+      setValue("fieldNameOne", contact.fieldNameOne);
+      setValue("contentOne", contact.contentOne);
+      setValue("fieldNameTwo", contact.fieldNameTwo);
+      setValue("contentTwo", contact.contentTwo);
+      setValue("fieldNameThree", contact.fieldNameThree);
+      setValue("contentThree", contact.contentThree);
       //contact.file && setSelectedFile(contact.file);
       contact.text && setRichValue(ConvertFromHtmlToEditorState(contact.text));
     };
@@ -114,23 +136,41 @@ export const Contact = () => {
           >
             Modyfikuj
           </Button>
-          <p>E-mail:</p>
+          <p>Nazwa pola 1:</p>
           <input
             className={BEM(cssClasses.contact, cssClasses.title)}
             type="text"
-            {...register("mail", { required: true })}
+            {...register("fieldNameOne", { required: true })}
           ></input>
-          <p>Telefon:</p>
+          <p>Wartość 1:</p>
           <input
             className={BEM(cssClasses.contact, cssClasses.title)}
             type="text"
-            {...register("phone", { required: true })}
+            {...register("contentOne", { required: true })}
           ></input>
-          <p>Instagram:</p>
+          <p>Nazwa pola 2:</p>
           <input
             className={BEM(cssClasses.contact, cssClasses.title)}
             type="text"
-            {...register("insta", { required: true })}
+            {...register("fieldNameTwo", { required: true })}
+          ></input>
+          <p>Wartość 2:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("contentTwo", { required: true })}
+          ></input>
+          <p>Nazwa pola 3:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("fieldNameTwo", { required: true })}
+          ></input>
+          <p>Wartość 3:</p>
+          <input
+            className={BEM(cssClasses.contact, cssClasses.title)}
+            type="text"
+            {...register("contentTwo", { required: true })}
           ></input>
         </div>
         <input className="submitButton" value="Zapisz" type="submit" />

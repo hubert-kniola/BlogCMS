@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,12 +11,21 @@ import {
   updateCarousel,
 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
-import { BEM, GetGTMDate } from "../../tools";
-import { UploadType } from "../../types";
+import {
+  ADD_CAROUSEL_ELEMENT,
+  UPDATE_CAROUSEL_ELEMENT,
+} from "../../apollo/apolloQueries";
+import { AddImageToAzure, BEM, GetGTMDate } from "../../tools";
+import {
+  AdminAddCarouselForm,
+  AdminUpdateCarouselForm,
+  UploadType,
+} from "../../types";
 import { mainColor } from "../../types/consts";
 import FileUploader from "../FileUploader/FileUploader";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
+import { ActionType } from "../../types";
 
 interface CarouselFormProps {
   type: string;
@@ -32,10 +42,15 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   const [title, setTitle] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File>(null);
   const [activeSlide, setActiveSlide] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>("");
+  const [disableOnClick, setDisableOnClick] = useState<boolean>(false);
+  const [addCarouselMutation, { data, loading, error }] =
+    useMutation(ADD_CAROUSEL_ELEMENT);
+  const [updateCarouselMutation] = useMutation(UPDATE_CAROUSEL_ELEMENT);
 
   useEffect(() => {
     const initEditedPost = () => {
-      if (type === "edit") {
+      if (type === ActionType.Edit) {
         if (carousels[index]) {
           let carousel = carousels[index];
           setTitle(carousel.title);
@@ -46,7 +61,24 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       }
     };
     initEditedPost();
-  }, []);
+    const handleAddActionRedux = () => {
+      if (type === ActionType.Add && data) {
+        const payload: any = {
+          id: data.addCarouselElement.id,
+          title: title,
+          publicationDate: GetGTMDate(),
+          content: richValue,
+          imgName: fileName,
+          file: selectedFile,
+          active: activeSlide,
+          url: carousels[index].url,
+        };
+        dispatch(addCarousel(payload));
+        handleClose();
+      }
+    };
+    handleAddActionRedux();
+  }, [data]);
 
   const cssClasses = {
     carousel: "carouselForm",
@@ -79,21 +111,42 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
     setSelectedFile(e);
   };
 
-  const savePost = () => {
-    const current = new Date();
-    const payload: any = {
-      title: title,
-      date: GetGTMDate(),
-      content: richValue,
-      file: selectedFile,
-      active: activeSlide,
-    };
-    if (type === "add") {
-      dispatch(addCarousel(payload));
-    } else {
-      dispatch(updateCarousel({ carousel: payload, index: index }));
+  const savePost = async () => {
+    if(selectedFile)
+    {
+      const fileName: any = await AddImageToAzure([selectedFile]);
+      setFileName(fileName[0].newName);
     }
-    handleClose();
+    if (type === ActionType.Add) {
+      await addCarouselMutation({
+        variables: {
+          title: title,
+          content: richValue,
+          publicationDate: GetGTMDate(),
+          imgName: fileName,
+          active: activeSlide,
+          url: "http://localhost:8080/",
+        } as AdminAddCarouselForm,
+      });
+      setDisableOnClick(true);
+    } else {
+      const payload: any = {
+        id: carousels[index].id,
+        title: title,
+        publicationDate: GetGTMDate(),
+        content: richValue,
+        imgName: fileName,
+        file: selectedFile,
+        active: activeSlide,
+        url: carousels[index].url,
+      };
+      await updateCarouselMutation({
+        variables: payload as AdminUpdateCarouselForm,
+      });
+      dispatch(updateCarousel({ carousel: payload, index: index }));
+      setDisableOnClick(true);
+      handleClose();
+    }
   };
 
   const closeIcon = (
@@ -115,7 +168,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
             cssClasses.text
           )}
         >
-          {type === "add" ? "Utwórz slajd" : "Edytuj slajd"}
+          {type === ActionType.Add ? "Utwórz slajd" : "Edytuj slajd"}
         </h3>
       </div>
       <div className={BEM(cssClasses.carousel, cssClasses.content)}>
@@ -159,7 +212,8 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       <div className={BEM(cssClasses.carousel, cssClasses.footer)}>
         <SaveButton
           handleSave={savePost}
-          text={type === "add" ? "Dodaj" : "Edytuj"}
+          text={type === ActionType.Add ? "Dodaj" : "Edytuj"}
+          disable={disableOnClick}
         />
       </div>
     </div>

@@ -1,6 +1,11 @@
 import { CategoryState } from "../../store/slices/categorySlice";
 import { RouteObjectType, TextPosition } from "./enums";
 
+export enum ActionType {
+  Add = "add",
+  Edit = "edit",
+}
+
 export type Post = {
   id?: string; //TODO: Zmienić na 'id' (BEZ ?)
   title: string;
@@ -25,6 +30,7 @@ export type Carousel = {
 };
 
 export type FAQ = {
+  id: string;
   question: string;
   answer: string;
   modifiedOn: string;
@@ -36,6 +42,7 @@ export type PostItemType = {
 };
 
 export type CategoryType = {
+  id?: string;
   title: string;
   path: string;
   objectType?: RouteObjectType;
@@ -71,4 +78,120 @@ export type ContactForm = {
   name: string;
   email: string;
   content: string;
+};
+
+export type AdminAboutForm = {
+  id: string;
+  title: string;
+  text: string;
+  imgName: string;
+};
+
+export type AdminContactForm = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type AdminInsertPostForm = {
+  title: string;
+  publicationDate: Date | string; //TODO: tylko DATE
+  content: any;
+  snippet: string;
+  primaryImgName: string;
+  contentImgName?: string[];
+  categories?: CategoryType[];
+  timeToReadInMs?: string;
+};
+
+export type AdminUpdatePostForm = {
+  id?: string; //TODO: Zmienić na 'id' (BEZ ?)
+  title: string;
+  publicationDate: Date | string; //TODO: tylko DATE
+  content: string;
+  snippet: string;
+  primaryImgName: string;
+  contentImgName?: string[];
+  categories?: CategoryType[];
+  timeToReadInMs?: string;
+};
+
+export type AdminRemovePostForm = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type AdminAddCategoryForm = {
+  title: string;
+  path: string;
+  parentId: string;
+};
+
+export type AdminUpdateCategoryForm = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type AdminRemoveCategoryForm = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type AdminAddCarouselForm = {
+  title: string;
+  content: string;
+  publicationDate: string;
+  imgName: string;
+  active: boolean;
+  url: string;
+};
+
+export type AdminUpdateCarouselForm = {
+  id: string;
+  title: string;
+  content: string;
+  publicationDate: string;
+  imgName: string;
+  active: boolean;
+  url: string;
+};
+
+export type AdminRemoveCarouselForm = {
+  id: string;
+};
+
+export type AdminAddFaqForm = {
+  question: string;
+  answer: string;
+};
+
+export type AdminUpdateFaqForm = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
+export type AdminRemoveFaqForm = {
+  id: string;
+};
+
+export type AdminPopularForm = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
+};
+
+export type AdminTop3Form = {
+  id: string;
+  title: string;
+  content: string;
+  textBoxes: TextBoxes[];
 };

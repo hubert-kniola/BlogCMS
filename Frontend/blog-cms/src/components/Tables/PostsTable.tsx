@@ -13,12 +13,14 @@ import { deletePost } from "../../../store/slices/postSlice";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
-import { Post } from "../../types";
+import { ActionType, AdminRemovePostForm, Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import PostModal from "../PostModal/PostModal";
 import Row from "./Rows/Row";
 import { removeTags } from "../../tools";
 import "./style.css";
+import { useMutation } from "@apollo/client";
+import { REMOVE_POST } from "../../apollo/apolloQueries";
 
 const PostsTable = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,7 @@ const PostsTable = () => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
+  const [removePostMutation] = useMutation(REMOVE_POST);
 
   const cssClasses = {
     postTable: "postTable",
@@ -79,7 +82,7 @@ const PostsTable = () => {
                 <Row
                   key={i}
                   cells={[element.title, removeTags(element.content)]}
-                  date={element.publicationDate.toString()}
+                  date={new Date(element.publicationDate).toString().split("GMT")[0]}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
@@ -93,6 +96,11 @@ const PostsTable = () => {
                       );
                       dispatch(updateTop3(newTop3));
                     }
+                    removePostMutation({
+                      variables: {
+                        id: posts[index].id,
+                      } as AdminRemovePostForm,
+                    });
                   }}
                 />
               );
@@ -104,13 +112,13 @@ const PostsTable = () => {
         handleClose={handleCloseCreate}
         index={editedIndex}
         open={openCreate}
-        type="add"
+        type={ActionType.Add}
       />
       <PostModal
         handleClose={handleCloseEdit}
         index={editedIndex}
         open={openEdit}
-        type="edit"
+        type={ActionType.Edit}
       />
     </>
   );

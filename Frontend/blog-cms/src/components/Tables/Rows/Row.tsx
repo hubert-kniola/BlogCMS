@@ -47,7 +47,7 @@ const Row = ({ index, cells, date, openModal, actionOnDelete }: RowProps) => {
           </TableCell>
         );
       })}
-      {date && <TableCell>{date}</TableCell>}
+      {date ?  <TableCell>{date}</TableCell> : null}
       <TableCell component="th" scope="row">
         {editIcon}
         {deleteIcon}

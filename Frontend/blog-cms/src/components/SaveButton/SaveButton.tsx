@@ -6,9 +6,10 @@ import "./style.css";
 interface SaveButtonProps {
   handleSave: () => void;
   text?: string;
+  disable?: boolean;
 }
 
-const SaveButton = ({handleSave, text}: SaveButtonProps) => {
+const SaveButton = ({handleSave, text, disable}: SaveButtonProps) => {
   return (
     <Button
       sx={{
@@ -27,6 +28,7 @@ const SaveButton = ({handleSave, text}: SaveButtonProps) => {
       variant="outlined"
       component="label"
       onClick={handleSave}
+      disabled={disable ? disable : false}
     >
       {text ? text : "Zapisz"}
     </Button>

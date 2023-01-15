@@ -2,16 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 export interface CategoriesState {
+  postsId: string;
   categories: CategoryState[];
 }
 
 export interface CategoryState {
+  id?: string;
   title: string;
-  url: string;
-  subMenu?: CategoryState[];
+  path: string;
+  objectType?: string;
+  subCategory?: CategoryState[];
 }
 
 export const initialState: CategoriesState = {
+  postsId: null,
   categories: [],
 };
 
@@ -19,6 +23,9 @@ export const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
+    updateId: (state: any, action: PayloadAction<any>) => {
+      state.postsId = action.payload.id;
+    },
     updateMenu: (state: any, action: PayloadAction<CategoriesState>) => {
       state.categories = action.payload.categories;
     },
@@ -40,7 +47,7 @@ export const categorySlice = createSlice({
           element.title === action.payload.categoryTitle
       );
       if (modifyIndex !== undefined) {
-        state.categories[modifyIndex].subMenu.push(action.payload.subCategory);
+        state.categories[modifyIndex].subCategory.push(action.payload.subCategory);
       }
     },
     deleteSubCategory: (state: any, action: PayloadAction<any>) => {
@@ -49,7 +56,7 @@ export const categorySlice = createSlice({
           element.title === action.payload.categoryTitle
       );
       if (modifyIndex !== undefined) {
-        state.categories[modifyIndex].subMenu.splice(
+        state.categories[modifyIndex].subCategory.splice(
           action.payload.indexOfSubCategory,
           1
         );
@@ -61,9 +68,9 @@ export const categorySlice = createSlice({
           element.title === action.payload.categoryTitle
       );
       if (modifyIndex !== undefined && action.payload.indexOfSubCategory !== undefined) {
-        state.categories[modifyIndex].subMenu[
+        state.categories[modifyIndex].subCategory[
           action.payload.indexOfSubCategory
-        ].subMenu.push(action.payload.tag);
+        ].subCategory.push(action.payload.tag);
       }
     },
     deleteTag: (state: any, action: PayloadAction<any>) => {
@@ -72,15 +79,16 @@ export const categorySlice = createSlice({
           element.title === action.payload.categoryTitle
       );
       if (modifyIndex !== undefined && action.payload.indexOfSubCategory !== undefined) {
-        state.categories[modifyIndex].subMenu[
+        state.categories[modifyIndex].subCategory[
           action.payload.indexOfSubCategory
-        ].subMenu.splice(action.payload.indexOfTag, 1);
+        ].subCategory.splice(action.payload.indexOfTag, 1);
       }
     },
   },
 });
 
 export const {
+  updateId,
   updateMenu,
   addCategory,
   addSubCategory,

@@ -16,6 +16,8 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import CheckIcon from "@mui/icons-material/Check";
 import { mainColor } from "../../types/consts";
+import { ADD_CATEGORY, REMOVE_CATEGORY_WITH_SUBCATEGORY } from "../../apollo/apolloQueries";
+import { useMutation } from "@apollo/client";
 
 interface TileProps {
   category: CategoryState;
@@ -30,7 +32,7 @@ export const Tiles = ({ category, style }: TileProps) => {
   const categoryIndex = categoriesRedux.findIndex(
     (element: CategoryState) => element.title === category.title
   );
-  const subCategoriesRedux = categoriesRedux[categoryIndex].subMenu;
+  const subCategoriesRedux = categoriesRedux[categoryIndex].subCategory;
 
   const [showInputSub, setShowInputSub] = useState<boolean>(false);
   const [showInputTag, setShowInputTag] = useState<any>({
@@ -39,6 +41,10 @@ export const Tiles = ({ category, style }: TileProps) => {
   });
   const [subCategory, setSubCategory] = useState<CategoryState>(null);
   const [tag, setTag] = useState<CategoryState>(null);
+  const [addCategoryMutation, { data, loading, error }] =
+    useMutation(ADD_CATEGORY);
+  const [removeCategoryMutation] =
+    useMutation(REMOVE_CATEGORY_WITH_SUBCATEGORY);
 
   const cssClasses = {
     tile: "tile",
@@ -53,8 +59,8 @@ export const Tiles = ({ category, style }: TileProps) => {
   const saveSubCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setSubCategory({
       title: e.currentTarget.value,
-      url: `/${e.currentTarget.value}/`,
-      subMenu: [],
+      path: `/${e.currentTarget.value}/`,
+      subCategory: [],
     });
   };
 
@@ -76,8 +82,8 @@ export const Tiles = ({ category, style }: TileProps) => {
   const saveTag = (e: ChangeEvent<HTMLInputElement>) => {
     setTag({
       title: e.currentTarget.value,
-      url: `/${e.currentTarget.value}/`,
-      subMenu: [],
+      path: `/${e.currentTarget.value}/`,
+      subCategory: [],
     });
   };
 
@@ -184,7 +190,7 @@ export const Tiles = ({ category, style }: TileProps) => {
                   </IconButton>
                 </div>
               )}
-              {subCategoriesRedux[i].subMenu.map(
+              {subCategoriesRedux[i].subCategory.map(
                 (element: CategoryState, index: number) => {
                   return (
                     <div>

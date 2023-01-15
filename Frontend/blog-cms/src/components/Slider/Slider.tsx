@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { GET_ACTIVE_CAROUSEL } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
 import { Carousel } from "../../types";
+import { pageColor } from "../../types/consts";
 import Spinner from "../Spinner/Spinner";
 import { css } from "./css";
 import { Slide } from "./Slide";
@@ -50,7 +51,7 @@ export const Slider = () => {
   return (
     <>
       {loading && carousel === undefined ? (
-        <Spinner />
+        <Spinner color={pageColor} />
       ) : (
         <>
           <div className={BEM(css.slider, css.container)}>

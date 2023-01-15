@@ -8,12 +8,15 @@ import {
   CategoryState,
 } from "../../../store/slices/categorySlice";
 import { RootState } from "../../../store/store";
-import { BEM } from "../../tools";
+import { BEM, ConvertTitleToPath } from "../../tools";
 import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
 import "./style.css";
+import { ADD_CATEGORY } from "../../apollo/apolloQueries";
+import { useMutation } from "@apollo/client";
+import { AdminAddCategoryForm } from "../../types";
 
 export const Category = () => {
   const cssClasses = {
@@ -31,12 +34,17 @@ export const Category = () => {
   const [categories, setCategories] = useState<CategoryState[]>([]);
   const [enteredCategory, setEnteredCategory] = useState<CategoryState>({
     title: "",
-    url: "",
-    subMenu: [],
+    path: "",
+    subCategory: [],
   });
   const categoriesRedux = useAppSelector(
     (state: RootState) => state.category.categories
   );
+  const postsId = useAppSelector(
+    (state: RootState) => state.category.postsId
+  );
+  const [addCategoryMutation, { data, loading, error }] =
+    useMutation(ADD_CATEGORY);
   const dispatch = useAppDispatch();
 
   const addReduxCategory = () => {
@@ -46,11 +54,18 @@ export const Category = () => {
     );
     if (enteredCategory && existedCategories === -1) {
       dispatch(addCategory(enteredCategory));
+      addCategoryMutation({
+        variables: {
+          title: enteredCategory.title,
+          path: ConvertTitleToPath(enteredCategory.title),
+          parentId: postsId,
+        } as AdminAddCategoryForm,
+      });
     }
     setEnteredCategory({
       title: "",
-      url: "",
-      subMenu: [],
+      path: "",
+      subCategory: [],
     });
   };
 
@@ -66,8 +81,8 @@ export const Category = () => {
   const saveCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setEnteredCategory({
       title: e.currentTarget.value,
-      url: `/${e.currentTarget.value}/`,
-      subMenu: [],
+      path: `/${e.currentTarget.value}/`,
+      subCategory: [],
     });
   };
 

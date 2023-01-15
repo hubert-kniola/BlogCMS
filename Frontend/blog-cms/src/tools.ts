@@ -56,31 +56,37 @@ export const GetGTMDate = () => {
   } ${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()} GMT`;
 };
 
-export const AddImageToAzure = (images: File[]): any => {
+export const AddImageToAzure = async (images: File[]) => {
   const formData = new FormData();
 
   for (let i = 0; i < images.length; i++) {
     formData.append("images", images[i]);
   }
 
-  axios
+  const response = await axios
     .post("http://localhost:7011/api/FileUpload", formData)
     .then((res) => {
       return res.data;
     })
     .catch((err) => console.error(err));
+  return response;
 };
 
-export const GetImageFromAzure = (fileName: string): any => {
+export const GetImageFromAzure = async (fileName: string) => {
   let headers = {
     "Access-Control-Allow-Origin": "*",
   };
 
-  axiosConfig
+  const response = await axiosConfig
     .get(`${BlobStorageURL}${fileName}`, { headers })
     .then((res) => {
       console.log(res.data);
       return res.data;
     })
     .catch((err) => console.error(err));
+  return response.data;
+};
+
+export const ConvertTitleToPath = (title: string): string => {
+  return `/${title.replace(" ", "-").toLowerCase()}/`;
 };
