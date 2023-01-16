@@ -178,7 +178,6 @@ namespace GraphQL.Infrastructure.Services
                || string.IsNullOrEmpty(post.Title)
                || string.IsNullOrEmpty(post.Content)
                || string.IsNullOrEmpty(post.Snippet)
-               || string.IsNullOrEmpty(post.PrimaryImgName)
                || string.IsNullOrEmpty(post.TimeToReadInMs)
                )
             {
