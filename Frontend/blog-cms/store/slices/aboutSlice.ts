@@ -14,7 +14,7 @@ export interface AboutState {
   id?: string;
   title: string;
   text: string;
-  file?: File;
+  file?: any;
   imgName?: string;
 }
 

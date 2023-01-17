@@ -16,6 +16,8 @@ export type Post = {
   contentImgName?: string[];
   categories?: CategoryType[];
   timeToReadInMs?: string;
+  primaryFile?: any;
+  contentFile?: any;
 };
 
 export type Carousel = {
@@ -24,7 +26,7 @@ export type Carousel = {
   content: string;
   publicationDate: string;
   imgName: string;
-  file: File;
+  file: any;
   active: boolean;
   url: string;
 };

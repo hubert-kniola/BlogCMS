@@ -43,14 +43,14 @@ export const About = () => {
     useMutation(UPDATE_ABOUT);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [selectedFile, setSelectedFile] = useState<any>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     //data["img"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
     data["file"] = selectedFile;
-    const fileName: any = await AddImageToAzure([selectedFile]);
-    data["imgName"] = fileName[0].newName;
+    const file: any = await AddImageToAzure([selectedFile]);
+    data["imgName"] = file.fileNames[0].newName;
     dispatch(updateAbout(data));
     updateAboutMutation({
       variables: {

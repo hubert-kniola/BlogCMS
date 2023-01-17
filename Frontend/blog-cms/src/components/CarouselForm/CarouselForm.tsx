@@ -68,7 +68,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
           title: title,
           publicationDate: GetGTMDate(),
           content: richValue,
-          imgName: fileName,
+          imgName: data.addCarouselElement.imgName,
           file: selectedFile,
           active: activeSlide,
           url: carousels[index].url,
@@ -112,10 +112,9 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   };
 
   const savePost = async () => {
-    if(selectedFile)
-    {
-      const fileName: any = await AddImageToAzure([selectedFile]);
-      setFileName(fileName[0].newName);
+    if (selectedFile && typeof selectedFile !== "string") {
+      const file: any = await AddImageToAzure([selectedFile]);
+      setFileName(file.fileNames[0].newName);
     }
     if (type === ActionType.Add) {
       await addCarouselMutation({
@@ -135,7 +134,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
         title: title,
         publicationDate: GetGTMDate(),
         content: richValue,
-        imgName: fileName,
+        imgName: fileName ? fileName : carousels[index].imgName,
         file: selectedFile,
         active: activeSlide,
         url: carousels[index].url,

@@ -44,18 +44,39 @@ const FileUploader = ({
     changeInputFile(null);
   };
 
+  const checkURL = (element: any): boolean => {
+    if (typeof element === "string" && element.includes("http")) {
+      return true;
+    } else if (
+      Array.isArray(element) &&
+      typeof element[0] === "string" &&
+      element[0].includes("http")
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const singleData = (event?: any) => {
     return (
       <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-        <p>
-          Dodano plik: {inputFile ? inputFile.name : event.target.files[0].name}
-        </p>
+        {inputFile ? (
+          inputFile.name ? (
+            <p>Dodano plik: {inputFile.name}</p>
+          ) : null
+        ) : (
+          <p>Dodano plik: {event.target.files[0].name}</p>
+        )}
         <div className={BEM(cssClasses.image, cssClasses.container)}>
           <img
             className={BEM(cssClasses.image, cssClasses.image)}
-            src={URL.createObjectURL(
-              inputFile ? inputFile : event.target.files[0]
-            )}
+            src={
+              checkURL(inputFile)
+                ? inputFile
+                : URL.createObjectURL(
+                    inputFile ? inputFile : event.target.files[0]
+                  )
+            }
             alt="Thumb"
           />
           <button
@@ -72,7 +93,7 @@ const FileUploader = ({
   const multiData = (event?: any) => {
     return (
       <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-        <p>Dodano pliki:</p>
+        {inputFile && inputFile[0].name ? <p>Dodano pliki:</p> : null}
         {inputFile
           ? Array.from(inputFile).map((element: File, index: number) => {
               return (
@@ -100,7 +121,7 @@ const FileUploader = ({
             )}
           >
             {inputFile
-              ? Array.from(inputFile).map((element: File) => {
+              ? Array.from(inputFile).map((element: any) => {
                   return (
                     <img
                       className={BEM(
@@ -108,7 +129,11 @@ const FileUploader = ({
                         cssClasses.image,
                         cssClasses.multi
                       )}
-                      src={URL.createObjectURL(element)}
+                      src={
+                        checkURL(element)
+                          ? element
+                          : URL.createObjectURL(element)
+                      }
                       alt="Thumb"
                     />
                   );
@@ -163,8 +188,12 @@ const FileUploader = ({
   };
 
   const handleFileEdit = () => {
-    if (inputFile.length > 1) {
-      return multiData();
+    if (Array.isArray(inputFile)) {
+      if (inputFile.length > 1) {
+        return multiData();
+      } else {
+        return singleData();
+      }
     } else {
       return singleData();
     }
