@@ -25,7 +25,7 @@ namespace GraphQL.Infrastructure.Services
                 {
                     categories.Add(category);
 
-                    List<Category> subCategories = new(await GetSubCategories(category.Id));
+                    List<Category> subCategories = new(await GetSubCategories(category.Id, false));
 
                     categories.AddRange(subCategories);
 
@@ -36,25 +36,40 @@ namespace GraphQL.Infrastructure.Services
             return null;
         }
 
+        public async Task<IEnumerable<Category>?> GetAllTags(string categoryId)
+        {
+            if (!string.IsNullOrEmpty(categoryId))
+            {
+                Category? category = await _categoryRepository.GetByIdAsync(categoryId);
+                if (category != null)
+                {
+                    return new List<Category>(await GetSubCategories(category.Id!, true, (int)category.DeephLvl!));
+                }
+            }
+            return null;
+        }
+
         public async Task<Category> AddCategory(Category category)
         {
             Category? parent = null;
             if (!string.IsNullOrEmpty(category.ParentId))
             {
+
                 parent = await _categoryRepository.GetByIdAsync(category.ParentId);
                 if (parent != null)
                 {
+                    category.DeephLvl = parent.DeephLvl + 1;
                     category.Path = CombinePath(parent.Path, category.Path);
                 }
+                else
+                    category.DeephLvl = 0;
             }
+            else
+                category.DeephLvl = 0;
 
             if (category.ObjectType == null)
             {
                 category.ObjectType = RouteObjectType.Category;
-            }
-
-            if (category.ObjectType == null)
-            {
                 category.IsConst = false;
             }
 
@@ -66,7 +81,8 @@ namespace GraphQL.Infrastructure.Services
                 {
                     Title = category.Title,
                     Path = category.Path,
-                    ParentId = category.Id
+                    ParentId = category.Id,
+                    DeephLvl = null
                 });
             }
 
@@ -132,7 +148,7 @@ namespace GraphQL.Infrastructure.Services
             return await _categoryRepository.InsertAsync(category);
         }
 
-        private async Task<IEnumerable<Category>> GetSubCategories(string categoryId)
+        private async Task<IEnumerable<Category>> GetSubCategories(string categoryId, bool isTag = false, int deepLvl = 0)
         {
             List<Category> categories = new();
 
@@ -144,8 +160,10 @@ namespace GraphQL.Infrastructure.Services
                 {
                     if (sub.Id != null)
                     {
-                        categories.Add(sub);
-                        List<Category> subSubCategories = new(await GetSubCategories(sub.Id));
+                        if (isTag && deepLvl == 3 || !isTag)
+                            categories.Add(sub);
+
+                        List<Category> subSubCategories = new(await GetSubCategories(sub.Id, isTag, deepLvl + 1));
                         if (subSubCategories.Count > 0)
                         {
                             categories.AddRange(subSubCategories);

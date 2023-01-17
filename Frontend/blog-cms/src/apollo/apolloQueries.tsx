@@ -264,6 +264,18 @@ export const GET_CONTACT = gql`
   }
 `;
 
+export const GET_TAGS = gql`
+  query GetAllTags($categoryId: String!) {
+    allTags(categoryId: $categoryId) {
+      id
+      title
+      path
+      objectType
+      isConst
+    }
+  }
+`;
+
 /* MUTATION */
 
 export const POST_CONTACT_FORM = gql`

@@ -53,8 +53,8 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyContactForm();
             //success = await SetDummyCarousels();
             //success = await SetDummyFaq();
-            //success = await SetDummyCategory();
-            success = await SetDummyContent();
+            success = await SetDummyCategory();
+            //success = await SetDummyContent();
 
             return success;
         }

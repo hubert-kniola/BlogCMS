@@ -16,6 +16,9 @@ namespace GraphQL.API.Queries
 
         public async Task<IEnumerable<Category>?> GetAllSubCategories(string categoryId, [Service] ICategoryService categoryService)
             => await categoryService.GetAllSubCategories(categoryId);
+
+        public async Task<IEnumerable<Category>?> GetAllTags(string categoryId, [Service] ICategoryService categoryService)
+            => await categoryService.GetAllTags(categoryId);
     }
 
     public class CategoryQueryType : ObjectType<CategoryQuery>

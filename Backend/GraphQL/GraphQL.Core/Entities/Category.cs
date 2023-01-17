@@ -6,6 +6,7 @@
         public string Path { get; set; }
         public RouteObjectType? ObjectType { get; set; } = RouteObjectType.Category;
         public string? ParentId { get; set; }
+        public int? DeephLvl{ get; set; }
         public bool? IsConst { get; set; } = false;
     }   
 
