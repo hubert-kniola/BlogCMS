@@ -84,7 +84,7 @@ export const GetImageFromAzure = async (fileName: string) => {
       return res.data;
     })
     .catch((err) => console.error(err));
-  return response.data;
+  return response;
 };
 
 export const ConvertTitleToPath = (title: string): string => {

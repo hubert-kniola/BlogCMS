@@ -23,7 +23,7 @@ export const AdminPanel = () => {
     { text: "~ Mateusz", link: "https://github.com/mateuszkuzniak" },
     { text: "~ Hubert", link: "https://github.com/hubert-kniola" },
   ];
-
+  
   return loading ? (
     <LoadingDataPanel handleLoading={(value: boolean) => setLoading(value)} />
   ) : (

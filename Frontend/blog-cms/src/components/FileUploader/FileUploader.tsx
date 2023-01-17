@@ -1,5 +1,7 @@
 import Button from "@mui/material/Button";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "../../../store/hooks";
+import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
 import { UploadType } from "../../types";
 import { mainColor } from "../../types/consts";

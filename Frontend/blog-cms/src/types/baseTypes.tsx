@@ -189,9 +189,6 @@ export type AdminPopularForm = {
   textBoxes: TextBoxes[];
 };
 
-export type AdminTop3Form = {
-  id: string;
-  title: string;
-  content: string;
-  textBoxes: TextBoxes[];
+export type AdminUpdateTop3Form = {
+  top: string[];
 };

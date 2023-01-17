@@ -1,11 +1,13 @@
+import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
+import { UPDATE_CAROUSEL_ELEMENT } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
-import { Post } from "../../types";
+import { AdminUpdateTop3Form, Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import "./style.css";
 
@@ -21,6 +23,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   const [selectedPosts, setSelectedPosts] = useState({});
   const { register, setValue, handleSubmit } = useForm();
   const [disabled, setDisabled] = useState([false, true, true]);
+  const [updateTop3Mutation] = useMutation(UPDATE_CAROUSEL_ELEMENT);
 
   const cssClasses = {
     configure: "configure",
@@ -53,6 +56,13 @@ const Top3 = ({ onSubmit }: Top3Props) => {
       }
     });
     dispatch(updateTop3(postsFromSelects));
+    let idsFromPosts = postsFromSelects.map((element: any) => {
+      return element.id;
+    });
+    const payload: any = {
+      top: idsFromPosts,
+    };
+    updateTop3Mutation({ variables: payload as AdminUpdateTop3Form });
     onSubmit();
   };
 
@@ -72,9 +82,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
 
   const handlePostSelection = (e: any, index: number) => {
     if (e) {
-      const restPosts = avaiblePosts.filter(
-        (elem) => elem.title !== e.label.split("-")[0]
-      );
+      const restPosts = avaiblePosts.filter((elem) => elem.id !== e.id);
       if (Object.values(selectedPosts)[index] !== undefined) {
         restPosts.push(Object.values(selectedPosts)[index]);
       }
@@ -106,9 +114,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
 
   const handleDisabled = (index: number, e: any) => {
     let disable = [...disabled];
-    const restPosts = avaiblePosts.filter(
-      (elem) => elem.title !== e.label.split("-")[0]
-    );
+    const restPosts = avaiblePosts.filter((elem) => elem.id !== e.id);
     if (disable[index] && disable[index] === true) {
       disable[index] = false;
     }
@@ -130,7 +136,8 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             cssClasses.configure,
             cssClasses.container,
             cssClasses.title
-          )}>
+          )}
+        >
           Trzy najpopularniejsze posty
         </h3>
         <p
@@ -138,7 +145,8 @@ const Top3 = ({ onSubmit }: Top3Props) => {
             cssClasses.configure,
             cssClasses.container,
             cssClasses.description
-          )}>
+          )}
+        >
           Sekcja wyświetlająca 3 wybrane posty
         </p>
         <div className={BEM(cssClasses.title, cssClasses.container)}>

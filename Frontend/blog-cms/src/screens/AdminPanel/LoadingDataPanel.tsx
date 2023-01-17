@@ -2,13 +2,21 @@ import { useQuery } from "@apollo/client";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
-import { updateAbout } from "../../../store/slices/aboutSlice";
+import {
+  fetchAboutImageByData,
+  updateAbout,
+} from "../../../store/slices/aboutSlice";
 import {
   addCategory,
   CategoryState,
   updateId,
 } from "../../../store/slices/categorySlice";
-import { addCarousel, addFaq } from "../../../store/slices/configureSlice";
+import {
+  addCarousel,
+  addFaq,
+  fetchCarouselImagesByData,
+  updateTop3,
+} from "../../../store/slices/configureSlice";
 import { updateContact } from "../../../store/slices/contactSlice";
 import { addPost } from "../../../store/slices/postSlice";
 import {
@@ -18,9 +26,9 @@ import {
   GET_CONTACT_INFO,
   GET_FAQ,
   GET_POSTS,
+  GET_TOP3,
 } from "../../apollo/apolloQueries";
 import Spinner from "../../components/Spinner/Spinner";
-import { GetImageFromAzure } from "../../tools";
 import { Carousel, FAQ, Post } from "../../types";
 import "./style.css";
 
@@ -36,6 +44,7 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   const [carouselLoaded, setCarouselLoaded] = useState<boolean>(false);
   const [categoryLoaded, setCategoryLoaded] = useState<boolean>(false);
   const [postLoaded, setPostLoaded] = useState<boolean>(false);
+  const [top3Loaded, setTop3Loaded] = useState<boolean>(false);
   const [about, setAbout] = useState<any>("");
   const [aboutFile, setAboutFile] = useState<File>(null);
   const {
@@ -68,15 +77,19 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     loading: postLoading,
     error: postError,
   } = useQuery(GET_POSTS);
+  const {
+    data: top3Data,
+    loading: top3Loading,
+    error: top3Error,
+  } = useQuery(GET_TOP3);
 
   /**================== ABOUT LOADING SECTION ==================*/
   if (aboutData && !aboutLoading && !aboutError && !aboutLoaded) {
     let aboutArray = Object.values(aboutData)[0];
     let aboutValue = _.cloneDeep(Object.values(aboutArray)[0]);
-    //if (aboutValue) {
-      //const file = await GetImageFromAzure(fileName);
-      //aboutValue.file = new File([file[0]], fileName);
-    //}
+    if (aboutValue.imgName) {
+      dispatch(fetchAboutImageByData(aboutValue.imgName));
+    }
     setAboutLoaded(true);
     dispatch(updateAbout(aboutValue));
   }
@@ -111,6 +124,10 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   if (carouselData && !carouselLoading && !carouselError && !carouselLoaded) {
     let carouselValue: any = Object.values(carouselData)[0];
     carouselValue.map((element: Carousel) => dispatch(addCarousel(element)));
+    // if(carouselValue)
+    // {
+    //   dispatch(fetchCarouselImagesByData(carouselValue));
+    // }
     setCarouselLoaded(true);
   }
 
@@ -130,6 +147,15 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     postValue.map((element: Post) => dispatch(addPost(element)));
     setPostLoaded(true);
   }
+
+  /**================== TOP3 LOADING SECTION ==================*/
+  if (top3Data && !top3Loading && !top3Error && !top3Loaded) {
+    let top3Value: any = Object.values(top3Data)[0];
+    top3Value.map((element: Post) => dispatch(updateTop3([element])));
+    setTop3Loaded(true);
+  }
+
+  /**================== POPULAR LOADING SECTION ==================*/
 
   if (
     aboutLoaded &&

@@ -1,6 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GetImageFromAzure } from "../../src/tools";
 import { Post, Carousel, FAQ } from "../../src/types";
 import type { RootState } from "../store";
+
+export const fetchCarouselImagesByData = createAsyncThunk(
+  "about/fetchAboutImageByData",
+  async (carousels: Carousel[], thunkAPI) => {
+    let carouselsWithFiles = carousels.map(async (element: Carousel) => {
+      const response = await GetImageFromAzure(element.imgName);
+      const file = new File([response], element.imgName, { type: "image/jpg" });
+      return { file: file, ...element };
+    });
+    return carouselsWithFiles;
+  }
+);
 
 export interface ConfigureState {
   carousel: Carousel[];
@@ -53,6 +66,21 @@ export const configureSlice = createSlice({
     updateFooter: (state: any, action: PayloadAction<any>) => {
       state.footer = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchCarouselImagesByData.fulfilled,
+      (state: any, action: any) => {
+        let copyOfCarousels: Carousel[] = [...state.carousel];
+        copyOfCarousels.map((element, index) => {
+          if (element.id === action.payload[index].id) {
+            element.file = action.payload[index].file;
+            return element;
+          }
+        });
+        state.carousel = copyOfCarousels;
+      }
+    );
   },
 });
 
