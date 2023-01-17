@@ -98,18 +98,22 @@ export const GET_ACTIVE_CAROUSEL = gql`
   }
 `;
 
-export const GET_NEWEST = gql`
-  query GetNewest {
-    newest {
+export const GET_LAST_POST_TITLE_CONTENT = gql`
+  query getLastPostTitleContent {
+    lastPostTitleContent {
       id
+      name
+      value
     }
   }
 `;
 
-export const GET_FOOTER = gql`
-  query GeFooter {
-    footer {
+export const GET_FOOTER_CONTENT = gql`
+  query getFootrtContent {
+    footerContent {
       id
+      name
+      value
     }
   }
 `;
@@ -558,5 +562,25 @@ export const UPDATE_TOP_THREE_POST = gql`
 export const REMOVE_POST = gql`
   mutation RemovePost($id: String!) {
     removePost(id: $id)
+  }
+`;
+
+export const UPDATE_FOOTER_CONTENT = gql`
+  mutation updateFooterContent($contentList: [ContentInput!]!) {
+    updateFooterContent(contentList: $contentList) {
+      id
+      name
+      value
+    }
+  }
+`;
+
+export const UPDATE_LAST_POST_TITLE_CONTENT = gql`
+  mutation updateLastPostTieleContent($content: ContentInput!) {
+    updateLastPostTieleContent(content: $content) {
+      id
+      name
+      value
+    }
   }
 `;

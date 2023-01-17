@@ -14,6 +14,8 @@ namespace GraphQL.Infrastructure.Services
         private ICarouselRepository _carouselRepository;
         private IFaqReposiotry _faqReposiotry;
         private ICategoryService _categoryService;
+        private IContentRepository _contentRepository;
+        private IContentService _contentService;
 
 
 
@@ -26,7 +28,9 @@ namespace GraphQL.Infrastructure.Services
             IContactFormRepository contactFormRepository,
             ICarouselRepository carouselRepository,
             IFaqReposiotry faqReposiotry,
-            ICategoryService categoryService
+            ICategoryService categoryService,
+            IContentRepository contentRepository,
+            IContentService contentService
             )
         {
             _categoryRepository = categoryRepository;
@@ -37,6 +41,8 @@ namespace GraphQL.Infrastructure.Services
             _carouselRepository = carouselRepository;
             _faqReposiotry = faqReposiotry;
             _categoryService = categoryService;
+            _contentRepository = contentRepository;
+            _contentService = contentService;
         }
 
         public async Task<bool> Execute()
@@ -47,7 +53,8 @@ namespace GraphQL.Infrastructure.Services
             //success = await SetDummyContactForm();
             //success = await SetDummyCarousels();
             //success = await SetDummyFaq();
-            success = await SetDummyCategory();
+            //success = await SetDummyCategory();
+            success = await SetDummyContent();
 
             return success;
         }
@@ -325,6 +332,51 @@ namespace GraphQL.Infrastructure.Services
 
             return false;
         }
+
+        private async Task<bool> SetDummyContent()
+        {
+            if (await _contentRepository.RemoveAllAsync())
+            {
+                return await SetManyDummyItems(_contentRepository, new List<Content>()
+                {
+                    new Content()
+                    {
+                        Name = "Last Post Title",
+                        Value = "Hej! Sprawdź moje ostatnie posty",
+                        Type = ContentType.LastPost,
+                        ModifiedOn= DateTime.Now,
+                        CreatedOn= DateTime.Now,
+                    },
+                    new Content()
+                    {
+                        Name = "Footer_1",
+                        Value = "Jakaś informacja do footera 1",
+                        Type = ContentType.Footer,
+                        ModifiedOn= DateTime.Now,
+                        CreatedOn= DateTime.Now,
+                    },
+                    new Content()
+                    {
+                        Name = "Footer_2",
+                        Value = "Jakaś informacja do footera 2",
+                        Type = ContentType.Footer,
+                        ModifiedOn= DateTime.Now,
+                        CreatedOn= DateTime.Now,
+                    },
+                    new Content()
+                    {
+                        Name = "Footer_3",
+                        Value = "Jakaś informacja do footera 3",
+                        Type = ContentType.Footer,
+                        ModifiedOn= DateTime.Now,
+                        CreatedOn= DateTime.Now,
+                    }
+                });
+            }
+
+            return false;
+        }
+
         #region GeneralFunctions
         private async Task<bool> SetDummyItem<T>(IBaseRepository<T> repository, T entity) where T : BaseEntity
         {

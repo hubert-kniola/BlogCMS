@@ -192,3 +192,9 @@ export type AdminPopularForm = {
 export type AdminUpdateTop3Form = {
   top: string[];
 };
+
+export type ContentInput = {
+  id: string;
+  name: string;
+  value: string;
+};

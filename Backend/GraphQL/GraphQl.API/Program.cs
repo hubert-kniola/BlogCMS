@@ -30,11 +30,13 @@ builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
 builder.Services.AddScoped<IContactFormRepository, ContactFormRepository>();
 builder.Services.AddScoped<ICarouselRepository, CarouselRepository>();
 builder.Services.AddScoped<IFaqReposiotry, FaqRepository>();
+builder.Services.AddScoped<IContentRepository, ContentRepository>();
 
 //Services
 builder.Services.AddScoped<IDummyDataService, DummyDataService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IContentService, ContentService>();
 
 builder.Services.AddCors(options =>
 {
@@ -59,6 +61,7 @@ builder.Services
         .AddTypeExtension<ContactFormQuery>()
         .AddTypeExtension<CarouselQuery>()
         .AddTypeExtension<FaqQuery>()
+        .AddTypeExtension<ContentQuery>()
     .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<PostMutation>()
         .AddTypeExtension<CategoryMutation>()
@@ -67,6 +70,7 @@ builder.Services
         .AddTypeExtension<ContactFormMutation>()
         .AddTypeExtension<CarouselMutation>()
         .AddTypeExtension<FaqMutation>()
+        .AddTypeExtension<ContentMutation>()
     .AddType<PostType>()
     .AddType<CategoryType>()
     .AddType<CategoryResolver>()
