@@ -18,7 +18,7 @@ namespace GraphQL.API.Queries
             => await categoryService.GetAllSubCategories(categoryId);
 
         public async Task<IEnumerable<Category>?> GetAllTags(string categoryId, [Service] ICategoryService categoryService)
-            => await categoryService.GetAllTags(categoryId);
+            => await categoryService.GetTags(categoryId);
     }
 
     public class CategoryQueryType : ObjectType<CategoryQuery>
@@ -30,5 +30,6 @@ namespace GraphQL.API.Queries
                 .Type<ListType<NonNullType<CategoryType>>>()
                 .UseFiltering();
         }
+
     }
 }

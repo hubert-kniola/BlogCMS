@@ -36,7 +36,7 @@ namespace GraphQL.Infrastructure.Services
             return null;
         }
 
-        public async Task<IEnumerable<Category>?> GetAllTags(string categoryId)
+        public async Task<IEnumerable<Category>?> GetTags(string categoryId)
         {
             if (!string.IsNullOrEmpty(categoryId))
             {
@@ -49,44 +49,48 @@ namespace GraphQL.Infrastructure.Services
             return null;
         }
 
-        public async Task<Category> AddCategory(Category category)
-        {
-            Category? parent = null;
-            if (!string.IsNullOrEmpty(category.ParentId))
-            {
 
-                parent = await _categoryRepository.GetByIdAsync(category.ParentId);
-                if (parent != null)
+        public async Task<Category?> AddCategory(Category category)
+        {
+            if (!(await _categoryRepository.IsExists(category)))
+            {
+                Category? parent;
+                if (!string.IsNullOrWhiteSpace(category.ParentId))
                 {
-                    category.DeephLvl = parent.DeephLvl + 1;
-                    category.Path = CombinePath(parent.Path, category.Path);
+                    parent = await _categoryRepository.GetByIdAsync(category.ParentId);
+                    if (parent != null)
+                    {
+                        category.DeephLvl = parent.DeephLvl + 1;
+                        category.Path = CombinePath(parent.Path, category.Path);
+                    }
+                    else
+                        category.DeephLvl = 0;
                 }
                 else
                     category.DeephLvl = 0;
-            }
-            else
-                category.DeephLvl = 0;
 
-            if (category.ObjectType == null)
-            {
-                category.ObjectType = RouteObjectType.Category;
-                category.IsConst = false;
-            }
-
-            category = await _categoryRepository.InsertAsync(category);
-
-            if (category.IsConst == null || category.IsConst != true)
-            {
-                await AddPostCategory(new()
+                if (category.ObjectType == null)
                 {
-                    Title = category.Title,
-                    Path = category.Path,
-                    ParentId = category.Id,
-                    DeephLvl = null
-                });
-            }
+                    category.ObjectType = RouteObjectType.Category;
+                    category.IsConst = false;
+                }
 
-            return category;
+                category = await _categoryRepository.InsertAsync(category);
+
+                if (category.IsConst == null || category.IsConst != true)
+                {
+                    await AddPostCategory(new()
+                    {
+                        Title = category.Title,
+                        Path = category.Path,
+                        ParentId = category.Id,
+                        DeephLvl = null
+                    });
+                }
+
+                return category;
+            }
+            return null;
         }
 
         public async Task<bool> RemoveCategoryWithSubCategory(string id)
