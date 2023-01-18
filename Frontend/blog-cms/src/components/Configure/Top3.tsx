@@ -5,7 +5,7 @@ import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
-import { UPDATE_CAROUSEL_ELEMENT } from "../../apollo/apolloQueries";
+import { UPDATE_CAROUSEL_ELEMENT, UPDATE_LAST_POST_TITLE_CONTENT, UPDATE_TOP_THREE_POST } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
 import { AdminUpdateTop3Form, Post } from "../../types";
 import { mainColor } from "../../types/consts";
@@ -23,7 +23,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   const [selectedPosts, setSelectedPosts] = useState({});
   const { register, setValue, handleSubmit } = useForm();
   const [disabled, setDisabled] = useState([false, true, true]);
-  const [updateTop3Mutation] = useMutation(UPDATE_CAROUSEL_ELEMENT);
+  const [updateTop3Mutation] = useMutation(UPDATE_TOP_THREE_POST);
 
   const cssClasses = {
     configure: "configure",
@@ -38,7 +38,7 @@ const Top3 = ({ onSubmit }: Top3Props) => {
       top3 && setSelectedPosts(mapPostsToOptions(top3));
       let avaiblePosts;
       if (top3 && posts) {
-        avaiblePosts = posts.filter((element) => !top3.includes(element));
+        avaiblePosts = posts.filter((element) => !top3.find((e) => e.id === element.id));
         setAvaiblePosts(avaiblePosts);
         setDisabled([false, false, false]);
       } else if (posts.length === 0) {
@@ -81,13 +81,20 @@ const Top3 = ({ onSubmit }: Top3Props) => {
   };
 
   const handlePostSelection = (e: any, index: number) => {
-    if (e) {
-      const restPosts = avaiblePosts.filter((elem) => elem.id !== e.id);
+    if (e && !Object.values(selectedPosts)[index]) {
+      const restPosts = avaiblePosts.filter((elem) => elem.id !== e.value.id);
       if (Object.values(selectedPosts)[index] !== undefined) {
         restPosts.push(Object.values(selectedPosts)[index]);
       }
       setAvaiblePosts(restPosts);
-    } else {
+    } else if(e && Object.values(selectedPosts)[index]) {
+      const clearedPost: any = Object.values(selectedPosts)[index];
+      const restPosts = avaiblePosts.filter((elem) => elem.id !== e.value.id);
+      if (avaiblePosts && avaiblePosts.indexOf(clearedPost.value) === -1) {
+        setAvaiblePosts([...restPosts, clearedPost.value]);
+      }
+    } else 
+    {
       const clearedPost: any = Object.values(selectedPosts)[index];
       if (avaiblePosts && avaiblePosts.indexOf(clearedPost.value) === -1) {
         setAvaiblePosts([...avaiblePosts, clearedPost.value]);

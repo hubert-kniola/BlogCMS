@@ -40,7 +40,7 @@ export const Contact = () => {
 
   const dispatch = useAppDispatch();
   const contact = useAppSelector((state: RootState) => state.contact);
-  const [updateContactMutation, { data, loading, error }] =
+  const [updateContactMutation] =
     useMutation(UPDATE_CONTACT);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);

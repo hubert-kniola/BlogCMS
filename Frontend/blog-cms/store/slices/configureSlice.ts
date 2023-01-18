@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GetImageFromAzure } from "../../src/tools";
-import { Post, Carousel, FAQ } from "../../src/types";
+import { Post, Carousel, FAQ, ContentInput } from "../../src/types";
 import type { RootState } from "../store";
 
 export const fetchCarouselImagesByData = createAsyncThunk(
@@ -19,8 +19,8 @@ export interface ConfigureState {
   carousel: Carousel[];
   top3: Post[];
   faq: FAQ[];
-  footer: any;
-  newest: string;
+  footer: ContentInput[];
+  newest: ContentInput;
 }
 
 export const initialState: ConfigureState = {

@@ -1,23 +1,24 @@
+import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import {
-    updateNewest
-  } from "../../../store/slices/configureSlice";
-  import { RootState } from "../../../store/store";
+import { updateNewest } from "../../../store/slices/configureSlice";
+import { RootState } from "../../../store/store";
+import { UPDATE_LAST_POST_TITLE_CONTENT } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
+import { AdminUpdateNewestForm } from "../../types";
 import FaqTable from "../Tables/FaqTable";
 import "./style.css";
 
 interface NewestProps {
-    onSubmit: () => void;
-  }
-  
+  onSubmit: () => void;
+}
 
 const Newest = ({ onSubmit }: NewestProps) => {
   const dispatch = useAppDispatch();
   const newest = useAppSelector((state: RootState) => state.configure.newest);
   const { register, setValue, handleSubmit } = useForm();
+  const [updateNewestMutation] = useMutation(UPDATE_LAST_POST_TITLE_CONTENT);
   const cssClasses = {
     configure: "configure",
     newest: "newest",
@@ -31,7 +32,7 @@ const Newest = ({ onSubmit }: NewestProps) => {
   useEffect(() => {
     const fetchData = () => {
       if (newest) {
-        setDescription(newest);
+        setDescription(newest.value);
       }
     };
 
@@ -40,11 +41,17 @@ const Newest = ({ onSubmit }: NewestProps) => {
 
   const handleDescription = (e: any) => {
     setDescription(e.target.value);
-    dispatch(updateNewest(e.target.value));
+    dispatch(
+      updateNewest({ value: e.target.value, name: newest.name, id: newest.id })
+    );
   };
 
   const onSubmitNewest: SubmitHandler<any> = async (data) => {
-    dispatch(updateNewest(description));
+    const payload = { value: description, name: newest.name, id: newest.id };
+    dispatch(updateNewest(payload));
+    updateNewestMutation({
+      variables: { content: payload } as AdminUpdateNewestForm,
+    });
     onSubmit();
   };
 

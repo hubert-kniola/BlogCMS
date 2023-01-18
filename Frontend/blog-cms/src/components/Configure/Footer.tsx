@@ -1,11 +1,12 @@
+import { useMutation } from "@apollo/client";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import {
-  updateFooter
-} from "../../../store/slices/configureSlice";
+import { updateFooter } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
+import { UPDATE_FOOTER_CONTENT } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
+import { AdminUpdateFooterForm, ContentInput } from "../../types";
 import "./style.css";
 
 interface FooterProps {
@@ -16,6 +17,7 @@ const Footer = ({ onSubmit }: FooterProps) => {
   const dispatch = useAppDispatch();
   const footer = useAppSelector((state: RootState) => state.configure.footer);
   const { register, setValue, handleSubmit } = useForm();
+  const [updateFooterMutation] = useMutation(UPDATE_FOOTER_CONTENT);
   const cssClasses = {
     configure: "configure",
     container: "container",
@@ -27,9 +29,9 @@ const Footer = ({ onSubmit }: FooterProps) => {
   useEffect(() => {
     const fetchData = () => {
       if (footer) {
-        setValue("text1", footer.text1);
-        setValue("text2", footer.text2);
-        setValue("text3", footer.text3);
+        setValue("text1", footer[0].value);
+        setValue("text2", footer[1].value);
+        setValue("text3", footer[2].value);
       }
     };
 
@@ -37,7 +39,26 @@ const Footer = ({ onSubmit }: FooterProps) => {
   }, []);
 
   const onSubmitFooter: SubmitHandler<any> = async (data) => {
-    dispatch(updateFooter(data));
+    let newFooter: ContentInput[] = [];
+    newFooter.push({
+      value: data.text1,
+      name: footer[0].name,
+      id: footer[0].id,
+    });
+    newFooter.push({
+      value: data.text2,
+      name: footer[1].name,
+      id: footer[1].id,
+    });
+    newFooter.push({
+      value: data.text3,
+      name: footer[2].name,
+      id: footer[2].id,
+    });
+    dispatch(updateFooter(newFooter));
+    updateFooterMutation({
+      variables: { contentList: newFooter } as AdminUpdateFooterForm,
+    });
     onSubmit();
   };
 

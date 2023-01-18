@@ -17,7 +17,7 @@ export type Post = {
   categories?: CategoryType[];
   timeToReadInMs?: string;
   primaryFile?: any;
-  contentFile?: any;
+  contentFile?: any[];
 };
 
 export type Carousel = {
@@ -194,6 +194,14 @@ export type AdminPopularForm = {
 export type AdminUpdateTop3Form = {
   top: string[];
 };
+
+export type AdminUpdateNewestForm = {
+  content: ContentInput;
+};
+
+export type AdminUpdateFooterForm = {
+  contentList: ContentInput[];
+}
 
 export type ContentInput = {
   id: string;
