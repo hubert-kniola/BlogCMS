@@ -13,7 +13,7 @@ import { deletePost } from "../../../store/slices/postSlice";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
-import { ActionType, AdminRemovePostForm, Post } from "../../types";
+import { ActionType, AdminRemovePostForm, ContactForm, Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import ContactModal from "../ContactModal/ContactModal";
 import Row from "./Rows/Row";
@@ -24,14 +24,14 @@ import { REMOVE_POST } from "../../apollo/apolloQueries";
 
 const ContactTable = () => {
   const dispatch = useAppDispatch();
-  const posts = useAppSelector((state: RootState) => state.post.posts);
+  const contactForms = useAppSelector((state: RootState) => state.contact.forms);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
-  const [removePostMutation] = useMutation(REMOVE_POST);
+  //const [removeContactFormMutation] = useMutation(REMOVE_POST);
 
   const cssClasses = {
-    postTable: "contactTable",
+    contactTable: "contactTable",
     container: "container",
     dropdown: "dropdown",
     item: "item",
@@ -47,55 +47,41 @@ const ContactTable = () => {
 
   return (
     <>
-      <div className={BEM(cssClasses.postTable, cssClasses.container)}>
-        <IconButton onClick={() => setOpenCreate(true)}>
-          <AddBoxIcon sx={{ color: mainColor }} />
-        </IconButton>
+      <div className={BEM(cssClasses.contactTable, cssClasses.container)}>
         <Table style={{ width: "60vw" }}>
-          {posts.length > 0 && (
+          {contactForms.length > 0 && (
             <TableHead>
               <TableRow>
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
-                  Tytuł
+                  Imię i nazwisko
+                </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Email
                 </TableCell>
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
                   Treść
-                </TableCell>
-                <TableCell align="left" style={{ fontWeight: "bold" }}>
-                  Data
                 </TableCell>
               </TableRow>
             </TableHead>
           )}
           <TableBody sx={{ width: "fit-content" }}>
-            {posts.map((element: Post, i: number) => {
+            {contactForms.map((element: ContactForm, i: number) => {
               return (
                 <Row
                   key={i}
-                  cells={[element.title, removeTags(element.content)]}
-                  date={
-                    new Date(element.publicationDate).toString().split("GMT")[0]
-                  }
+                  cells={[element.name, element.email, element.content]}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
                     setEditedIndex(i);
                   }}
-                  actionOnDelete={(index: number) => {
-                    dispatch(deletePost({ index }));
-                  }}
+                  onlyView={true}
                 />
               );
             })}
           </TableBody>
         </Table>
       </div>
-      <ContactModal
-        handleClose={handleCloseCreate}
-        index={editedIndex}
-        open={openCreate}
-        type={ActionType.Add}
-      />
       <ContactModal
         handleClose={handleCloseEdit}
         index={editedIndex}

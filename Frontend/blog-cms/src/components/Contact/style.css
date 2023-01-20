@@ -12,6 +12,23 @@
   flex-direction: column;
 }
 
+.contactFormTable_container {
+  width: fit-content;
+  height: fit-content;
+  background-color: white;
+  box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+
 .contact_elements {
   margin-top: 3rem;
   margin-right: auto;
@@ -66,4 +83,14 @@
 }
 .contact_elements > input:focus {
   outline: 2px dashed rgb(196, 196, 196);
+}
+
+.configure_container--title {
+  font-size: large;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.configure_container--description {
+  margin-left: 1rem;
 }

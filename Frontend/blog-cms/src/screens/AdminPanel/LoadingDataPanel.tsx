@@ -19,12 +19,13 @@ import {
   updateNewest,
   updateTop3,
 } from "../../../store/slices/configureSlice";
-import { updateContact } from "../../../store/slices/contactSlice";
+import { addContactForm, updateContact } from "../../../store/slices/contactSlice";
 import { addPost } from "../../../store/slices/postSlice";
 import {
   GET_ABOUT,
   GET_CAROUSEL,
   GET_CATEGORY_OBJECT,
+  GET_CONTACT_FORMS,
   GET_CONTACT_INFO,
   GET_FAQ,
   GET_FOOTER_CONTENT,
@@ -52,6 +53,7 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   const [top3Loaded, setTop3Loaded] = useState<boolean>(false);
   const [lastPostLoaded, setLastPostLoaded] = useState<boolean>(false);
   const [footerLoaded, setFooterLoaded] = useState<boolean>(false);
+  const [contactFormLoaded, setContactFormLoaded] = useState<boolean>(false);
   const {
     data: aboutData,
     loading: aboutLoading,
@@ -62,6 +64,11 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     loading: contactLoading,
     error: contactError,
   } = useQuery(GET_CONTACT_INFO);
+  const {
+    data: contactFormData,
+    loading: contactFormLoading,
+    error: contactFormError,
+  } = useQuery(GET_CONTACT_FORMS);
   const {
     data: faqData,
     loading: faqLoading,
@@ -126,6 +133,13 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
       })
     );
     setContactLoaded(true);
+  }
+
+   /**================== CONTACT FORM LOADING SECTION ==================*/
+   if (contactFormData && !contactFormLoading && !contactFormError && !contactFormLoaded) {
+    let contactFormValue: any = Object.values(contactFormData)[0];
+    dispatch(addContactForm(contactFormValue));
+    setContactFormLoaded(true);
   }
 
   /**================== FAQ LOADING SECTION ==================*/
@@ -227,7 +241,8 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
     postLoaded &&
     top3Loaded &&
     lastPostLoaded &&
-    footerData
+    footerLoaded &&
+    contactFormLoaded
   ) {
     handleLoading(false);
   }

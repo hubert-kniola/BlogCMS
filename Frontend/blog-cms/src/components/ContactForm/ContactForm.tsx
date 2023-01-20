@@ -17,6 +17,7 @@ import { mainColor } from "../../types/consts";
 import SaveButton from "../SaveButton/SaveButton";
 import "./style.css";
 import { ActionType } from "../../types";
+import Box from "@mui/material/Box";
 
 interface ContactFormProps {
   type: string;
@@ -26,16 +27,19 @@ interface ContactFormProps {
 
 const ContactForm = ({ type, handleClose, index }: ContactFormProps) => {
   const dispatch = useDispatch();
-  const messages = useAppSelector((state: RootState) => state.configure.faq);
+  const contactForms = useAppSelector(
+    (state: RootState) => state.contact.forms
+  );
 
   const cssClasses = {
-    post: "contactForm",
+    contactForm: "contactForm",
     container: "container",
     text: "text",
     elements: "elements",
     title: "title",
     tag: "tag",
     close: "close",
+    row: "row",
   };
 
   const closeIcon = (
@@ -45,15 +49,34 @@ const ContactForm = ({ type, handleClose, index }: ContactFormProps) => {
   );
 
   return (
-    <div className={BEM(cssClasses.post, cssClasses.container)}>
-      <div className={BEM(cssClasses.post, cssClasses.close)}>{closeIcon}</div>
+    <div className={BEM(cssClasses.contactForm, cssClasses.container)}>
+      <div className={BEM(cssClasses.contactForm, cssClasses.close)}>
+        {closeIcon}
+      </div>
       <h3
-        className={BEM(cssClasses.post, cssClasses.container, cssClasses.text)}
+        className={BEM(
+          cssClasses.contactForm,
+          cssClasses.container,
+          cssClasses.text
+        )}
       >
-        `Wiadomość ${index}`
+        {`Wiadomość od ${contactForms[index].name}`}
       </h3>
-      <div className={BEM(cssClasses.post, cssClasses.elements)}>
-        <p>Pytanie:</p>
+      <div className={BEM(cssClasses.contactForm, cssClasses.elements)}>
+        <div style={{ width: "100%" }}>
+          <div className={BEM(cssClasses.contactForm, cssClasses.row)}>
+            <h3>Email: </h3>
+            <p>{contactForms[index].email}</p>
+          </div>
+          <div className={BEM(cssClasses.contactForm, cssClasses.row)}>
+            <h3>Treść: </h3>
+            <p>
+              {contactForms[index].content
+                ? contactForms[index].content
+                : "<Brak>"}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

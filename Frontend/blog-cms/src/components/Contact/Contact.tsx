@@ -16,6 +16,7 @@ import "./style.css";
 import { AdminContactForm, ContactForm, UploadType } from "../../types";
 import { UPDATE_CONTACT } from "../../apollo/apolloQueries";
 import { useMutation } from "@apollo/client";
+import ContactTable from "../Tables/ContactTable";
 
 interface IFormInput {
   title: string;
@@ -31,17 +32,19 @@ interface IFormInput {
 export const Contact = () => {
   const cssClasses = {
     contact: "contact",
+    contactFormTable: "contactFormTable",
     container: "container",
     text: "text",
     elements: "elements",
     title: "title",
     textarea: "textarea",
+    configure: "configure",
+    description: "description",
   };
 
   const dispatch = useAppDispatch();
-  const contact = useAppSelector((state: RootState) => state.contact);
-  const [updateContactMutation] =
-    useMutation(UPDATE_CONTACT);
+  const contact = useAppSelector((state: RootState) => state.contact.contact);
+  const [updateContactMutation] = useMutation(UPDATE_CONTACT);
   const { register, setValue, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
@@ -97,91 +100,116 @@ export const Contact = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={BEM(cssClasses.contact, cssClasses.container)}>
-        {" "}
+    <>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={BEM(cssClasses.contact, cssClasses.container)}>
+            {" "}
+            <h3
+              className={BEM(
+                cssClasses.contact,
+                cssClasses.container,
+                cssClasses.text
+              )}
+            >
+              Uzupełnij informacje kontaktowe
+            </h3>
+            <div className={BEM(cssClasses.contact, cssClasses.elements)}>
+              <p>Tytuł:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("title", { required: true })}
+              ></input>
+              <p>Treść:</p>
+              <Button
+                sx={{
+                  borderRadius: "2px",
+                  marginTop: "1rem",
+                  color: mainColor,
+                  borderColor: mainColor,
+                  width: "10vw",
+                  "&:hover": {
+                    backgroundColor: mainColor,
+                    color: "white",
+                    borderColor: "white",
+                  },
+                }}
+                variant="outlined"
+                component="label"
+                onClick={() => setOpenEditor(true)}
+              >
+                Modyfikuj
+              </Button>
+              <p>Nazwa pola 1:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("fieldNameOne", { required: true })}
+              ></input>
+              <p>Wartość 1:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("contentOne", { required: true })}
+              ></input>
+              <p>Nazwa pola 2:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("fieldNameTwo", { required: true })}
+              ></input>
+              <p>Wartość 2:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("contentTwo", { required: true })}
+              ></input>
+              <p>Nazwa pola 3:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("fieldNameTwo", { required: true })}
+              ></input>
+              <p>Wartość 3:</p>
+              <input
+                className={BEM(cssClasses.contact, cssClasses.title)}
+                type="text"
+                {...register("contentTwo", { required: true })}
+              ></input>
+            </div>
+            <input className="submitButton" value="Zapisz" type="submit" />
+          </div>
+          <EditorModal
+            handleClose={handleCloseEditor}
+            open={openEditor}
+            editorValue={richValue}
+            setEditorValue={(element: any) => setRichValue(element)}
+          />
+          <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
+        </form>
+      </div>
+      <div className={BEM(cssClasses.contactFormTable, cssClasses.container)}>
         <h3
           className={BEM(
-            cssClasses.contact,
+            cssClasses.configure,
             cssClasses.container,
-            cssClasses.text
+            cssClasses.title
           )}
         >
-          Uzupełnij informacje kontaktowe
+          Wiadomości
         </h3>
-        <div className={BEM(cssClasses.contact, cssClasses.elements)}>
-          <p>Tytuł:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("title", { required: true })}
-          ></input>
-          <p>Treść:</p>
-          <Button
-            sx={{
-              borderRadius: "2px",
-              marginTop: "1rem",
-              color: mainColor,
-              borderColor: mainColor,
-              width: "10vw",
-              "&:hover": {
-                backgroundColor: mainColor,
-                color: "white",
-                borderColor: "white",
-              },
-            }}
-            variant="outlined"
-            component="label"
-            onClick={() => setOpenEditor(true)}
-          >
-            Modyfikuj
-          </Button>
-          <p>Nazwa pola 1:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("fieldNameOne", { required: true })}
-          ></input>
-          <p>Wartość 1:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("contentOne", { required: true })}
-          ></input>
-          <p>Nazwa pola 2:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("fieldNameTwo", { required: true })}
-          ></input>
-          <p>Wartość 2:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("contentTwo", { required: true })}
-          ></input>
-          <p>Nazwa pola 3:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("fieldNameTwo", { required: true })}
-          ></input>
-          <p>Wartość 3:</p>
-          <input
-            className={BEM(cssClasses.contact, cssClasses.title)}
-            type="text"
-            {...register("contentTwo", { required: true })}
-          ></input>
-        </div>
-        <input className="submitButton" value="Zapisz" type="submit" />
+        <p
+          className={BEM(
+            cssClasses.configure,
+            cssClasses.container,
+            cssClasses.description
+          )}
+        >
+          Sekcja służąca do wyświetlania wiadomości mailowych
+        </p>
+        <ContactTable />
       </div>
-      <EditorModal
-        handleClose={handleCloseEditor}
-        open={openEditor}
-        editorValue={richValue}
-        setEditorValue={(element: any) => setRichValue(element)}
-      />
-      <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
-    </form>
+    </>
   );
 };

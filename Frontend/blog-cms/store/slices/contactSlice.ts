@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ContactForm } from "../../src/types";
 import type { RootState } from "../store";
 
 export interface ContactState {
@@ -13,16 +14,24 @@ export interface ContactState {
   contentThree: string;
 }
 
-export const initialState: ContactState = {
-  id: null,
-  title: null,
-  text: null,
-  fieldNameOne: null,
-  contentOne: null,
-  fieldNameTwo: null,
-  contentTwo: null,
-  fieldNameThree: null,
-  contentThree: null,
+export interface ContactTypeState {
+  contact: ContactState;
+  forms: ContactForm[];
+}
+
+export const initialState: ContactTypeState = {
+  contact: {
+    id: null,
+    title: null,
+    text: null,
+    fieldNameOne: null,
+    contentOne: null,
+    fieldNameTwo: null,
+    contentTwo: null,
+    fieldNameThree: null,
+    contentThree: null,
+  },
+  forms: [],
 };
 
 export const contactSlice = createSlice({
@@ -30,20 +39,23 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     updateContact: (state: any, action: PayloadAction<ContactState>) => {
-      state.id = action.payload.id;
-      state.title = action.payload.title;
-      state.text = action.payload.text;
-      state.fieldNameOne = action.payload.fieldNameOne;
-      state.contentOne = action.payload.contentOne;
-      state.fieldNameTwo = action.payload.fieldNameTwo;
-      state.contentTwo = action.payload.contentTwo;
-      state.fieldNameThree = action.payload.fieldNameThree;
-      state.contentThree = action.payload.contentThree;
+      state.contact.id = action.payload.id;
+      state.contact.title = action.payload.title;
+      state.contact.text = action.payload.text;
+      state.contact.fieldNameOne = action.payload.fieldNameOne;
+      state.contact.contentOne = action.payload.contentOne;
+      state.contact.fieldNameTwo = action.payload.fieldNameTwo;
+      state.contact.contentTwo = action.payload.contentTwo;
+      state.contact.fieldNameThree = action.payload.fieldNameThree;
+      state.contact.contentThree = action.payload.contentThree;
+    },
+    addContactForm: (state: any, action: PayloadAction<ContactForm[]>) => {
+      state.forms = action.payload;
     },
   },
 });
 
-export const { updateContact } = contactSlice.actions;
+export const { updateContact, addContactForm } = contactSlice.actions;
 
 export const selectCategory = (state: RootState) => state.contact;
 
