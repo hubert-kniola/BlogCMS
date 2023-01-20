@@ -208,3 +208,7 @@ export type ContentInput = {
   name: string;
   value: string;
 };
+
+export type AdminRemoveContactForm = {
+  id: string;
+};

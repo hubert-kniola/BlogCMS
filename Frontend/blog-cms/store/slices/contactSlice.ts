@@ -52,10 +52,14 @@ export const contactSlice = createSlice({
     addContactForm: (state: any, action: PayloadAction<ContactForm[]>) => {
       state.forms = action.payload;
     },
+    deleteContactForm: (state: any, action: PayloadAction<any>) => {
+      if (state.forms[action.payload.index])
+        state.forms.splice(action.payload.index, 1);
+    },
   },
 });
 
-export const { updateContact, addContactForm } = contactSlice.actions;
+export const { updateContact, addContactForm, deleteContactForm } = contactSlice.actions;
 
 export const selectCategory = (state: RootState) => state.contact;
 

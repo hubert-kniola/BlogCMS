@@ -38,7 +38,7 @@ const Row = ({ index, cells, date, onlyView, openModal, actionOnDelete }: RowPro
 
   const viewIcon = (
     <IconButton onClick={openModal}>
-      <VisibilityIcon sx={{ color: mainColor }} />
+      <VisibilityIcon color="action" />
     </IconButton>
   );
 

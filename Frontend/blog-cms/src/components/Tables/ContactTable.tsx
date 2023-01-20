@@ -13,14 +13,15 @@ import { deletePost } from "../../../store/slices/postSlice";
 import { updateTop3 } from "../../../store/slices/configureSlice";
 import { RootState } from "../../../store/store";
 import { BEM } from "../../tools";
-import { ActionType, AdminRemovePostForm, ContactForm, Post } from "../../types";
+import { ActionType, AdminRemoveContactForm, AdminRemovePostForm, ContactForm, Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import ContactModal from "../ContactModal/ContactModal";
 import Row from "./Rows/Row";
 import { removeTags } from "../../tools";
 import "./style.css";
 import { useMutation } from "@apollo/client";
-import { REMOVE_POST } from "../../apollo/apolloQueries";
+import { REMOVE_CONTACT_FORM_ELEMENT, REMOVE_POST } from "../../apollo/apolloQueries";
+import { deleteContactForm } from "../../../store/slices/contactSlice";
 
 const ContactTable = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const ContactTable = () => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editedIndex, setEditedIndex] = useState<number>(null);
-  //const [removeContactFormMutation] = useMutation(REMOVE_POST);
+  const [removeContactFormMutation] = useMutation(REMOVE_CONTACT_FORM_ELEMENT);
 
   const cssClasses = {
     contactTable: "contactTable",
@@ -74,6 +75,14 @@ const ContactTable = () => {
                   openModal={() => {
                     setOpenEdit(true);
                     setEditedIndex(i);
+                  }}
+                  actionOnDelete={(index: number) => {
+                    dispatch(deleteContactForm({ index }));
+                    removeContactFormMutation({
+                      variables: {
+                        id: contactForms[index].id,
+                      } as AdminRemoveContactForm,
+                    });
                   }}
                   onlyView={true}
                 />

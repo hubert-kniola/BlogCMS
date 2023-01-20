@@ -386,6 +386,12 @@ export const REMOVE_CAROUSEL_ELEMENT = gql`
   }
 `;
 
+export const REMOVE_CONTACT_FORM_ELEMENT = gql`
+  mutation RemoveContactForm($id: String!) {
+    removeContactForm(id: $id)
+  }
+`;
+
 export const UPDATE_ABOUT = gql`
   mutation UpdateAbout(
     $id: String!
