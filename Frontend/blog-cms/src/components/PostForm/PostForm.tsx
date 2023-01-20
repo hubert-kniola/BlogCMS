@@ -119,7 +119,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           if (editedPost.categories.length > 0) {
             let elements = mapCategoriesToOptions(editedPost.categories);
             elements.pop();
-            elements[2] = mapCategoriesToOptions(editedPost.categories[2]);
+            elements[2] = mapCategoriesToOptions([editedPost.categories[2]]);
             setSelectedCategories(elements);
           }
           setSnippet(editedPost.snippet);

@@ -11,6 +11,7 @@ export const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   const cssClasses = {
     /* input class */
@@ -26,11 +27,14 @@ export const Login = () => {
     modifiers: {
       /* password modifier */
       password: "password",
+      /* clicked modifier */
+      clicked: "clicked",
     },
   };
 
   const handleButtonClick = async () => {
     if (email && password) {
+      setClicked(true);
       const params = {
         email: email,
         // pass: sha256(password),
@@ -42,6 +46,7 @@ export const Login = () => {
         .then((response) => dispatch(updateUser(response.data)))
         .catch((error) => {
           setIsValid(false);
+          setClicked(false);
         });
     }
   };
@@ -69,7 +74,8 @@ export const Login = () => {
         ></input>
         <button
           type="button"
-          className={cssClasses.button}
+          className={`${cssClasses.button} ${clicked ? BEM(cssClasses.button, cssClasses.modifiers.clicked) : null}`}
+          disabled={clicked}
           onClick={handleButtonClick}
         >
           LOGIN

@@ -1,0 +1,89 @@
+.messageForm_container {
+  width: 45vw;
+  background-color: white;
+  box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.messageForm_elements {
+  margin-top: 3rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.messageForm_close {
+  display: flex;
+  margin-right: 0px;
+  float: right;
+  margin-left: auto;
+}
+
+.messageForm_elements > p {
+  margin-top: 1rem;
+}
+
+.messageForm_container--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+  font-weight: 600;
+}
+
+.messageForm_title {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 6vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+}
+
+.messageForm_title--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+}
+
+.messageForm_content {
+  height: 15vh;
+  width: 25vw;
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  outline-color: rgb(199, 199, 199);
+}
+
+.messageForm_elements > textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_elements > input:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_select {
+  outline-color: #00eadc;
+}
+
+.messageForm_textarea {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+}
+
+.messageForm_elements > textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}

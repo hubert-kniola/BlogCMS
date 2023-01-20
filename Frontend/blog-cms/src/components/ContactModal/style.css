@@ -1,0 +1,147 @@
+.messageForm_container {
+  width: 45vw;
+  background-color: white;
+  box-shadow: rgba(160, 160, 160, 0.35) 0px 5px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.messageForm_elements--padding {
+  overflow-y: auto;
+  max-height: 80vh;
+  padding: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  flex-direction: column;
+  display: flex;
+  overflow-x: hidden;
+}
+
+.messageForm_elements {
+  margin-top: 3rem;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  width: 18vw;
+}
+
+.messageForm_close {
+  display: flex;
+  margin-right: 0px;
+  float: right;
+  margin-left: auto;
+}
+
+.messageForm_elements > p {
+  margin-top: 1rem;
+}
+
+.messageForm_container--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+  font-weight: 600;
+}
+
+.messageForm_title {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  margin-left: 0.1rem;
+  padding: 0 8px;
+}
+
+.messageForm_textarea {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 25vh;
+  margin-top: 0.5rem;
+  margin-left: 0.1rem;
+  padding: 0 8px;
+}
+
+.messageForm_title--text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+}
+
+.messageForm_header {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.messageForm_footer {
+  width: 100%;
+  height: 6vh;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.messageForm_content {
+  width: 100%;
+  height: 70vh;
+  overflow-y: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2rem;
+}
+
+.messageForm_selects {
+  width: 18vw;
+}
+
+.messageForm_datepicker {
+  width: 20vw;
+}
+
+.messageForm_selects > p {
+  margin-top: 1rem;
+}
+
+.messageForm_elements > textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_elements > input:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_select {
+  outline-color: #00eadc;
+}
+
+.messageForm_textarea {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+}
+
+.messageForm_elements > textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}
+
+.messageForm_textarea:focus {
+  outline: 2px dashed rgb(196, 196, 196);
+}

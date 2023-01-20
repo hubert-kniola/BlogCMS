@@ -170,30 +170,30 @@ const LoadingDataPanel = ({ handleLoading }: LoadingDataPanelProps) => {
   /**================== POST LOADING SECTION ==================*/
   if (postData && !postLoading && !postError && !postLoaded) {
     let postValue: any = Object.values(postData)[0];
-    let newCarouselValue: Post[] = postValue.map((element: Post): Post => {
+    let newPostValue: Post[] = postValue.map((element: Post): Post => {
       return { primaryFile: null, contentFile: null, ...element };
     });
-    if (newCarouselValue) {
-      newCarouselValue.forEach((element: Post) => {
-        const index = newCarouselValue.findIndex(
+    if (newPostValue) {
+      newPostValue.forEach((element: Post) => {
+        const index = newPostValue.findIndex(
           (index: Post) => index.id === element.id
         );
         if (element.primaryImgName) {
-          newCarouselValue[
+          newPostValue[
             index
           ].primaryFile = `${BlobStorageURL}${element.primaryImgName}`;
         }
         if (element.contentImgName) {
-          newCarouselValue[index].contentFile = [];
+          newPostValue[index].contentFile = [];
           element.contentImgName.map((element: string) => {
-            newCarouselValue[index].contentFile.push(
+            newPostValue[index].contentFile.push(
               `${BlobStorageURL}${element}`
             );
           });
         }
       });
     }
-    postValue.map((element: Post) => dispatch(addPost(element)));
+    newPostValue.map((element: Post) => dispatch(addPost(element)));
     setPostLoaded(true);
   }
 
