@@ -260,7 +260,7 @@ namespace GraphQL.Infrastructure.Services
                 Category? webDesign = await _categoryService.AddCategory(new()
                 {
                     Title = "Web development",
-                    Path = "/web-design",
+                    Path = "/web-dev",
                     ParentId = main.Id,
                 });
 

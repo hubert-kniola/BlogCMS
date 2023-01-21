@@ -251,9 +251,9 @@ export const GET_SIMILAR_POST = gql`
   }
 `;
 
-export const GET_POST_BY_CATEGORY_ID = gql`
-  query GetPostByCategoryIdAsync($categoryId: String!) {
-    postByCategoryId(categoryId: $categoryId) {
+export const GET_POST_BY_PATH = gql`
+  query GetPostByPath($path: String!) {
+    postByPath(path: $path) {
       id
       title
       content
@@ -267,23 +267,6 @@ export const GET_POST_BY_CATEGORY_ID = gql`
         id
         title
         path
-      }
-      categoryTree {
-        mainCategory {
-          id
-          title
-          path
-        }
-        subCategory {
-          id
-          title
-          path
-        }
-        tags {
-          id
-          title
-          path
-        }
       }
     }
   }

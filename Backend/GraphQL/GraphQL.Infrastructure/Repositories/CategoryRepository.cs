@@ -16,6 +16,12 @@ namespace GraphQL.Infrastructure.Repositories
             return (await _collection.FindAsync(x => x.ParentId.Equals(parentId))).ToEnumerable();
         }
 
+        public async Task<Category?> GetCategoryByPath(string path)
+        {
+            return (await _collection.FindAsync(x => x.Path.Equals(path))).FirstOrDefault();
+
+        }
+
         public async Task<IEnumerable<Category>> GetAllTags()
         {
             return await _collection.Find(

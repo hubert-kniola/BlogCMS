@@ -33,19 +33,6 @@ interface IListItem {
 }
 
 export const ListItem = ({ post, index }: IListItem) => {
-  const joinCategories = (categories: CategoryType[]): string => {
-    var text: string | undefined = undefined;
-
-    categories.forEach((category) => {
-      if (text) {
-        text += `, ${category.title}`;
-      } else {
-        text = category.title;
-      }
-    });
-    return text;
-  };
-
   const htmlToPlainText = (html: string): string => {
     let element = document.createElement("span");
     element.innerHTML = html;

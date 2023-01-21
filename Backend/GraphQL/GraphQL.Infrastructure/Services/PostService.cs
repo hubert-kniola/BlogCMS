@@ -60,32 +60,38 @@ namespace GraphQL.Infrastructure.Services
             return null;
         }
 
-        public async Task<IEnumerable<Post>?> GetPostByCategoryIdAsync(string categoryId)
+        public async Task<IEnumerable<Post>?> GetPostByPathAsync(string path)
         {
-            if (!string.IsNullOrEmpty(categoryId))
+            if (!string.IsNullOrEmpty(path))
             {
                 List<Post> postList = new();
 
-                var categoryList = await _categoryService.GetAllSubCategories(categoryId);
+                var topCategory = await _categoryRepository.GetCategoryByPath(path);
 
-                if (categoryList != null)
+                if (topCategory != null)
                 {
-                    foreach (var category in categoryList)
+                    var categoryList = await _categoryService.GetAllSubCategories(topCategory.Id);
+
+                    if (categoryList != null)
                     {
-                        IEnumerable<Post>? posts = await _postRepository.GetAllByCategoryId(category.Id!);
-                        if (posts != null)
+                        foreach (var category in categoryList)
                         {
-                            foreach (var post in posts)
+                            IEnumerable<Post>? posts = await _postRepository.GetAllByCategoryId(category.Id!);
+                            if (posts != null)
                             {
-                                if (!postList.Contains(post))
+                                foreach (var post in posts)
                                 {
-                                    postList.Add(post);
+                                    if (!postList.Contains(post))
+                                    {
+                                        postList.Add(post);
+                                    }
                                 }
                             }
                         }
+                        return postList;
                     }
-                    return postList;
                 }
+
             }
             return null;
         }

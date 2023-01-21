@@ -21,9 +21,8 @@ namespace GraphQL.API.Queries
         public async Task<IEnumerable<Post>?> GetTopThreePostAsync([Service] IPostRepository postRepository)
             => await postRepository.GetTopPostAsync();
 
-
-        public async Task<IEnumerable<Post>?> GetPostByCategoryIdAsync(string categoryId, [Service] IPostService postService)
-            => await postService.GetPostByCategoryIdAsync(categoryId);
+        public async Task<IEnumerable<Post>?> GetPostByPath(string path, [Service] IPostService postService)
+            => await postService.GetPostByPathAsync(path);
 
         public async Task<IEnumerable<Post>?> GetSimilarPostAsync(string postId, [Service] IPostService postService)
             => await postService.GetSimilarPostAsync(postId);
