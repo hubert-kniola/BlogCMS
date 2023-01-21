@@ -6,6 +6,7 @@ namespace GraphQL.Core.Services
     {
         Task<IEnumerable<Category>?> GetAllSubCategories(string categoryId);
         Task<IEnumerable<Category>?> GetTags(string categoryId);
+        Task<CategoryTree?> GetCategoryTree(Post post);
         Task<Category?> AddCategory(Category category);
         Task<bool> RemoveCategoryWithSubCategory(string id);
 

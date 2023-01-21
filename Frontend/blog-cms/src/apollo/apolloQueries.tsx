@@ -57,6 +57,23 @@ export const GET_TOP3 = gql`
         title
         path
       }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
+      }
     }
   }
 `;
@@ -119,7 +136,7 @@ export const GET_FOOTER_CONTENT = gql`
 `;
 
 export const GET_POSTS = gql`
-  query GetAllPosts {
+  query GetAllPostsWithCategoryTree {
     posts {
       id
       title
@@ -133,6 +150,27 @@ export const GET_POSTS = gql`
         id
         title
         path
+        parentId
+      }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+          parentId
+        }
+        subCategory {
+          id
+          title
+          path
+          parentId
+        }
+        tags {
+          id
+          title
+          path
+          parentId
+        }
       }
     }
   }
@@ -149,10 +187,28 @@ export const GET_POSTS_BY_ID = gql`
       primaryImgName
       contentImgName
       publicationDate
+      isTopPost
       categories {
         id
         title
         path
+      }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
       }
     }
   }
@@ -173,6 +229,23 @@ export const GET_SIMILAR_POST = gql`
         id
         title
         path
+      }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
       }
     }
   }
@@ -195,6 +268,23 @@ export const GET_POST_BY_CATEGORY_ID = gql`
         title
         path
       }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
+      }
     }
   }
 `;
@@ -215,6 +305,23 @@ export const GET_FIRST_POST_PREMIER = gql`
         id
         title
         path
+      }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
       }
     }
   }

@@ -15,6 +15,7 @@ export type Post = {
   primaryImgName: string;
   contentImgName?: string[];
   categories?: CategoryType[];
+  categoryTree?: CategoryTreeType[];
   timeToReadInMs?: string;
   primaryFile?: any;
   contentFile?: any[];
@@ -49,6 +50,12 @@ export type CategoryType = {
   path: string;
   objectType?: RouteObjectType;
   subCategory?: CategoryType[];
+};
+
+export type CategoryTreeType = {
+  mainCategory: CategoryType;
+  subCategory: CategoryType;
+  tags: CategoryType[];
 };
 
 export type FaqType = {
@@ -201,7 +208,7 @@ export type AdminUpdateNewestForm = {
 
 export type AdminUpdateFooterForm = {
   contentList: ContentInput[];
-}
+};
 
 export type ContentInput = {
   id: string;

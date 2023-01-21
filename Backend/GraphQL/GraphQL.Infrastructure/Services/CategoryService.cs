@@ -49,6 +49,40 @@ namespace GraphQL.Infrastructure.Services
             return null;
         }
 
+        public async Task<CategoryTree?> GetCategoryTree(Post post)
+        {
+            List<Category> tags = new();
+            Category? mainCategory = null;
+            Category? subCategory = null;
+            Category? firstTag;
+
+            foreach (var categoryId in post.Categories)
+            {
+                Category? category = await _categoryRepository.GetByIdAsync(categoryId);
+                if (category != null)
+                {
+                    tags.Add(category);
+                }
+            }
+
+            if (!tags.Any())
+                return null;
+
+            firstTag = tags.First();
+
+            if (firstTag != null && !string.IsNullOrEmpty(firstTag.ParentId))
+                subCategory = await _categoryRepository.GetByIdAsync(firstTag.ParentId);
+
+            if(subCategory != null && !string.IsNullOrEmpty(subCategory.ParentId))
+                mainCategory = await _categoryRepository.GetByIdAsync(subCategory.ParentId);
+
+            return new()
+            {
+                MainCategory = mainCategory,
+                SubCategory = subCategory,
+                Tags = tags,
+            };
+        }
 
         public async Task<Category?> AddCategory(Category category)
         {

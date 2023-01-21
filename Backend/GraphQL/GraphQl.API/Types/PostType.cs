@@ -20,6 +20,7 @@ namespace GraphQL.API.Types
             descriptor.Field(_ => _.CreatedOn);
 
             descriptor.Field<CategoryResolver>(_ => _.GetCategoriesAsync(default, default));
+            descriptor.Field<CategoryResolver>(_ => _.GetCategoryTreeAsync(default, default));
         }
     }
 }

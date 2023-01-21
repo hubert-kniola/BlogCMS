@@ -1,5 +1,6 @@
 ﻿using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
+using GraphQL.Core.Services;
 using HotChocolate.AspNetCore.Authorization;
 
 namespace GraphQL.API.Resolver
@@ -15,5 +16,9 @@ namespace GraphQL.API.Resolver
         [UseFiltering]
         public async Task<IEnumerable<Category>> GetSubCategoryAsync([Parent] Category category, [Service] ICategoryRepository categoryRepository)
             => await categoryRepository.GetCategoriesByParentId(category.Id);
+
+        [UseFiltering]
+        public async Task<CategoryTree?> GetCategoryTreeAsync([Parent] Post post, [Service] ICategoryService categoryService)
+            => await categoryService.GetCategoryTree(post);
     }
 }
