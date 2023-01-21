@@ -44,7 +44,7 @@
 .bestContainer{
     width:50%;
     min-width: 900px;
-    height: 20rem;
+    height: 23rem;
     margin: auto;
     margin-bottom: 4rem;
     padding: 0 4rem;
@@ -56,8 +56,8 @@
 
 .bestContainer_bestPost{
     width: 17%;
-    height: 18rem;
-    min-width: 250px;
+    height: 21rem;
+    min-width: 270px;
     margin: 0 1rem;
     overflow: hidden;
     
@@ -67,32 +67,32 @@
 }
 
 .bestContainer_bestPost--second{
-    height: 20rem;
+    height: 23rem;
 }
 
 .bestPost_bestPhoto{
     margin: auto;
     padding: 0;
     width: 100%;
-    height: 7rem;
+    height: 8rem;
 
     @apply
     bg-cover bg-center
 }
 
 .bestContainer_bestPost--second .bestPost_bestPhoto{
-    height: 9rem;
+    height: 10rem;
 }
 
 .bestPost_bestContent{
     position: relative;
     margin: auto;
-    height: 10rem;
+    height: 12.5rem;
     padding: 0 0.5rem;
 }
 
 .bestPost_bestTitle{
-    font-size: large;
+    font-size: 14px;
     font-weight: bold;
     margin-top: 0.5rem;
     @apply 
@@ -100,7 +100,7 @@
 }
 
 .bestPost_bestDate{
-    font-size: small;
+    font-size: smaller;
     @apply 
     text-secondary-600 
 }

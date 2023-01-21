@@ -1,6 +1,7 @@
 import React from "react";
 import { BackgroundDiv } from "..";
-import { BEM } from "../../tools";
+import { BlobStorageURL } from "../../settings";
+import { BEM, GetDate } from "../../tools";
 import { Post } from "../../types";
 import "./style.css";
 
@@ -30,19 +31,26 @@ export const BestOne = ({ post, isSecond = false }: IBestOne) => {
           isSecond && BEM(css.bestContainer, css.bestPost, css.modifiers.second)
         }`}>
         <BackgroundDiv
-          url={post.primaryImgName}
+          url={`${BlobStorageURL}${post.primaryImgName}`}
           className={BEM(css.bestPost, css.bestPhoto)}
         />
         <div className={BEM(css.bestPost, css.bestContent)}>
           <div className={BEM(css.bestPost, css.bestTitle)}>{post.title}</div>
           <div className={BEM(css.bestPost, css.bestDate)}>
-            {post.publicationDate.toString()}
+            {GetDate(post.publicationDate.toString())}
           </div>
           <div className={BEM(css.bestPost, css.bestSnippet)}>
             {post.snippet}
           </div>
           <div className={BEM(css.bestPost, css.bestHidden)}>
-            <a href="https://google.pl">Read More</a>
+            <a
+              href={
+                post.categories[0]
+                  ? post.categories[0].path + "/" + post.id
+                  : ""
+              }>
+              Read More
+            </a>
           </div>
         </div>
       </div>

@@ -90,3 +90,19 @@ export const GetImageFromAzure = async (fileName: string) => {
 export const ConvertTitleToPath = (title: string): string => {
   return `/${title.replace(" ", "-").toLowerCase()}/`;
 };
+
+export const GetDate = (date: string): string => {
+  var dateTime = new Date(date);
+
+  const day = getFormatedDate(dateTime.getDay());
+  const month = getFormatedDate(dateTime.getMonth() + 1);
+  const year = dateTime.getFullYear();
+  const hours = getFormatedDate(dateTime.getHours());
+  const minutes = getFormatedDate(dateTime.getMinutes());
+
+  return `${day}-${month}-${year} ${hours}:${minutes}`;
+};
+
+const getFormatedDate = (value: number): string => {
+  return value < 10 ? `0${value}` : value.toString();
+};
