@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { ListItem } from "./ListItem";
-import { Post } from "../../types";
+import { ContentInput, Post } from "../../types";
 import { BEM } from "../../tools";
+import { useQuery } from "@apollo/client";
+import {
+  GET_ALL_ACTIVE_POSTS,
+  GET_LAST_POST_TITLE_CONTENT,
+} from "../../apollo/apolloQueries";
 
 const css = {
   container: "listContainer",
@@ -69,21 +74,48 @@ const posts: Post[] = [
   },
 ];
 
-export const List = () => {
+interface IListInterface {
+  activePosts: Post[];
+}
+
+export const List = ({ activePosts }: IListInterface) => {
+  const [title, setTitle] = useState<string>();
+  const { loading, data, error } = useQuery(GET_LAST_POST_TITLE_CONTENT);
+
+  const getTitleContent = (data: any): ContentInput => {
+    return data?.lastPostTitleContent;
+  };
+
+  useEffect(() => {
+    if (!loading) {
+      setTitle(getTitleContent(data)?.value);
+    }
+  }, [loading]);
+
   return (
-    <div className={BEM(css.container)}>
-      <div className={BEM(css.container, css.posts, css.title)}>
-        Hej!
-        <br />
-        Sprawdź moje
-        <br />
-        ostatnie posty
-      </div>
-      <div className={BEM(css.container, css.posts)}>
-        {posts.slice(0, 5).map((post, index) => {
-          return <ListItem post={post} index={index} key={index} />;
-        })}
-      </div>
-    </div>
+    <>
+      {!loading && (
+        <div className={BEM(css.container)}>
+          <div className={BEM(css.container, css.posts, css.title)}>
+            {title ? (
+              title
+            ) : (
+              <>
+                Hej!
+                <br />
+                Sprawdź moje
+                <br />
+                ostatnie posty
+              </>
+            )}
+          </div>
+          <div className={BEM(css.container, css.posts)}>
+            {activePosts.slice(0, 5).map((post, index) => {
+              return <ListItem post={post} index={index} key={index} />;
+            })}
+          </div>
+        </div>
+      )}
+    </>
   );
 };

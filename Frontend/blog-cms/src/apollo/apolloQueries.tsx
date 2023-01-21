@@ -327,6 +327,27 @@ export const GET_FIRST_POST_PREMIER = gql`
   }
 `;
 
+export const GET_ALL_ACTIVE_POSTS = gql`
+  query GetAllActivePosts {
+    activePosts {
+      id
+      title
+      content
+      snippet
+      timeToReadInMs
+      primaryImgName
+      contentImgName
+      publicationDate
+      categories {
+        id
+        title
+        path
+        parentId
+      }
+    }
+  }
+`;
+
 export const GET_ABOUT = gql`
   query getAbout {
     about {

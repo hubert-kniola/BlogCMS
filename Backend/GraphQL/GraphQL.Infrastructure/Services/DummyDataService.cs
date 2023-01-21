@@ -1,4 +1,5 @@
-﻿using GraphQL.Core.Entities;
+﻿using DnsClient.Internal;
+using GraphQL.Core.Entities;
 using GraphQL.Core.Repository;
 using GraphQL.Core.Services;
 using System.ComponentModel;
@@ -385,6 +386,13 @@ namespace GraphQL.Infrastructure.Services
         {
             if (await _postRepository.RemoveAllAsync())
             {
+                string[] pictures = {
+                            "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                            "1cc8655b-0aca-44da-af78-7d712d92cece.jpg",
+                            "2213a8b7-3019-4559-ad39-7176ac1a8651.jpg",
+                            "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
+                            "07e8f032-22ad-4db2-952b-1bd9b4780bbb.jpg"
+                };
                 IEnumerable<Category>? categoryList = null;
 
                 bool success = await SetDummyCategory();
@@ -407,7 +415,7 @@ namespace GraphQL.Infrastructure.Services
                             Content = _htmlContent,
                             Snippet = "Tutaj będzie jakiś snippet bla bla bla - opis postu co? jak? gdzie? po co? dlaczego? co to ma na celu? Czy to ma sens?",
                             TimeToReadInMs = $"{5 + i}",
-                            PrimaryImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                            PrimaryImgName = pictures[i%2],
                             ContentImgName = new List<string>() {
                             "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
                             "1cc8655b-0aca-44da-af78-7d712d92cece.jpg",
@@ -415,7 +423,7 @@ namespace GraphQL.Infrastructure.Services
                             "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
                             "07e8f032-22ad-4db2-952b-1bd9b4780bbb.jpg"
                         },
-                            PublicationDate = i < 8 ? DateTime.Now : DateTime.Now.AddDays(10 - i),
+                            PublicationDate = i < 8 ? DateTime.UtcNow.AddMinutes(-i) : DateTime.UtcNow.AddDays(10 - i),
                             Categories = categoryListId,
                             IsTopPost = i < 3,
                         });

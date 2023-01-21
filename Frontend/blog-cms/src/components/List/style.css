@@ -7,6 +7,7 @@
 
 .listContainer_posts{
     width: 65%;
+    min-width: 730px;
     margin-left: auto;
     padding: 2rem;
 }
@@ -42,16 +43,16 @@
 .listItem_photo {
     margin: auto;
     padding: 0;
-    width: 8rem;
-    min-width: 8rem;
-    height: 8rem;
-    min-height: 8rem;
+    width: 9rem;
+    min-width: 9rem;
+    height: 9rem;
+    min-height: 9rem;
     @apply 
         bg-cover bg-center
 }
 
 .listItem_content {
-    width: calc(100% - 8rem);
+    width: calc(100% - 9rem);
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +65,7 @@
 
 .listItem_title {
     width: 100%;
-    font-size: large;
+    font-size: medium;
     font-weight: bold;
     @apply 
     text-primary

@@ -22,6 +22,11 @@ namespace GraphQL.Infrastructure.Repositories
             return await _collection.Find(x => x.Categories.Contains(categoryId)).ToListAsync();
         }
 
+        public async Task<IEnumerable<Post>?> GetAllActivePostAsync()
+        {
+            return (await _collection.Find(x => x.PublicationDate <= DateTime.UtcNow).ToListAsync()).OrderBy(x => x.PublicationDate);
+        }
+
         public async Task<IEnumerable<Post>?> GetTopPostAsync()
         {
             return await _collection.Find(x => x.IsTopPost == true).ToListAsync();
@@ -29,25 +34,13 @@ namespace GraphQL.Infrastructure.Repositories
 
         public async Task<Post?> GetFirstPostPremier()
         {
-            List<Post> postList = new(await GetAllAsync());
-            DateTime? nextFeatureDate = null;
-            Post? premierePost = null;
+            var postList = await GetAllAsync();
+            var nextFeatureDate = postList
+                .Where(post => post.PublicationDate > DateTime.UtcNow)
+                .OrderBy(post => post.PublicationDate)
+                .FirstOrDefault();
 
-            foreach (var post in postList)
-            {
-                if (nextFeatureDate == null)
-                {
-                    nextFeatureDate = post.PublicationDate;
-                    premierePost = post;
-                }
-                else if (post.PublicationDate > DateTime.Now && post.PublicationDate < nextFeatureDate)
-                {
-                    nextFeatureDate = post.PublicationDate;
-                    premierePost = post;
-                }
-            }
-
-            return premierePost;
+            return nextFeatureDate?.PublicationDate > DateTime.UtcNow ? nextFeatureDate : null;
         }
 
         public async Task<Post?> UpdateAsync(Post entity)
