@@ -94,7 +94,7 @@ const FileUploader = ({
     return (
       <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
         {inputFile && inputFile[0].name ? <p>Dodano pliki:</p> : null}
-        {inputFile
+        {(inputFile && inputFile[0].name)
           ? Array.from(inputFile).map((element: File, index: number) => {
               return (
                 <p>

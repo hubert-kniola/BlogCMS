@@ -65,7 +65,7 @@ export const AdminHeader = ({ menuItems }: AdminHeaderProps) => {
           {navList.map((element: any, i: number) => (
             <>
               <li key={i}>
-                <Link key={i + 10} className={getNavClasses(element).join(" ")} to={element.to}>
+                <Link className={getNavClasses(element).join(" ")} to={element.to}>
                   {element.text}
                 </Link>
               </li>

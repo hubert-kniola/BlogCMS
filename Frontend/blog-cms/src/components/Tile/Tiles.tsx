@@ -180,7 +180,7 @@ export const Tiles = ({ category, style }: TileProps) => {
         )}
         {subCategoriesRedux.map((element: CategoryState, i: number) => {
           return (
-            <div>
+            <div key={element.id}>
               <div className={BEM(cssClasses.tile, cssClasses.sub)}>
                 <p>{element.title}</p>
                 <IconButton
@@ -230,7 +230,7 @@ export const Tiles = ({ category, style }: TileProps) => {
               {subCategoriesRedux[i].subCategory.map(
                 (element: CategoryState, index: number) => {
                   return (
-                    <div>
+                    <div key={element.id}>
                       <div className={BEM(cssClasses.tile, cssClasses.tag)}>
                         <p>{element.title}</p>
                         <IconButton
