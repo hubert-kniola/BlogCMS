@@ -1,0 +1,36 @@
+.errorPage_container{
+    width: 50%;
+    min-width: 650px;
+    padding-top: 3rem;
+    margin: auto;
+    cursor: pointer;
+}
+
+.errorPage_code{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @apply
+        text-primary-300
+}
+
+.errorPage_code div{
+    font-size: 16rem;
+    line-height: 16rem;
+}
+
+.errorPage_code svg{
+    margin: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.errorPage_mess {
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+    @apply
+    text-primary-300
+}

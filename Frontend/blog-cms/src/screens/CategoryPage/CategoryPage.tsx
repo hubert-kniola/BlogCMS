@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import { multiply } from "lodash";
 import React, { useEffect, useState } from "react";
 import LoadingOverlayWrapper from "react-loading-overlay-ts";
 import { GET_POST_BY_PATH } from "../../apollo/apolloQueries";
@@ -7,6 +8,7 @@ import {
   CalenderIco,
   CustomButton,
   CustomCheckbox,
+  Empty,
   Input,
   MainPageMenu,
   OverflowContainer,
@@ -60,7 +62,7 @@ export const CategoryPage = () => {
 
       {loading ? (
         <Spinner />
-      ) : (
+      ) : currentPosts.length > 0 ? (
         <div className={BEM(css.categoryPage, css.container)}>
           <div className={BEM(css.categoryPage, css.left)}>
             <div className={BEM(css.categoryPage, css.header)}>
@@ -118,6 +120,8 @@ export const CategoryPage = () => {
               })}
           </div>
         </div>
+      ) : (
+        <Empty />
       )}
     </>
   );

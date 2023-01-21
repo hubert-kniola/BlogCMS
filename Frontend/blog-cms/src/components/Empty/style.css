@@ -1,0 +1,21 @@
+.empty_container{
+    padding-top: 5rem;
+    width: 50%;
+    margin: auto;
+    cursor: pointer;
+}
+
+.empty_container img{
+    mix-blend-mode: multiply;
+    margin: auto;
+}
+
+.empty_container div{
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+    @apply
+    text-primary-300
+}
