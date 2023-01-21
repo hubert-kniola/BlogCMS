@@ -55,7 +55,7 @@ export const ListItem = ({ post, index }: IListItem) => {
 
   return (
     <a
-      href="https://google.pl"
+      href={`${post.categories[0].path}/${post.id}`}
       className={index > 0 ? GetNextItemClass() : GetFirstItemClass()}>
       <BackgroundDiv
         url={`${BlobStorageURL}${post.primaryImgName}`}
