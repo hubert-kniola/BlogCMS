@@ -76,16 +76,18 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
   );
   const top3 = useAppSelector((state: RootState) => state.configure.top3);
   const posts = useAppSelector((state: RootState) => state.post.posts);
-  const [mainCategory, setMainCategory] = useState({
+  const [mainCategory, setMainCategory] = useState<CategoryState>({
     id: null,
     title: null,
     path: null,
+    objectType: null,
     subCategory: [],
   });
-  const [subCategory, setSubCategory] = useState({
+  const [subCategory, setSubCategory] = useState<CategoryState>({
     id: null,
     title: null,
     path: null,
+    objectType: null,
     subCategory: [],
   });
   const [tagCategory, setTagCategory] = useState([]);
@@ -109,53 +111,86 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
 
   useEffect(() => {
     const initEditedPost = () => {
-      if (type === ActionType.Edit) {
+      if (type === ActionType.Edit && !data) {
         if (posts[index]) {
           let editedPost = posts[index];
           setTitle(editedPost.title);
-          setMainSelectedFile(editedPost.mainImage);
-          setSideSelectedFiles(editedPost.sideImages);
+          setMainSelectedFile(
+            editedPost.primaryFile
+              ? editedPost.primaryFile
+              : editedPost.mainImage
+          );
+          setSideSelectedFiles(
+            editedPost.contentFile
+              ? editedPost.contentFile
+              : editedPost.sideImages
+          );
           setRichValue(ConvertFromHtmlToEditorState(editedPost.content));
-          if (editedPost.categories.length > 0) {
-            let elements = mapCategoriesToOptions(editedPost.categories);
-            elements.pop();
-            elements[2] = mapCategoriesToOptions([editedPost.categories[2]]);
+          if (editedPost.categoryTree) {
+            let elements = [];
+            if (editedPost.categoryTree.mainCategory) {
+              let mainCategory = categoriesRedux.find(
+                (element: any) =>
+                  element.id === editedPost.categoryTree.mainCategory.id
+              );
+              let mainC = mapCategoriesToOptions([mainCategory]);
+              elements.push(mainC[0]);
+              setMainCategory(mainCategory);
+              if (editedPost.categoryTree.subCategory) {
+                let subCategory = mainCategory.subCategory.find(
+                  (element: any) =>
+                    element.id === editedPost.categoryTree.subCategory.id
+                );
+                let subC = mapCategoriesToOptions([subCategory]);
+                elements.push(subC[0]);
+                setSubCategory(subCategory);
+                if (editedPost.categoryTree.tags) {
+                  let tags = subCategory.subCategory.filter((element: any) =>
+                    editedPost.categoryTree.tags.some(
+                      (e: any) => element.id === e.id
+                    )
+                  );
+                  elements[2] = mapCategoriesToOptions(tags);
+                  setTagCategory(tags);
+                }
+              }
+            }
             setSelectedCategories(elements);
           }
           setSnippet(editedPost.snippet);
           setTimeToRead(editedPost.timeToReadInMs);
           setPlaceInPopular(editedPost.placeInPopular);
-          setPublicOnDate(editedPost.publicOnDate);
+          setPublicOnDate(editedPost.publicationDate && true);
           setPublicDate(editedPost.publicationDate);
-          if (editedPost.categories[0])
-            setMainCategory(editedPost.categories[0]);
-          if (editedPost.categories[1])
-            setSubCategory(editedPost.categories[1]);
-          if (editedPost.categories.length > 2)
-            setTagCategory(editedPost.categories[2]);
         }
       }
     };
     initEditedPost();
     const handleInsertActionRedux = () => {
       if (type === ActionType.Add && data) {
-        let category = [];
+        let category: any = {};
         if (mainCategory.title) {
-          category.push(mainCategory);
-          subCategory.title !== null && category.push(subCategory);
-          tagCategory && category.push(tagCategory);
+          category.mainCategory = mainCategory;
+          if (subCategory.title !== null) {
+            category.subCategory = subCategory;
+            if (tagCategory) {
+              category.tags = tagCategory;
+            }
+          }
         }
         const reduxPayload: any = {
           id: data.createPost.id,
           title: title,
           publicationDate:
-            publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
+            publicOnDate && publicDate
+              ? publicDate.toLocaleString()
+              : new Date().toLocaleString(),
           content: convertToHTML(richValue.getCurrentContent()),
           snippet: snippet,
-          timeToReadInMs: timeToRead.toString(),
-          mainImage: mainSelectedFile,
-          sideImages: sideSelectedFiles,
-          categories: category,
+          timeToReadInMs: timeToRead && timeToRead.toString(),
+          primaryFile: mainSelectedFile,
+          contentFile: sideSelectedFiles,
+          categoryTree: category,
           publicOnDate: publicOnDate,
           placeInPopular: placeInPopular,
         };
@@ -272,74 +307,86 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setSideSelectedFiles(e);
   };
 
-  const mapCategoriesToPostCategories = (categories: any[]) => {
-    let newCategories = categories.map((element) => {
-      return { id: element.id, title: element.title, path: element.path };
+  const mapTagsToPostCategories = (categories: any[]) => {
+    let newCategories = categories.map((element: any, index: number) => {
+      return element[index].id;
     });
     return newCategories;
   };
 
   const savePost = async () => {
+    let mainFileName: string = null;
+    let sideFileNames: string[] = [];
     if (
       mainSelectedFile &&
       (type === ActionType.Add ||
         (type === ActionType.Edit &&
-          mainSelectedFile !== posts[index].mainImage))
+          mainSelectedFile !== posts[index].primaryFile))
     ) {
-      const mainFileName: any = await AddImageToAzure([mainSelectedFile]);
-      setMainFileName(mainFileName[0].newName);
+      const mainFile: any = await AddImageToAzure([mainSelectedFile]);
+      mainFileName = mainFile.fileNames[0].newName;
     }
     if (
       sideSelectedFiles &&
       (type === ActionType.Add ||
         (type === ActionType.Edit &&
-          sideSelectedFiles !== posts[index].sideImages))
+          sideSelectedFiles !== posts[index].contentFile))
     ) {
-      const sideFileNames: any = await AddImageToAzure(sideSelectedFiles);
-      let sideFiles = [];
-      sideFileNames.map((element: any) => sideFiles.push(element.newName));
-      setSideFileNames(sideFileNames);
+      const sideFiles: any = await AddImageToAzure(sideSelectedFiles);
+      sideFiles.fileNames.map((element: any) =>
+        sideFileNames.push(element.newName)
+      );
     }
-    //let categoryNames = [];
     let category = [];
     if (mainCategory.title) {
-      category.push(mainCategory);
-      //categoryNames.push(mainCategory.id);
       if (subCategory.title !== null) {
-        category.push(subCategory);
-        //categoryNames.push(subCategory.id);
-      }
-      if (tagCategory) {
-        category.push(tagCategory);
-        //tagCategory.map((element) => categoryNames.push(element.id));
+        if (tagCategory) {
+          category.push(tagCategory);
+        }
       }
     }
     const payload: any = {
       title: title,
       content: convertToHTML(richValue.getCurrentContent()),
       snippet: snippet,
-      timeToReadInMs: timeToRead.toString(),
-      primaryImgName: mainFileName,
-      contentImgName: sideFileNames,
+      timeToReadInMs: timeToRead ? timeToRead.toString() : "5",
+      primaryImgName: mainFileName ? mainFileName : posts[index].primaryImgName,
+      contentImgName: sideFileNames
+        ? sideFileNames
+        : posts[index].contentImgName,
       publicationDate:
-        publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
-      categories: mapCategoriesToPostCategories(category),
+        publicOnDate && publicDate
+          ? publicDate.toLocaleString()
+          : new Date().toLocaleString(),
+      categories: category ? mapTagsToPostCategories(category) : [],
     };
     if (type === ActionType.Add) {
       insertPostMutation({ variables: payload as AdminInsertPostForm });
       setDisableOnClick(true);
     } else {
+      let categoryTree: any = {};
+      if (mainCategory.title) {
+        categoryTree.mainCategory = mainCategory;
+        if (subCategory.title !== null) {
+          categoryTree.subCategory = subCategory;
+          if (tagCategory) {
+            categoryTree.tags = tagCategory;
+          }
+        }
+      }
       const reduxPayload: any = {
         id: posts[index].id,
         title: title,
         publicationDate:
-          publicOnDate && publicDate ? publicDate.toString() : GetGTMDate(),
+          publicOnDate && publicDate
+            ? publicDate.toLocaleString()
+            : new Date().toLocaleString(),
         content: convertToHTML(richValue.getCurrentContent()),
         snippet: snippet,
         timeToReadInMs: timeToRead.toString(),
-        mainImage: mainSelectedFile,
-        sideImages: sideSelectedFiles,
-        categories: category,
+        primaryFile: mainSelectedFile,
+        contentFile: sideSelectedFiles,
+        categoryTree: categoryTree,
         publicOnDate: publicOnDate,
         placeInPopular: placeInPopular,
       };
@@ -528,7 +575,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                 onChange={(e) => handleTagCategory(e, 2)}
               />
             </div>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={
                 <Checkbox
                   checked={placeInPopular}
@@ -542,7 +589,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
                 />
               }
               label="Wyświetlaj w popularnych"
-            />
+            /> */}
             <FormControlLabel
               control={
                 <Checkbox

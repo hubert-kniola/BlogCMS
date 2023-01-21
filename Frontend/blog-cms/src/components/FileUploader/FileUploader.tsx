@@ -61,7 +61,7 @@ const FileUploader = ({
     return (
       <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
         {inputFile ? (
-          inputFile.name ? (
+          (inputFile.name && !inputFile.name.includes("_")) ? (
             <p>Dodano plik: {inputFile.name}</p>
           ) : null
         ) : (
@@ -93,15 +93,17 @@ const FileUploader = ({
   const multiData = (event?: any) => {
     return (
       <div className={BEM(cssClasses.fileUploader, cssClasses.container)}>
-        {inputFile && inputFile[0].name ? <p>Dodano pliki:</p> : null}
-        {(inputFile && inputFile[0].name)
-          ? Array.from(inputFile).map((element: File, index: number) => {
-              return (
-                <p>
-                  {index}.{element.name}
-                </p>
-              );
-            })
+        {/* {inputFile && inputFile[0].name ? <p>Dodano pliki:</p> : null} */}
+        {/* {inputFile
+          ? inputFile[0].name
+            ? Array.from(inputFile).map((element: File, index: number) => {
+                return (
+                  <p>
+                    {index}.{element.name}
+                  </p>
+                );
+              })
+            : null
           : event.target.files &&
             Array.from(event.target.files).map(
               (element: File, index: number) => {
@@ -111,7 +113,7 @@ const FileUploader = ({
                   </p>
                 );
               }
-            )}
+            )} */}
         <div className={BEM(cssClasses.image, cssClasses.container)}>
           <div
             className={BEM(
@@ -188,8 +190,9 @@ const FileUploader = ({
   };
 
   const handleFileEdit = () => {
-    if (Array.isArray(inputFile)) {
-      if (inputFile.length > 1) {
+    const isArray: boolean = Array.isArray(inputFile);
+    if (isArray || typeof inputFile === "object") {
+      if (isArray  || Object.keys(inputFile).length > 1) {
         return multiData();
       } else {
         return singleData();

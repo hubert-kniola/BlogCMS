@@ -75,6 +75,7 @@
   background-color: rgb(241, 241, 241);
   height: 40vh;
   overflow: auto;
+  margin-bottom: 5vh;
 }
 
 .category_content--input > input[type="text"] {

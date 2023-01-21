@@ -66,12 +66,14 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
         const payload: any = {
           id: data.addCarouselElement.id,
           title: title,
-          publicationDate: GetGTMDate(),
+          publicationDate: new Date().toLocaleString(),
           content: richValue,
           imgName: data.addCarouselElement.imgName,
           file: selectedFile,
           active: activeSlide,
-          url: carousels[index].url,
+          url: data.addCarouselElement.url
+            ? data.addCarouselElement.url
+            : "http://localhost:8080/",
         };
         dispatch(addCarousel(payload));
         handleClose();
@@ -112,16 +114,17 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
   };
 
   const savePost = async () => {
+    let fileName = "";
     if (selectedFile && typeof selectedFile !== "string") {
       const file: any = await AddImageToAzure([selectedFile]);
-      setFileName(file.fileNames[0].newName);
+      fileName = file.fileNames[0].newName;
     }
     if (type === ActionType.Add) {
       await addCarouselMutation({
         variables: {
           title: title,
           content: richValue,
-          publicationDate: GetGTMDate(),
+          publicationDate: new Date().toLocaleString(),
           imgName: fileName,
           active: activeSlide,
           url: "http://localhost:8080/",
@@ -132,7 +135,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       const payload: any = {
         id: carousels[index].id,
         title: title,
-        publicationDate: GetGTMDate(),
+        publicationDate: new Date().toLocaleString(),
         content: richValue,
         imgName: fileName ? fileName : carousels[index].imgName,
         file: selectedFile,

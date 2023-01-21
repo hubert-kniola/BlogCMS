@@ -140,7 +140,6 @@ export const Category = () => {
           </div>
         </div>
       </div>
-      <SaveButton handleSave={saveMenu} />
       <ToastContainer toastStyle={{ backgroundColor: mainColor }} />
     </div>
   );

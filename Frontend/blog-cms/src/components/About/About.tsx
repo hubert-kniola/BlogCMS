@@ -50,7 +50,7 @@ export const About = () => {
     data["text"] = convertToHTML(richValue.getCurrentContent());
     data["file"] = selectedFile;
     const file: any = await AddImageToAzure([selectedFile]);
-    data["imgName"] = file.fileNames[0].newName;
+    data["imgName"] = file.fileNames[0].newName ? file.fileNames[0].newName : about.imgName;
     dispatch(updateAbout(data));
     updateAboutMutation({
       variables: {

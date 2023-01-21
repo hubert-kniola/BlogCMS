@@ -20,6 +20,7 @@ import CarouselModal from "../CarouselModal/CarouselModal";
 import Row from "./Rows/Row";
 import { ActionType } from "../../types";
 import "./style.css";
+import { GetDate } from "../../tools";
 
 const CarouselTable = () => {
   const dispatch = useAppDispatch();
@@ -72,6 +73,9 @@ const CarouselTable = () => {
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
                   Aktywność
                 </TableCell>
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  Data
+                </TableCell>
               </TableRow>
             </TableHead>
           )}
@@ -85,9 +89,7 @@ const CarouselTable = () => {
                     element.content,
                     element.active ? "Aktywny" : "Nieaktywny",
                   ]}
-                  date={
-                    new Date(element.publicationDate).toString().split("GMT")[0]
-                  }
+                  date={GetDate(element.publicationDate.toLocaleString())}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);

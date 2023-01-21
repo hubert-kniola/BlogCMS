@@ -17,7 +17,7 @@ import { ActionType, AdminRemovePostForm, Post } from "../../types";
 import { mainColor } from "../../types/consts";
 import PostModal from "../PostModal/PostModal";
 import Row from "./Rows/Row";
-import { removeTags } from "../../tools";
+import { removeTags, GetDate } from "../../tools";
 import "./style.css";
 import { useMutation } from "@apollo/client";
 import { REMOVE_POST } from "../../apollo/apolloQueries";
@@ -82,7 +82,7 @@ const PostsTable = () => {
                 <Row
                   key={i}
                   cells={[element.title, removeTags(element.content)]}
-                  date={new Date(element.publicationDate).toString().split("GMT")[0]}
+                  date={GetDate(element.publicationDate.toLocaleString())}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
