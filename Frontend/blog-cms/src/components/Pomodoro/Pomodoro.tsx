@@ -1,9 +1,6 @@
-import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { BackgroundDiv } from "..";
-import { GET_FIRST_POST_PREMIER, GET_TOP3 } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
-import { Post } from "../../types";
 import "./style.css";
 
 interface IPomodoro {

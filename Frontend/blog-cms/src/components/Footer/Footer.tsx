@@ -1,11 +1,8 @@
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import {
-  GET_CONTACT_INFO,
-  POST_CONTACT_FORM,
-} from "../../apollo/apolloQueries";
+import { GET_FOOTER_CONTENT } from "../../apollo/apolloQueries";
 import { BEM } from "../../tools";
-import { ContactInfoType } from "../../types";
+import { ContentInput } from "../../types";
 import "./style.css";
 
 const css = {
@@ -14,35 +11,28 @@ const css = {
 };
 
 export const Footer = () => {
-  const {
-    loading: loadingData,
-    error: errorData,
-    data: contactInfoData,
-  } = useQuery(GET_CONTACT_INFO);
-  const [createContactForm, { data, loading, error }] =
-    useMutation(POST_CONTACT_FORM);
+  const { loading, error, data } = useQuery(GET_FOOTER_CONTENT);
 
-  const [contactInfo, setContactInfo] = useState(undefined as ContactInfoType);
+  const [footerContent, setFooterContent] = useState([] as ContentInput[]);
 
-  const getContactInfoData = (data: any): ContactInfoType => {
-    return data?.contactInfo;
+  const getFooterContent = (data: any): ContentInput[] => {
+    return data?.footerContent;
   };
 
   useEffect(() => {
-    if (!loadingData) {
-      setContactInfo(getContactInfoData(contactInfoData));
+    if (!loading) {
+      setFooterContent(getFooterContent(data));
     }
-  }, [loadingData]);
+  }, [loading]);
 
   return (
     <>
       <div className={BEM(css.footer)}>
-        {contactInfo &&
-          contactInfo.textBoxes.map((item, idx) => {
+        {!loading &&
+          footerContent.map((item, idx) => {
             return (
               <div key={idx} className={BEM(css.footer, css.item)}>
-                <p>{item.fieldName}</p>
-                <p>{item.content}</p>
+                <p>{item.value}</p>
               </div>
             );
           })}
