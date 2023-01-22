@@ -13,7 +13,7 @@ namespace GraphQL.API.Queries
             => (await postRepository.GetAllAsync());
 
         public async Task<IEnumerable<Post>> GetActivePostsAsync([Service] IPostRepository postRepository)
-            => (await postRepository.GetAllAsync());
+            => (await postRepository.GetAllActivePostAsync());
 
         public async Task<Post?> GetPostById(string id, [Service] IPostRepository postRepository)
             => await postRepository.GetByIdAsync(id);

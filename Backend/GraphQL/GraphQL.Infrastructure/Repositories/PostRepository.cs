@@ -24,7 +24,7 @@ namespace GraphQL.Infrastructure.Repositories
 
         public async Task<IEnumerable<Post>?> GetAllActivePostAsync()
         {
-            return (await _collection.Find(x => x.PublicationDate <= DateTime.UtcNow).ToListAsync()).OrderBy(x => x.PublicationDate);
+            return (await _collection.Find(x => x.PublicationDate <= DateTime.UtcNow).ToListAsync()).OrderByDescending(x => x.PublicationDate);
         }
 
         public async Task<IEnumerable<Post>?> GetTopPostAsync()

@@ -17,20 +17,21 @@ namespace GraphQL.Infrastructure.Services
 
         public async Task<IEnumerable<Category>?> GetAllSubCategories(string categoryId)
         {
-            List<Category> categories = new();
             if (!string.IsNullOrEmpty(categoryId))
             {
                 Category? category = await _categoryRepository.GetByIdAsync(categoryId);
-                if (category != null)
-                {
-                    categories.Add(category);
+                return await GetSubCategories(category); ;
+            }
 
-                    List<Category> subCategories = new(await GetSubCategories(category.Id, false));
+            return null;
+        }
 
-                    categories.AddRange(subCategories);
-
-                    return categories;
-                }
+        public async Task<IEnumerable<Category>?> GetAllSubCategoriesByPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                Category? category = await _categoryRepository.GetCategoryByPath(path);
+                return await GetSubCategories(category);
             }
 
             return null;
@@ -73,7 +74,7 @@ namespace GraphQL.Infrastructure.Services
             if (firstTag != null && !string.IsNullOrEmpty(firstTag.ParentId))
                 subCategory = await _categoryRepository.GetByIdAsync(firstTag.ParentId);
 
-            if(subCategory != null && !string.IsNullOrEmpty(subCategory.ParentId))
+            if (subCategory != null && !string.IsNullOrEmpty(subCategory.ParentId))
                 mainCategory = await _categoryRepository.GetByIdAsync(subCategory.ParentId);
 
             return new()
@@ -211,6 +212,22 @@ namespace GraphQL.Infrastructure.Services
             }
 
             return categories;
+        }
+        private async Task<IEnumerable<Category>?> GetSubCategories(Category? category)
+        {
+            List<Category> categories = new();
+            if (category != null)
+            {
+                categories.Add(category);
+
+                List<Category> subCategories = new(await GetSubCategories(category.Id!, false));
+
+                categories.AddRange(subCategories);
+
+                return categories;
+            }
+
+            return null;
         }
     }
 }
