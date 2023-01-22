@@ -29,6 +29,21 @@ export const GET_CATEGORY_OBJECT = gql`
   }
 `;
 
+export const GET_ALL_SUB_CATEGORIES_BY_PATH = gql`
+  query GetAllSubCategoriesByPath($path: String!) {
+    allSubCategoriesByPath(
+      path: $path
+      where: { and: [{ objectType: { eq: CATEGORY } }] }
+    ) {
+      id
+      title
+      path
+      objectType
+      deephLvl
+    }
+  }
+`;
+
 export const GET_ROUTE = gql`
   query GetRoute {
     category {

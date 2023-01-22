@@ -1,5 +1,4 @@
-import { CategoryState } from "../../store/slices/categorySlice";
-import { RouteObjectType, TextPosition } from "./enums";
+import { RouteObjectType } from "./enums";
 
 export enum ActionType {
   Add = "add",
@@ -50,6 +49,7 @@ export type CategoryType = {
   path: string;
   objectType?: RouteObjectType;
   subCategory?: CategoryType[];
+  deephLvl?: number;
 };
 
 export type CategoryTreeType = {

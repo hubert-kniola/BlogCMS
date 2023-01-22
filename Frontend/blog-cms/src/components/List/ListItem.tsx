@@ -1,9 +1,9 @@
 import React from "react";
-import "./style.css";
-import { BEM } from "../../tools";
-import { CategoryType, Post } from "../../types";
 import { BackgroundDiv } from "..";
 import { BlobStorageURL } from "../../settings";
+import { BEM, GetDate } from "../../tools";
+import { Post } from "../../types";
+import "./style.css";
 
 const css = {
   listItem: "listItem",
@@ -51,7 +51,7 @@ export const ListItem = ({ post, index }: IListItem) => {
       <div className={BEM(css.listItem, css.content)}>
         <div className={BEM(css.listItem, css.title)}>{post.title}</div>
         <div className={BEM(css.listItem, css.date)}>
-          {post.publicationDate.toString()}
+          {GetDate(post.publicationDate.toLocaleString())}
         </div>
         <div className={BEM(css.listItem, css.snippet)}>
           {htmlToPlainText(post.content)}

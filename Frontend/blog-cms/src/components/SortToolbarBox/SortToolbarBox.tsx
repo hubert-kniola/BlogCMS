@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BEM } from "../../tools";
 import { ArrowDownIco } from "../Ico/ArrowDownIco";
 import "./style.css";
@@ -13,12 +13,17 @@ const css = {
 };
 
 interface ISortToolbarBox {
+  isActive: boolean;
+  setIsActive: (value: boolean) => void;
   children: React.ReactNode;
 }
 
-export const SortToolbarBox = ({ children }: ISortToolbarBox) => {
+export const SortToolbarBox = ({
+  isActive,
+  children,
+  setIsActive,
+}: ISortToolbarBox) => {
   const [isDown, setIsDown] = useState(true);
-  const [isActive, setIsActive] = useState(false);
 
   const onClickHandler = () => {
     if (!isActive) {
@@ -29,14 +34,13 @@ export const SortToolbarBox = ({ children }: ISortToolbarBox) => {
       setIsActive(false);
       setIsDown((s) => !s);
     }
-
-    // if (isActive && isDown) {
-    //   setIsActive(false);
-    // } else {
-    //   setIsDown((s) => !s);
-    //   setIsActive(true);
-    // }
   };
+
+  useEffect(() => {
+    if (!isActive) {
+      setIsDown(true);
+    }
+  }, [isActive]);
 
   return (
     <div
