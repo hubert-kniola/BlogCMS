@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import { check } from "prettier";
 import React, { useEffect, useState } from "react";
 import {
   GET_ALL_SUB_CATEGORIES_BY_PATH,
@@ -18,7 +19,7 @@ import {
 import { ListItem } from "../../components/List/ListItem";
 import Spinner from "../../components/Spinner/Spinner";
 import { BEM } from "../../tools";
-import { CategoryState, CategoryType, Post } from "../../types";
+import { CategoryState, CategoryType, Post, PostItemType } from "../../types";
 import "./style.css";
 
 const css = {
@@ -148,7 +149,41 @@ export const CategoryPage = () => {
     setCurrentTags(tempTags);
   };
 
-  const onFilterButtonClickHandler = () => {};
+  const onFilterButtonClickHandler = () => {
+    let checkedCategory = [] as CategoryType[];
+
+    currentCategories.forEach(({ category, active }) => {
+      active && checkedCategory.push(category);
+    });
+
+    currnetTags.forEach(({ category, active }) => {
+      active && checkedCategory.push(category);
+    });
+
+    let tempPosts = searchValue.length > 0 ? currentSearchPosts : posts;
+    let filteredPost = [] as Post[];
+
+    if (checkedCategory.length > 0) {
+      checkedCategory.forEach((category) => {
+        let posts = tempPosts.filter(
+          (x) =>
+            x.categoryTree?.mainCategory?.id === category.id ||
+            x.categoryTree?.subCategory?.id === category.id ||
+            x.categoryTree?.tags?.find((x) => x.id === category.id)
+        );
+
+        posts.forEach((post) => {
+          if (!filteredPost.find((x) => x.id === post.id)) {
+            filteredPost.push(post);
+          }
+        });
+      });
+
+      setCurrentPosts(filteredPost);
+    } else {
+      setCurrentPosts(searchValue.length > 0 ? currentSearchPosts : posts);
+    }
+  };
 
   useEffect(() => {
     if (!postsLoading) {
@@ -164,12 +199,10 @@ export const CategoryPage = () => {
     } else if (calenderActive) {
       let tempPosts = sortByCalendar(currentPosts, calenderDesc);
       setCurrentPosts(tempPosts);
+    } else if (searchValue.length > 0) {
+      setCurrentPosts(currentSearchPosts);
     } else {
-      if (searchValue.length > 0) {
-        setCurrentPosts(currentSearchPosts);
-      } else {
-        setCurrentPosts(posts);
-      }
+      onFilterButtonClickHandler();
     }
   }, [alphabetActive, alphabetDesc, calenderActive, calenderDesc]);
 
@@ -254,7 +287,7 @@ export const CategoryPage = () => {
                 )}
                 <CustomButton
                   label="Filtruj"
-                  onClickAtionHandler={() => console.log("Filtruje...")}
+                  onClickAtionHandler={() => onFilterButtonClickHandler()}
                 />
               </div>
             </div>

@@ -14,7 +14,7 @@ export type Post = {
   primaryImgName: string;
   contentImgName?: string[];
   categories?: CategoryType[];
-  categoryTree?: CategoryTreeType[];
+  categoryTree?: CategoryTreeType;
   timeToReadInMs?: string;
   primaryFile?: any;
   contentFile?: any[];

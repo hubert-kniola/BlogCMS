@@ -283,6 +283,23 @@ export const GET_POST_BY_PATH = gql`
         title
         path
       }
+      categoryTree {
+        mainCategory {
+          id
+          title
+          path
+        }
+        subCategory {
+          id
+          title
+          path
+        }
+        tags {
+          id
+          title
+          path
+        }
+      }
     }
   }
 `;
