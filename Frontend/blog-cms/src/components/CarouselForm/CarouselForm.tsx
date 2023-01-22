@@ -66,7 +66,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
         const payload: any = {
           id: data.addCarouselElement.id,
           title: title,
-          publicationDate: new Date().toLocaleString(),
+          publicationDate: data.addCarouselElement.publicationDate,
           content: richValue,
           imgName: data.addCarouselElement.imgName,
           file: selectedFile,

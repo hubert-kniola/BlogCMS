@@ -182,9 +182,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
           id: data.createPost.id,
           title: title,
           publicationDate:
-            publicOnDate && publicDate
-              ? publicDate.toLocaleString()
-              : new Date().toLocaleString(),
+            data.createPost.publicationDate,
           content: convertToHTML(richValue.getCurrentContent()),
           snippet: snippet,
           timeToReadInMs: timeToRead && timeToRead.toString(),
@@ -307,9 +305,9 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
     setSideSelectedFiles(e);
   };
 
-  const mapTagsToPostCategories = (categories: any[]) => {
+  const mapCategoriesToPostCategories = (categories: any[]) => {
     let newCategories = categories.map((element: any, index: number) => {
-      return element[index].id;
+      return element.id;
     });
     return newCategories;
   };
@@ -337,11 +335,13 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         sideFileNames.push(element.newName)
       );
     }
-    let category = [];
+    let category: any[] = [];
     if (mainCategory.title) {
+      category = [mainCategory];
       if (subCategory.title !== null) {
+        category = [subCategory];
         if (tagCategory) {
-          category.push(tagCategory);
+          category = tagCategory;
         }
       }
     }
@@ -358,7 +358,7 @@ const PostForm = ({ type, handleClose, index }: PostFormProps) => {
         publicOnDate && publicDate
           ? publicDate.toLocaleString()
           : new Date().toLocaleString(),
-      categories: category ? mapTagsToPostCategories(category) : [],
+      categories: category ? mapCategoriesToPostCategories(category) : [],
     };
     if (type === ActionType.Add) {
       insertPostMutation({ variables: payload as AdminInsertPostForm });
