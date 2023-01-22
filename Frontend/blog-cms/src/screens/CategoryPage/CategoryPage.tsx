@@ -285,13 +285,12 @@ export const CategoryPage = () => {
                       ))}
                   </OverflowContainer>
                 )}
-                {currentCategories.length > 1 ||
-                  (currnetTags.length > 1 && (
-                    <CustomButton
-                      label="Filtruj"
-                      onClickAtionHandler={() => onFilterButtonClickHandler()}
-                    />
-                  ))}
+                {(categories?.length > 1 || tags?.length > 1) && (
+                  <CustomButton
+                    label="Filtruj"
+                    onClickAtionHandler={() => onFilterButtonClickHandler()}
+                  />
+                )}
               </div>
             </div>
           )}
