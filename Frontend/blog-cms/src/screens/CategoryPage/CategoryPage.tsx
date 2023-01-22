@@ -207,17 +207,17 @@ export const CategoryPage = () => {
                 {currentCategories.length >= 2 && (
                   <OverflowContainer header="Kategorie">
                     {!categoriesLoading &&
-                      currentCategories.map((item, idx) => {
-                        return <CustomCheckbox label={item.title} key={idx} />;
-                      })}
+                      currentCategories.map((item, idx) => (
+                        <CustomCheckbox label={item.title} key={idx} />
+                      ))}
                   </OverflowContainer>
                 )}
                 {currnetTags.length >= 2 && (
                   <OverflowContainer header="Tagi">
                     {!categoriesLoading &&
-                      currnetTags.map((item, idx) => {
-                        return <CustomCheckbox label={item.title} key={idx} />;
-                      })}
+                      currnetTags.map((item, idx) => (
+                        <CustomCheckbox label={item.title} key={idx} />
+                      ))}
                   </OverflowContainer>
                 )}
                 <CustomButton
