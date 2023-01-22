@@ -76,7 +76,7 @@ export const Login = () => {
         >
           LOGIN
         </button>
-        <div className={cssClasses.register}><a href="http://localhost:8080/">VISIT PAGE</a></div>
+        <div className={cssClasses.register}><a href="http://localhost:8080/" target="_blank">VISIT PAGE</a></div>
         {!isValid && (
           <p className={cssClasses.valid}>
             You entered wrong e-mail or password!

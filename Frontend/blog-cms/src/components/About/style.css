@@ -42,6 +42,22 @@
   padding: 0 8px;
 }
 
+.about_title--required {
+  background-color: rgb(241, 241, 241);
+  border: 2px solid #ff4b4b;
+  border-radius: 3px;
+  width: 15vw;
+  height: 4vh;
+  margin-top: 0.5rem;
+  padding: 0 8px;
+  outline: none;
+}
+
+.about_text--required {
+  color: #ff4b4b;
+  margin-top: 0;
+}
+
 .about_title--text {
   margin-left: auto;
   margin-right: auto;

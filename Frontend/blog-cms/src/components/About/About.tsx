@@ -36,12 +36,13 @@ export const About = () => {
     elements: "elements",
     title: "title",
     textarea: "textarea",
+    required: "required",
   };
   const dispatch = useAppDispatch();
   const about = useAppSelector((state: RootState) => state.about);
   const [updateAboutMutation, { data, loading, error }] =
     useMutation(UPDATE_ABOUT);
-  const { register, setValue, handleSubmit } = useForm<IFormInput>();
+  const { register, setValue, formState: { errors }, handleSubmit } = useForm<IFormInput>();
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [richValue, setRichValue] = useState(() => EditorState.createEmpty());
@@ -49,8 +50,12 @@ export const About = () => {
     //data["img"] = selectedFile;
     data["text"] = convertToHTML(richValue.getCurrentContent());
     data["file"] = selectedFile;
-    const file: any = await AddImageToAzure([selectedFile]);
-    data["imgName"] = file.fileNames[0].newName ? file.fileNames[0].newName : about.imgName;
+    let file = null;
+    if(selectedFile !== about.file)
+    {
+      file = await AddImageToAzure([selectedFile]);
+    }
+    data["imgName"] = (file?.fileNames && file?.fileNames[0]?.newName) ? file.fileNames[0].newName : about.imgName;
     dispatch(updateAbout(data));
     updateAboutMutation({
       variables: {
@@ -105,10 +110,11 @@ export const About = () => {
         <div className={BEM(cssClasses.about, cssClasses.elements)}>
           <p>Tytuł:</p>
           <input
-            className={BEM(cssClasses.about, cssClasses.title)}
+            className={errors.title?.type === 'required' ? BEM(cssClasses.about, cssClasses.title, cssClasses.required) : BEM(cssClasses.about, cssClasses.title)}
             type="text"
             {...register("title", { required: true })}
           />
+          {errors.title?.type === 'required' && <h3 className={BEM(cssClasses.about, cssClasses.text, cssClasses.required)} role="alert">Pole wymagane.</h3>}
           <p>Treść:</p>
           <Button
             sx={{
