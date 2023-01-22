@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { IconButton, TableCell, TableRow } from "@mui/material";
 import React from "react";
 import { useAppDispatch } from "../../../../store/hooks";
@@ -17,7 +17,14 @@ interface RowProps {
   actionOnDelete?: (index: number) => void;
 }
 
-const Row = ({ index, cells, date, onlyView, openModal, actionOnDelete }: RowProps) => {
+const Row = ({
+  index,
+  cells,
+  date,
+  onlyView,
+  openModal,
+  actionOnDelete,
+}: RowProps) => {
   const cssClasses = {
     row: "row",
     title: "title",
@@ -47,13 +54,14 @@ const Row = ({ index, cells, date, onlyView, openModal, actionOnDelete }: RowPro
       {cells.map((element) => {
         return (
           <TableCell>
-            <div className={BEM(cssClasses.row, cssClasses.content)}>
-              {element}
-            </div>
+            <div
+              className={BEM(cssClasses.row, cssClasses.content)}
+              dangerouslySetInnerHTML={{ __html: element }}
+            />
           </TableCell>
         );
       })}
-      {date ?  <TableCell>{date}</TableCell> : null}
+      {date ? <TableCell>{date}</TableCell> : null}
       <TableCell component="th" scope="row">
         {onlyView ? viewIcon : editIcon}
         {actionOnDelete && deleteIcon}

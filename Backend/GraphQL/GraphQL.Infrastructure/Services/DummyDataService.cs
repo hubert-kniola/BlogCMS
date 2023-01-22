@@ -53,12 +53,12 @@ namespace GraphQL.Infrastructure.Services
         public async Task<bool> Execute()
         {
             bool success;
-            //success = await SetDummyAbout();
-            //success = await SetDummyContactInfo();
-            //success = await SetDummyContactForm();
-            //success = await SetDummyCarousels();
-            //success = await SetDummyFaq();
-            //success = await SetDummyContent();
+            success = await SetDummyAbout();
+            success = await SetDummyContactInfo();
+            success = await SetDummyContactForm();
+            success = await SetDummyCarousels();
+            success = await SetDummyFaq();
+            success = await SetDummyContent();
             success = await SetDummyPostAndCategory();
 
             return success;
@@ -105,19 +105,19 @@ namespace GraphQL.Infrastructure.Services
                 {
                     Name = "Adam Kowalski",
                     Email = "jakis@email.com",
-                    Content = "Cześć jestem Adam Kowalski"
+                    Content = "Cześć jestem Adam Kowalski. Świetne posty!"
                 },
                 new ContactForm()
                 {
                     Name = "Andrzej Nowak",
                     Email = "adam@nowak.com",
-                    Content = "Cześć jestem Andrzej Nowak"
+                    Content = "Cześć jestem Andrzej Nowak. Chciałbyś napisać coś na temat graphQL?"
                 },
                 new ContactForm()
                 {
                     Name = "Przemek Gość",
                     Email = "przemekgosc@email.com",
-                    Content = "Cześć jestem Przemek Gość"
+                    Content = "Cześć jestem Przemek Gość. Lubisz podróżować?"
                 }
             };
 
@@ -130,85 +130,40 @@ namespace GraphQL.Infrastructure.Services
             {
                 new Carousel()
                 {
-                    Title = "Pierwszy element",
-                    Content = "1: Tutaj jakis krotki opis ",
+                    Title = "Akcja adoptuj zwierzaka!",
+                    Content = "Przyjdź 2023-01-31 o godzinie 12:00 do schroniska przy ul. XYZ 5 w Poznaniu!",
                     PublicationDate = DateTime.Now,
-                    ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
+                    ImgName = "db541208-cc04-4d4d-9a7d-4abc6ebb7dd5.jpg",
                     Active = true,
                     Url = "http://localhost:8080/",
                 },
                 new Carousel()
                 {
-                    Title = "Drugi element",
-                    Content = "2: Tutaj jakis krotki opis ",
+                    Title = "[ENG JOKE] Did you know that 10 + 10 is equal to 11 + 11?",
+                    Content = "ten plus ten is twenty, and eleven + eleven is 'twenty too' [twenty-two] ",
                     PublicationDate = DateTime.Now,
-                    ImgName = "1cc8655b-0aca-44da-af78-7d712d92cece.jpg",
+                    ImgName = "5b8bf8e2-ab87-49d8-8acc-714958dbcb48.jpg",
                     Active = true,
                     Url = "http://localhost:8080/",
                 },
                 new Carousel()
                 {
-                    Title = "Trzeci element",
-                    Content = "3: Tutaj jakis krotki opis ",
+                    Title = "Dzięki, że jesteście",
+                    Content = "Zapraszam do zapoznania się z nowymi postami",
                     PublicationDate = DateTime.Now,
-                    ImgName = "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
+                    ImgName = "5615a013-4c52-4668-9e38-62a45835e823.jpg",
                     Active = true,
                     Url = "http://localhost:8080/",
                 },
                 new Carousel()
                 {
-                    Title = "Czwarty element",
-                    Content = "4: Tutaj jakis krotki opis ",
+                    Title = "Widzimy się w sobotę 4 lutego na PIWKU!",
+                    Content = "4 luty 2023, pub chmielnik, poznań, ul. XYZ godz: 18:00 ",
                     PublicationDate = DateTime.Now,
-                    ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
+                    ImgName = "3a99ed29-47c1-4259-924d-a88754d7071a.jpg",
                     Active = true,
                     Url = "http://localhost:8080/",
                 },
-                new Carousel()
-                {
-                    Title = "Piąty element",
-                    Content = "5: Tutaj jakis krotki opis ",
-                    PublicationDate = DateTime.Now,
-                    ImgName = "a62860cd-5115-4ae2-982c-7f365cea160a.jpg",
-                    Active = true,
-                    Url = "http://localhost:8080/",
-                },
-                new Carousel()
-                {
-                    Title = "Szósty element",
-                    Content = "6: Tutaj jakis krotki opis ",
-                    PublicationDate = DateTime.Now,
-                    ImgName = "f8c99c62-b222-4555-bc8f-9cc154b6919d.jpg",
-                    Active = true,
-                    Url = "http://localhost:8080/",
-                },
-                new Carousel()
-                {
-                    Title = "Czwarty element",
-                    Content = "7: Tutaj jakis krotki opis ",
-                    PublicationDate = DateTime.Now,
-                    ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
-                    Active = false,
-                    Url = "http://localhost:8080/",
-                },
-                new Carousel()
-                {
-                    Title = "Piąty element",
-                    Content = "8: Tutaj jakis krotki opis ",
-                    PublicationDate = DateTime.Now,
-                    ImgName = "8aa1bc44-ba97-41fe-8c6a-53266dc97ecc.jpg",
-                    Active = false,
-                    Url = "http://localhost:8080/",
-                },
-                new Carousel()
-                {
-                    Title = "Szósty element",
-                    Content = "9: Tutaj jakis krotki opis ",
-                    PublicationDate = DateTime.Now,
-                    ImgName = "1b31fbbc-458a-41ab-b103-20d94ae7ba10.jpg",
-                    Active = false,
-                    Url = "http://localhost:8080/",
-                }
             };
 
             return await SetManyDummyItems(_carouselRepository, data);
@@ -225,8 +180,10 @@ namespace GraphQL.Infrastructure.Services
                 },
                 new()
                 {
-                    Question = "Czy to ma sens",
-                    Answer = "Prawdopodobnie nie"
+                    Question = "W jakim celu powstała ta storna?",
+                    Answer = "Strona internetowa, a właściwie cały system powstał w celu zaliczenia przedmiodu <b> Systemu zarządzania treścią </b>." +
+                        "Aby zaliczyć przedmiot wymagane było utworzenie właśnie takiego systemu zarządzania treścią. To co tu widać jest jedynie częścią ogólnodostępną." +
+                        "Cały system zarządzania jest dotępny tylko dla administratora."
                 },
                 new()
                 {
@@ -275,7 +232,7 @@ namespace GraphQL.Infrastructure.Services
 
                 Category? backend = await _categoryService.AddCategory(new()
                 {
-                    Title = "Backen",
+                    Title = "Backend",
                     Path = "/b-end",
                     ParentId = webDevelopment.Id,
                 });
@@ -355,7 +312,7 @@ namespace GraphQL.Infrastructure.Services
                     new Content()
                     {
                         Name = "Footer_1",
-                        Value = "Jakaś informacja do footera 1",
+                        Value = "Dzięki, że ze mną jesteś!",
                         Type = ContentType.Footer,
                         ModifiedOn= DateTime.Now,
                         CreatedOn= DateTime.Now,
@@ -363,7 +320,7 @@ namespace GraphQL.Infrastructure.Services
                     new Content()
                     {
                         Name = "Footer_2",
-                        Value = "Jakaś informacja do footera 2",
+                        Value = "Masz jakieś pytania? <br/> Zapraszam do kontaktu",
                         Type = ContentType.Footer,
                         ModifiedOn= DateTime.Now,
                         CreatedOn= DateTime.Now,
@@ -371,7 +328,7 @@ namespace GraphQL.Infrastructure.Services
                     new Content()
                     {
                         Name = "Footer_3",
-                        Value = "Jakaś informacja do footera 3",
+                        Value = "Blog o wszystkim",
                         Type = ContentType.Footer,
                         ModifiedOn= DateTime.Now,
                         CreatedOn= DateTime.Now,
@@ -411,9 +368,9 @@ namespace GraphQL.Infrastructure.Services
                     {
                         postList.Add(new Post()
                         {
-                            Title = $"To jest tytuł pierwszego wpisu - ale nie wiem jak ma się nazywać, ma być długi. Tak żeby zajmował dwie linie [{i}]",
+                            Title = $"To jest tytuł posta - bez konkretnej treści, ma być długi. Tak żeby zajmował dwie linie. A tu jego numer [{i}]",
                             Content = _htmlContent,
-                            Snippet = "Tutaj będzie jakiś snippet bla bla bla - opis postu co? jak? gdzie? po co? dlaczego? co to ma na celu? Czy to ma sens?",
+                            Snippet = "Krótki opis na temat tego, o czym jest post. Na tyle krótki, aby szybko się czytał i zachecił użytkownika do przeczytania.",
                             TimeToReadInMs = $"{5 + i}",
                             PrimaryImgName = pictures[i%2],
                             ContentImgName = new List<string>() {
@@ -423,7 +380,7 @@ namespace GraphQL.Infrastructure.Services
                             "4027801e-d25a-4b36-a719-5d58504958bb.jpg",
                             "07e8f032-22ad-4db2-952b-1bd9b4780bbb.jpg"
                         },
-                            PublicationDate = i < 8 ? DateTime.UtcNow.AddMinutes(-i) : DateTime.UtcNow.AddDays(10 - i),
+                            PublicationDate = i < 10 ? DateTime.UtcNow.AddMinutes(-i) : DateTime.UtcNow.AddDays(10 - i),
                             Categories = categoryListId,
                             IsTopPost = i < 3,
                         });
