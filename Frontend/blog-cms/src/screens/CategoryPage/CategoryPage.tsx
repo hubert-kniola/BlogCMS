@@ -172,9 +172,13 @@ export const CategoryPage = () => {
   }, [categoriesLoading]);
 
   useEffect(() => {
-    let tempPosts = currentPosts;
-    tempPosts = [...tempPosts.filter((x) => x.title.includes(searchValue))];
-    setCurrentPosts(tempPosts);
+    if (searchValue.length > 0) {
+      let tempPosts = currentPosts;
+      tempPosts = [...tempPosts.filter((x) => x.title.includes(searchValue))];
+      setCurrentPosts(tempPosts);
+    } else {
+      setCurrentPosts(posts);
+    }
   }, [searchValue]);
 
   return (
@@ -183,7 +187,9 @@ export const CategoryPage = () => {
 
       {postsLoading ? (
         <Spinner />
-      ) : currentPosts.length > 0 || searchValue !== "" ? (
+      ) : setInterval(() => {
+          currentPosts.length > 0 || searchValue !== "";
+        }, 50) ? (
         <div className={BEM(css.categoryPage, css.container)}>
           {mainCategory && (
             <div className={BEM(css.categoryPage, css.left)}>
