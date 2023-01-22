@@ -40,8 +40,8 @@ export const AboutMePage = () => {
             className={BEM(css.aboutMe, css.photo)}
           />
           <div className={BEM(css.aboutMe, css.content)}>
-            <p>{aboutData && aboutData.title}</p>
-            <div dangerouslySetInnerHTML={{ __html: aboutData.text }} />
+            <p dangerouslySetInnerHTML={{ __html: aboutData?.title }} />
+            <div dangerouslySetInnerHTML={{ __html: aboutData?.text }} />
           </div>
         </div>
       )}
