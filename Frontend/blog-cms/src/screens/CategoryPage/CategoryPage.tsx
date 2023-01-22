@@ -135,6 +135,18 @@ export const CategoryPage = () => {
     return categories.map((category) => ({ category, active: false }));
   };
 
+  const changeCategoryState = (categoryIdx: number) => {
+    let tempCategories = currentCategories;
+    tempCategories[categoryIdx].active = !tempCategories[categoryIdx].active;
+    setCurrentCategories(tempCategories);
+  };
+
+  const changeTagState = (tagIdx: number) => {
+    let tempTags = currnetTags;
+    tempTags[tagIdx].active = !tempTags[tagIdx].active;
+    setCurrentTags(tempTags);
+  };
+
   const onFilterButtonClickHandler = () => {};
 
   useEffect(() => {
@@ -195,9 +207,7 @@ export const CategoryPage = () => {
 
       {postsLoading ? (
         <Spinner />
-      ) : setInterval(() => {
-          currentPosts.length > 0 || searchValue !== "";
-        }, 50) ? (
+      ) : posts.length > 0 ? (
         <div className={BEM(css.categoryPage, css.container)}>
           {mainCategory && (
             <div className={BEM(css.categoryPage, css.left)}>
@@ -215,16 +225,24 @@ export const CategoryPage = () => {
                 {currentCategories.length >= 2 && (
                   <OverflowContainer header="Kategorie">
                     {!categoriesLoading &&
-                      currentCategories.map(({ category }, idx) => (
-                        <CustomCheckbox label={category.title} key={idx} />
+                      currentCategories.map(({ category, active }, idx) => (
+                        <CustomCheckbox
+                          label={category.title}
+                          key={idx}
+                          onClickAction={() => changeCategoryState(idx)}
+                        />
                       ))}
                   </OverflowContainer>
                 )}
                 {currnetTags.length >= 2 && (
                   <OverflowContainer header="Tagi">
                     {!categoriesLoading &&
-                      currnetTags.map(({ category }, idx) => (
-                        <CustomCheckbox label={category.title} key={idx} />
+                      currnetTags.map(({ category, active }, idx) => (
+                        <CustomCheckbox
+                          label={category.title}
+                          key={idx}
+                          onClickAction={() => changeTagState(idx)}
+                        />
                       ))}
                   </OverflowContainer>
                 )}
