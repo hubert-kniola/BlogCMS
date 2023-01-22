@@ -133,7 +133,7 @@ namespace GraphQL.Infrastructure.Services
                     Title = "Akcja adoptuj zwierzaka!",
                     Content = "Przyjdź 2023-01-31 o godzinie 12:00 do schroniska przy ul. XYZ 5 w Poznaniu!",
                     PublicationDate = DateTime.Now,
-                    ImgName = "db541208-cc04-4d4d-9a7d-4abc6ebb7dd5.jpg",
+                    ImgName = "5615a013-4c52-4668-9e38-62a45835e823.jpg",
                     Active = true,
                     Url = "http://localhost:8080/",
                 },
