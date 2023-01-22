@@ -30,6 +30,7 @@ export const CustomCheckbox = ({
         className={BEM(css.customCheckbox, css.checkbox)}
         checked={checked}
         disabled={disabled}
+        readOnly={true}
       />
       <div>{label}</div>
     </div>
