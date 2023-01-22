@@ -24,13 +24,19 @@ type Field = {
   fieldName: string;
   content: string;
 };
-interface Contact1 {
-  title: string;
-  text: string;
-  fields: Field[];
-}
+
+const emailRegex =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const ContactPage = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isNameInvalid, setNameIsInvalid] = useState(false);
+  const [isEmailInvalid, setEmailIsInvalid] = useState(false);
+  const [isMessageInvalid, setMessageIsInvalid] = useState(false);
+  const [isFirstLoop, setIsFirstLoop] = useState(true);
+
   const {
     loading: loadingData,
     error: errorData,
@@ -45,18 +51,55 @@ export const ContactPage = () => {
     return data?.contactInfo;
   };
 
+  const checkNameValid = () => {
+    if (name.trim().length <= 2) {
+      setNameIsInvalid(true);
+      setIsFirstLoop(false);
+    }
+  };
+
+  const checkMessageValid = () => {
+    if (name.trim().length <= 2) {
+      setMessageIsInvalid(true);
+      setIsFirstLoop(false);
+    }
+  };
+
+  const checkEmailValid = () => {
+    if (!emailRegex.test(email)) {
+      setEmailIsInvalid(true);
+      setIsFirstLoop(false);
+    }
+  };
+
   //TODO Obsłużyć formularz
   const onClickHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    createContactForm({
-      variables: {
-        name: "Kolega Darka",
-        email: "zna@darka.pl",
-        content: "interesuje się jego żoną",
-      } as ContactForm,
-    });
+
+    checkNameValid();
+    checkEmailValid();
+    checkMessageValid();
+
+    if (
+      !isNameInvalid &&
+      !isEmailInvalid &&
+      !isMessageInvalid &&
+      !isFirstLoop
+    ) {
+      createContactForm({
+        variables: {
+          name: name,
+          email: email,
+          content: message,
+        } as ContactForm,
+      });
+
+      setName("");
+      setEmail("");
+      setMessage("");
+    }
   };
 
   useEffect(() => {
@@ -65,6 +108,24 @@ export const ContactPage = () => {
       setContactInfo(getContactInfoData(contactInfoData));
     }
   }, [loadingData]);
+
+  useEffect(() => {
+    if (isNameInvalid) {
+      setNameIsInvalid(false);
+    }
+  }, [name]);
+
+  useEffect(() => {
+    if (isEmailInvalid) {
+      setEmailIsInvalid(false);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (isMessageInvalid) {
+      setMessageIsInvalid(false);
+    }
+  }, [message]);
 
   return (
     <>
@@ -90,12 +151,34 @@ export const ContactPage = () => {
             <div className={BEM(css.contact, css.form)}>
               <p>Formularz kontaktowy </p>
               <h1> Imię: </h1>
-              <Input placeholder="Imię" />
+              <Input
+                invalid={isNameInvalid}
+                placeholder="Imię"
+                value={name}
+                onChange={(e) => setName(e.currentTarget.value)}
+                onBlur={() => checkNameValid()}
+              />
               <h1> E-mail: </h1>
-              <Input placeholder="E-mail" />
+              <Input
+                invalid={isEmailInvalid}
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                onBlur={checkEmailValid}
+              />
               <h1>Co tam?</h1>
-              <textarea required placeholder="Co tam? " />
-              <button type="submit" onClick={(e) => onClickHandler(e)}>
+              <textarea
+                style={isMessageInvalid ? { borderColor: "red" } : {}}
+                required
+                placeholder="Co tam? "
+                value={message}
+                onChange={(e) => setMessage(e.currentTarget.value)}
+                onBlur={checkMessageValid}
+              />
+              <button
+                type="submit"
+                onClick={(e) => onClickHandler(e)}
+                disabled={isNameInvalid && isEmailInvalid && isMessageInvalid}>
                 Wyślij!
               </button>
             </div>
