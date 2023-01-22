@@ -58,6 +58,11 @@ export type CategoryTreeType = {
   tags: CategoryType[];
 };
 
+export type CategoryState = {
+  category: CategoryType;
+  active: boolean;
+};
+
 export type FaqType = {
   question: string;
   answer: string;

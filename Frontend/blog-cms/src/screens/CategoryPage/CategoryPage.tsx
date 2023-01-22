@@ -18,7 +18,7 @@ import {
 import { ListItem } from "../../components/List/ListItem";
 import Spinner from "../../components/Spinner/Spinner";
 import { BEM } from "../../tools";
-import { CategoryType, Post } from "../../types";
+import { CategoryState, CategoryType, Post } from "../../types";
 import "./style.css";
 
 const css = {
@@ -49,10 +49,10 @@ export const CategoryPage = () => {
   const [mainCategory, setMainCategory] = useState(null as CategoryType);
   const [categories, setCategories] = useState([] as CategoryType[]);
   const [currentCategories, setCurrentCategories] = useState(
-    [] as CategoryType[]
+    [] as CategoryState[]
   );
   const [tags, setTags] = useState([] as CategoryType[]);
-  const [currnetTags, setCurrentTags] = useState([] as CategoryType[]);
+  const [currnetTags, setCurrentTags] = useState([] as CategoryState[]);
   const [searchValue, setSearchValue] = useState("");
 
   const {
@@ -129,6 +129,14 @@ export const CategoryPage = () => {
     setAlphabetActive(value);
   };
 
+  const mapCategoriesToCategoriesState = (
+    categories: CategoryType[]
+  ): CategoryState[] => {
+    return categories.map((category) => ({ category, active: false }));
+  };
+
+  const onFilterButtonClickHandler = () => {};
+
   useEffect(() => {
     if (!postsLoading) {
       setPosts(getPostByPath(postsData));
@@ -165,9 +173,9 @@ export const CategoryPage = () => {
       });
 
       setCategories(tempCategories);
-      setCurrentCategories(tempCategories);
+      setCurrentCategories(mapCategoriesToCategoriesState(tempCategories));
       setTags(tempTags);
-      setCurrentTags(tempTags);
+      setCurrentTags(mapCategoriesToCategoriesState(tempTags));
     }
   }, [categoriesLoading]);
 
@@ -207,16 +215,16 @@ export const CategoryPage = () => {
                 {currentCategories.length >= 2 && (
                   <OverflowContainer header="Kategorie">
                     {!categoriesLoading &&
-                      currentCategories.map((item, idx) => (
-                        <CustomCheckbox label={item.title} key={idx} />
+                      currentCategories.map(({ category }, idx) => (
+                        <CustomCheckbox label={category.title} key={idx} />
                       ))}
                   </OverflowContainer>
                 )}
                 {currnetTags.length >= 2 && (
                   <OverflowContainer header="Tagi">
                     {!categoriesLoading &&
-                      currnetTags.map((item, idx) => (
-                        <CustomCheckbox label={item.title} key={idx} />
+                      currnetTags.map(({ category }, idx) => (
+                        <CustomCheckbox label={category.title} key={idx} />
                       ))}
                   </OverflowContainer>
                 )}
