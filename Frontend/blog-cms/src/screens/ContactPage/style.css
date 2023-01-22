@@ -30,7 +30,7 @@
         text-secondary
 }
 
-.contact_info p {
+.contact_info p#contactInfoTtitle {
     font-size: x-large;
     font-weight: bold;
     margin-bottom: 1rem;

@@ -74,8 +74,8 @@ export const ContactPage = () => {
         <div className={BEM(css.contact, css.view)}>
           <div className={BEM(css.contact, css.box)}>
             <div className={BEM(css.contact, css.info)}>
-              <p> {contactInfo && contactInfo.title}</p>
-              <div>{contactInfo && contactInfo.content}</div>
+              <p id="contactInfoTtitle"> {contactInfo && contactInfo.title}</p>
+              <div dangerouslySetInnerHTML={{ __html: contactInfo?.content }} />
               {contactInfo &&
                 contactInfo.textBoxes.map((field, idx) => {
                   return (
