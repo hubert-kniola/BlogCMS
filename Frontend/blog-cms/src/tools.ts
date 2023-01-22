@@ -92,7 +92,6 @@ export const ConvertTitleToPath = (title: string): string => {
 };
 
 export const GetDate = (date: string): string => {
-  console.log(date);
   var dateTime = new Date(date);
 
   const day = getFormatedDate(dateTime.getDate());
@@ -100,8 +99,6 @@ export const GetDate = (date: string): string => {
   const year = dateTime.getFullYear();
   const hours = getFormatedDate(dateTime.getHours());
   const minutes = getFormatedDate(dateTime.getMinutes());
-
-  console.log(day);
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };

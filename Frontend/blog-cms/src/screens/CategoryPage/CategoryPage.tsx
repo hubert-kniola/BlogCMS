@@ -46,6 +46,7 @@ export const CategoryPage = () => {
 
   const [posts, setPosts] = useState([] as Post[]);
   const [currentPosts, setCurrentPosts] = useState([] as Post[]);
+  const [currentSearchPosts, setCurrentSearchPosts] = useState([] as Post[]);
   const [mainCategory, setMainCategory] = useState(null as CategoryType);
   const [categories, setCategories] = useState([] as CategoryType[]);
   const [currentCategories, setCurrentCategories] = useState(
@@ -158,13 +159,17 @@ export const CategoryPage = () => {
 
   useEffect(() => {
     if (alphabetActive) {
-      let tempPosts = sortByTitle(posts, alphabetDesc);
+      let tempPosts = sortByTitle(currentPosts, alphabetDesc);
       setCurrentPosts(tempPosts);
     } else if (calenderActive) {
-      let tempPosts = sortByCalendar(posts, calenderDesc);
+      let tempPosts = sortByCalendar(currentPosts, calenderDesc);
       setCurrentPosts(tempPosts);
     } else {
-      setCurrentPosts(posts);
+      if (searchValue.length > 0) {
+        setCurrentPosts(currentSearchPosts);
+      } else {
+        setCurrentPosts(posts);
+      }
     }
   }, [alphabetActive, alphabetDesc, calenderActive, calenderDesc]);
 
@@ -196,6 +201,7 @@ export const CategoryPage = () => {
       let tempPosts = currentPosts;
       tempPosts = [...tempPosts.filter((x) => x.title.includes(searchValue))];
       setCurrentPosts(tempPosts);
+      setCurrentSearchPosts(tempPosts);
     } else {
       setCurrentPosts(posts);
     }
