@@ -54,10 +54,9 @@ const Row = ({
       {cells.map((element) => {
         return (
           <TableCell>
-            <div
-              className={BEM(cssClasses.row, cssClasses.content)}
-              dangerouslySetInnerHTML={{ __html: element }}
-            />
+            <div className={BEM(cssClasses.row, cssClasses.content)}>
+              {element}
+            </div>
           </TableCell>
         );
       })}

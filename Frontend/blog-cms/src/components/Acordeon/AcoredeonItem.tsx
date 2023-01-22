@@ -42,9 +42,9 @@ export const AcordeonItem = ({ setActiveFaq, isActive, faq }: IFaqItem) => {
                   css.active
                 )}`
               : BEM(css.faq, css.item, css.content)
-          }`}>
-          {faq.answer}
-        </div>
+          }`}
+          dangerouslySetInnerHTML={{ __html: faq.answer }}
+        />
       </div>
     </>
   );
