@@ -71,7 +71,7 @@ const PostsTable = () => {
                   Treść
                 </TableCell>
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
-                  Data
+                  Data publikacji
                 </TableCell>
               </TableRow>
             </TableHead>

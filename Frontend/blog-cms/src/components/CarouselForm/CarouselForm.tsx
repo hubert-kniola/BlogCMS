@@ -135,7 +135,7 @@ const CarouselForm = ({ type, handleClose, index }: CarouselFormProps) => {
       const payload: any = {
         id: carousels[index].id,
         title: title,
-        publicationDate: new Date().toLocaleString(),
+        publicationDate: carousels[index].publicationDate,
         content: richValue,
         imgName: fileName ? fileName : carousels[index].imgName,
         file: selectedFile,

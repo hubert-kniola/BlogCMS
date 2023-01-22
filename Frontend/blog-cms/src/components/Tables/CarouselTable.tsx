@@ -74,7 +74,7 @@ const CarouselTable = () => {
                   Aktywność
                 </TableCell>
                 <TableCell align="left" style={{ fontWeight: "bold" }}>
-                  Data
+                  Data dodania
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -89,7 +89,7 @@ const CarouselTable = () => {
                     element.content,
                     element.active ? "Aktywny" : "Nieaktywny",
                   ]}
-                  date={GetDate(element.publicationDate.toLocaleString())}
+                  date={element.publicationDate.includes("Z") ? GetDate(element.publicationDate.toLocaleString()) : new Date().toLocaleString()}
                   index={i}
                   openModal={() => {
                     setOpenEdit(true);
