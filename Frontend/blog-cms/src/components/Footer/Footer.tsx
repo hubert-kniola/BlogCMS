@@ -32,7 +32,7 @@ export const Footer = () => {
           footerContent.map((item, idx) => {
             return (
               <div key={idx} className={BEM(css.footer, css.item)}>
-                <p>{item.value}</p>
+                <p dangerouslySetInnerHTML={{ __html: item.value }} />
               </div>
             );
           })}
