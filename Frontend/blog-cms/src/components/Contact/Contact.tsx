@@ -169,13 +169,13 @@ export const Contact = () => {
               <input
                 className={BEM(cssClasses.contact, cssClasses.title)}
                 type="text"
-                {...register("fieldNameTwo", { required: true })}
+                {...register("fieldNameThree", { required: true })}
               ></input>
               <p>Wartość 3:</p>
               <input
                 className={BEM(cssClasses.contact, cssClasses.title)}
                 type="text"
-                {...register("contentTwo", { required: true })}
+                {...register("contentThree", { required: true })}
               ></input>
             </div>
             <input className="submitButton" value="Zapisz" type="submit" />
