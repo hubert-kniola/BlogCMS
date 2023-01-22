@@ -81,7 +81,7 @@ namespace GraphQL.Infrastructure.Services
                             {
                                 foreach (var post in posts)
                                 {
-                                    if (!postList.Contains(post))
+                                    if (!postList.Any(x => x.Id.Equals(post.Id)))
                                     {
                                         postList.Add(post);
                                     }
