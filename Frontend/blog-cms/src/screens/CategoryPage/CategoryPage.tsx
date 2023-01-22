@@ -236,7 +236,7 @@ export const CategoryPage = () => {
       setCurrentPosts(tempPosts);
       setCurrentSearchPosts(tempPosts);
     } else {
-      setCurrentPosts(posts);
+      onFilterButtonClickHandler();
     }
   }, [searchValue]);
 
