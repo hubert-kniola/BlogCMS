@@ -41,7 +41,7 @@ export const AboutMePage = () => {
           />
           <div className={BEM(css.aboutMe, css.content)}>
             <p>{aboutData && aboutData.title}</p>
-            <div>{aboutData && aboutData.text}</div>
+            <div dangerouslySetInnerHTML={{ __html: aboutData.text }} />
           </div>
         </div>
       )}
