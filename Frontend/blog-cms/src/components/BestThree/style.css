@@ -36,8 +36,9 @@
         text-primary-200
 }
 
-.bestContainer_header p span{
+.bestContainer_header p a{
     font-weight: bold;
+    cursor: pointer;
     @apply text-primary-300
 }
 

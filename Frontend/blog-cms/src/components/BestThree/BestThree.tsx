@@ -32,7 +32,7 @@ export const BestThree = () => {
         <p>
           Jeżeli chciałabyś podzielić się swoimi odczuciami na temat postów, coś
           jest niejasne lub chciałbyś podyskutować na dany temat
-          <span>skontaktuj się ze mną</span>
+          <a href="/contact"> skontaktuj się ze mną</a>
         </p>
       </div>
 

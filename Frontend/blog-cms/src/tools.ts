@@ -1,9 +1,9 @@
+import axios from "axios";
 import { ContentState, EditorState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
-import { month, TextPosition, weekday } from "./types";
-import axios from "axios";
-import { BlobStorageURL } from "./settings";
 import axiosConfig from "./axiosConfig";
+import { BlobStorageURL } from "./settings";
+import { month, TextPosition, weekday } from "./types";
 
 export const BEM = (
   block: string,
@@ -91,7 +91,7 @@ export const ConvertTitleToPath = (title: string): string => {
   return `/${title.replace(" ", "-").toLowerCase()}/`;
 };
 
-export const GetDate = (date: string): string => {
+export const GetDate = (date: string, onlyDate: boolean = false): string => {
   var dateTime = new Date(date);
 
   const day = getFormatedDate(dateTime.getDate());
@@ -100,7 +100,10 @@ export const GetDate = (date: string): string => {
   const hours = getFormatedDate(dateTime.getHours());
   const minutes = getFormatedDate(dateTime.getMinutes());
 
-  return `${year}-${month}-${day} ${hours}:${minutes}`;
+  let currentDate = `${year}-${month}-${day}`;
+  let currenTime = `${hours}:${minutes}`;
+
+  return onlyDate ? currentDate : `${currentDate} ${currenTime}`;
 };
 
 const getFormatedDate = (value: number): string => {
