@@ -40,9 +40,14 @@ export const ListItem = ({ post, index }: IListItem) => {
     return plainText.replace(/<[^>]*>/g, "");
   };
 
+  const getPath = () => {
+    let endSlash = post.categories[0].path.endsWith("/");
+    return `${post.categories[0].path}${endSlash ? "" : "/"}${post.id}`;
+  };
+
   return (
     <a
-      href={`${post.categories[0].path}/${post.id}`}
+      href={getPath()}
       className={index > 0 ? GetNextItemClass() : GetFirstItemClass()}>
       <BackgroundDiv
         url={`${BlobStorageURL}${post.primaryImgName}`}
