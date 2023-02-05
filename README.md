@@ -2,5 +2,5 @@
 
 #### W pełni konfigurowalna strona internetowa - blog osobisty
 
-![](images/blog1.JPG)
+![](Images/blog1.JPG)
 
