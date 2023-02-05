@@ -4,15 +4,27 @@
 
 ### Admin Panel:
 
+#### Panel logowania:
+
 ![](Images/admin1.JPG)
+
+#### Strona główna:
 
 ![](Images/admin2.JPG)
 
+#### Kategorie:
+
 ![](Images/admin3.JPG)
+
+#### Posty:
 
 ![](Images/admin4.JPG)
 
+#### O mnie:
+
 ![](Images/admin5.JPG)
+
+#### Kontakt:
 
 ![](Images/admin6.JPG)
 
